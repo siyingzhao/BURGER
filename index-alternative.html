@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>BURGER — Robot drawing as a test for VLA learning</title>
+  <meta name="description" content="Robot drawing makes language essential, admits many valid actions, and exposes model failures. BURGER offers a benchmark and a scalable sketch-to-robot data pipeline.">
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/alternative.css">
+  <script src="js/modes-alternative.js" defer></script>
+  <script src="js/alternative.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">BURGER<span class="draft-label">Comparison draft</span></a>
+      <nav aria-label="Page sections">
+        <a href="#motivation">Motivation</a>
+        <a href="#dataset">Data</a>
+        <a href="#circle">Results</a>
+        <a class="compare-link" href="index.html" target="_blank" rel="noopener" aria-label="Open the current page for comparison">Current <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container" id="top" aria-labelledby="paper-title">
+      <h1 id="paper-title"><span class="wordmark">BURGER</span>
+        <span class="paper-title">Benchmarking and Understanding Robotic Generalization<br class="desktop-break"> via Embodied d<span class="accent">R</span>awing</span>
+      </h1>
+      <ul class="authors" aria-label="Authors">
+        <li>Xiangyu Xu<sup aria-label="Equal contribution">*</sup></li>
+        <li>Bangshuai Peng<sup aria-label="Equal contribution">*</sup></li>
+        <li><a href="https://taichi-pink.github.io/Ziyi-Liu/">Ziyi Liu</a><sup aria-label="Equal contribution">*</sup></li>
+        <li><a href="https://qxjyqzw.github.io/">Mengjie Zhao</a></li>
+        <li><a href="https://ctp314.github.io/">Chenhao Lu</a></li>
+        <li>Zhengyang Fan</li>
+        <li><a href="https://iiis.tsinghua.edu.cn/en/People/Faculty/XuHuazhe.htm">Huazhe Xu</a><sup aria-label="Corresponding author">†</sup></li>
+        <li><a href="https://hukz18.github.io/">Kaizhe Hu</a><sup aria-label="Corresponding author">†</sup></li>
+      </ul>
+      <p class="affiliation">Tsinghua University</p>
+      <p class="author-notes">* Equal contribution <span>† Corresponding authors</span></p>
+      <div class="resources" aria-label="Project resources">
+        <a class="button" href="#overview"><span aria-hidden="true">▷</span> Watch the overview</a>
+        <span class="forthcoming">arXiv, code &amp; data forthcoming</span>
+      </div>
+    </section>
+
+    <section class="section container why-section" id="why" aria-labelledby="why-title">
+      <div class="why-lead">
+        <div class="why-copy">
+          <p class="eyebrow">Why robot drawing?</p>
+          <h2 id="why-title">A blank canvas.<br>A revealing test for VLAs.</h2>
+          <p>Drawing tests whether a vision-language-action model follows language,
+            learns diverse behaviors, and controls its actions precisely.</p>
+          <a class="text-link" href="#generate">Build your own drawing dataset <span aria-hidden="true">↓</span></a>
+        </div>
+        <figure class="demo opening-demo">
+          <div class="demo-heading"><span class="instruction">“Draw a hamburger.”</span><span>Generated demonstration · simulation</span></div>
+          <div class="video-frame">
+            <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/hero.mp4" poster="assets/posters/hero.jpg" aria-label="Generated demonstration of a robot drawing a hamburger"></video>
+            <span class="video-tag">8.5×</span><button class="video-toggle" type="button" aria-label="Play hamburger demonstration" data-name="hamburger demonstration"><span aria-hidden="true">▶</span></button>
+          </div>
+          <figcaption>At evaluation, a policy receives language, the current canvas, and robot state. No target sketch.</figcaption>
+        </figure>
+      </div>
+      <div class="principles">
+        <div><span class="principle-number" aria-hidden="true">01</span><h3>Intrinsically multimodal</h3>
+          <p>One instruction, many valid shapes and stroke sequences. A direct test of the diverse actions diffusion and flow policies can model.</p></div>
+        <div><span class="principle-number" aria-hidden="true">02</span><h3>No visual shortcut</h3>
+          <p>The initial canvas is blank. The image alone cannot reveal the requested drawing; the model must use language.</p></div>
+        <div><span class="principle-number" aria-hidden="true">03</span><h3>Complexity you control</h3>
+          <p>Go from a circle to detailed objects and spatial instructions, using the same robot and canvas.</p></div>
+        <div><span class="principle-number" aria-hidden="true">04</span><h3>Failures you can inspect</h3>
+          <p>Wrong object, wrong position, broken stroke: drawings and trajectories show where a policy goes wrong.</p></div>
+      </div>
+    </section>
+
+    <section class="section container motivation-section" id="motivation" aria-labelledby="motivation-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Motivation</p><h2 id="motivation-title">One instruction,<br>many valid routes.</h2></div>
+        <p>A policy must learn the alternatives a task allows. Averaging different stroke sequences can produce a path
+          unlike any demonstration. We compare BURGER and LIBERO using the same clustering procedure.</p>
+      </div>
+    <figure class="mode-evidence" id="evidence">
+      <div class="explorer" id="explorer">
+      <div class="ex-panels">
+        <figure class="ex-panel" data-set="libero">
+          <figcaption><span class="sw sw-lib"></span>LIBERO <span class="ex-instr" id="ex-lib-name"></span></figcaption>
+          <canvas width="520" height="520" id="ex-lib" aria-label="Overlaid LIBERO trajectories for the selected instruction"></canvas>
+          <p class="ex-read"><b id="ex-lib-modes">–</b> effective modes · <span id="ex-lib-n"></span> episodes</p>
+        </figure>
+        <figure class="ex-panel" data-set="burger">
+          <figcaption><span class="sw sw-bur"></span>BURGER <span class="ex-instr" id="ex-bur-name"></span></figcaption>
+          <canvas width="520" height="520" id="ex-bur" aria-label="Overlaid BURGER trajectories for the selected instruction"></canvas>
+          <p class="ex-read"><b id="ex-bur-modes">–</b> effective modes · <span id="ex-bur-n"></span> episodes</p>
+        </figure>
+      </div>
+      <div class="ex-controls">
+        <label class="tog"><input type="checkbox" id="ex-color" checked> Color by route cluster</label>
+        <label class="tog"><input type="checkbox" id="ex-mean"> Show the average path
+          <span class="hint">pointwise mean of the displayed paths</span></label>
+        <button class="linkbtn" id="ex-shuffle" type="button">Another pair</button>
+      </div>
+      <div class="strip-wrap">
+        <p class="strip-title">All 40 + 40 instructions <span class="hint">· click a dot to inspect it</span></p>
+        <svg id="strip" class="strip" role="group" aria-label="Choose an instruction to compare effective trajectory modes in LIBERO and BURGER"></svg>
+      </div>
+    </div>
+      <figcaption>Planar trajectories for one instruction, aligned at their starting point. Select any of the 40 instructions per dataset.
+        The dashed average path illustrates trajectory averaging; it is not a policy rollout.</figcaption>
+    </figure>
+
+      <p class="comparison-finding">BURGER averages <strong>7.13 effective modes per instruction</strong>, versus <strong>1.09 for LIBERO</strong>—a 6.6× difference.
+        For 31 of LIBERO’s 40 instructions, all paths fall in one cluster.</p>
+      <div class="mode-methods">
+        <figure>
+          <h3>Consistent across clustering resolutions</h3>
+          <div class="ksweep"><svg id="ksweep" role="img" aria-label="Effective trajectory modes versus number of clusters k, for LIBERO and BURGER"></svg></div>
+          <figcaption>BURGER remains higher from <i>k</i> = 8 to 48. The main comparison uses <i>k</i> = 24.</figcaption>
+        </figure>
+        <div class="mode-method-copy">
+          <h3>How routes are counted</h3>
+          <p>40 instructions × approximately 42 demonstrations per dataset, including all four LIBERO suites.
+            Each planar path is resampled to 32 points. A shared <i>k</i>-means codebook groups execution routes.</p>
+          <p>Effective mode count is the exponential of cluster entropy, N<sub>eff</sub> = exp(−Σ<sub>j</sub> p<sub>j</sub> log p<sub>j</sub>).
+            It measures trajectory diversity, not task success.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section band" id="dataset" aria-labelledby="dataset-title">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">The BURGER dataset</p><h2 id="dataset-title">Diversity across tasks.<br>Variety within each one.</h2></div>
+          <p>Simple shapes, detailed objects, and spatial compositions—each paired with many different robot executions.</p>
+        </div>
+        <dl class="dataset-facts">
+          <div><dt>Simulated demonstrations</dt><dd>28,200</dd></div>
+          <div><dt>Single-object tasks</dt><dd>132</dd></div>
+          <div><dt>Composition tasks</dt><dd>150</dd></div>
+          <div><dt>Demonstrations per task</dt><dd>100</dd></div>
+        </dl>
+        <div class="dataset-groups">
+          <div>
+            <h3>Different instructions</h3>
+            <div class="dataset-grid">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_moon.mp4" poster="assets/posters/g_moon.jpg" aria-label="Moon"></video>
+                <span class="video-tag">3.4×</span><button class="video-toggle" type="button" aria-label="Play Moon" data-name="Moon"><span aria-hidden="true">▶</span></button>
+              </div><figcaption>Moon</figcaption>
+            </figure>
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_cup.mp4" poster="assets/posters/g_cup.jpg" aria-label="Cup"></video>
+                <span class="video-tag">7.1×</span><button class="video-toggle" type="button" aria-label="Play Cup" data-name="Cup"><span aria-hidden="true">▶</span></button>
+              </div><figcaption>Cup</figcaption>
+            </figure>
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_guitar.mp4" poster="assets/posters/g_guitar.jpg" aria-label="Guitar"></video>
+                <span class="video-tag">6.5×</span><button class="video-toggle" type="button" aria-label="Play Guitar" data-name="Guitar"><span aria-hidden="true">▶</span></button>
+              </div><figcaption>Guitar</figcaption>
+            </figure>
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_bicycle.mp4" poster="assets/posters/g_bicycle.jpg" aria-label="Bicycle"></video>
+                <span class="video-tag">8.3×</span><button class="video-toggle" type="button" aria-label="Play Bicycle" data-name="Bicycle"><span aria-hidden="true">▶</span></button>
+              </div><figcaption>Bicycle</figcaption>
+            </figure>
+            </div>
+          </div>
+          <div>
+            <h3>One instruction: “Draw a helmet.”</h3>
+            <div class="dataset-grid helmet-grid">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/same_helmet_0.mp4" poster="assets/posters/same_helmet_0.jpg" aria-label="Helmet demonstration 1"></video>
+                <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 1" data-name="Helmet demonstration 1"><span aria-hidden="true">▶</span></button>
+              </div>
+            </figure>
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/same_helmet_1.mp4" poster="assets/posters/same_helmet_1.jpg" aria-label="Helmet demonstration 2"></video>
+                <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 2" data-name="Helmet demonstration 2"><span aria-hidden="true">▶</span></button>
+              </div>
+            </figure>
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/same_helmet_2.mp4" poster="assets/posters/same_helmet_2.jpg" aria-label="Helmet demonstration 3"></video>
+                <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 3" data-name="Helmet demonstration 3"><span aria-hidden="true">▶</span></button>
+              </div>
+            </figure>
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/same_helmet_3.mp4" poster="assets/posters/same_helmet_3.jpg" aria-label="Helmet demonstration 4"></video>
+                <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 4" data-name="Helmet demonstration 4"><span aria-hidden="true">▶</span></button>
+              </div>
+            </figure>
+            </div>
+          </div>
+        </div>
+        <p class="caption">Generated training demonstrations, replayed in simulation. Different shapes, starting points, and stroke orders.</p>
+
+      </div>
+    </section>
+
+    <section class="section" id="generate" aria-labelledby="generate-title">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">Build your own data</p><h2 id="generate-title">Your sketches.<br>Your robot dataset.</h2></div>
+          <p>Supply line drawings or generate them from text. BURGER converts them into strokes,
+            replays them in simulation, and records training data in batches.</p>
+        </div>
+        <div class="pipeline" data-pipeline>
+          <div class="pipeline-toolbar">
+            <div class="object-picker" role="group" aria-label="Choose a pipeline example">
+              <button type="button" aria-pressed="true" data-object="bicycle">Bicycle</button>
+              <button type="button" aria-pressed="false" data-object="cat">Cat</button>
+              <button type="button" aria-pressed="false" data-object="sailboat">Sailboat</button>
+              <button type="button" aria-pressed="false" data-object="elephant">Elephant</button>
+            </div>
+            <span class="caption">Generated demonstration</span>
+          </div>
+          <div class="pipeline-grid">
+            <figure class="pipeline-step">
+              <div class="sketch-frame"><img id="input-sketch" src="assets/images/sketch/bicycle.webp" width="512" height="512" loading="lazy" alt="Input line sketch of a bicycle"></div>
+              <figcaption><span class="step-number">01</span> Input sketch</figcaption>
+            </figure>
+            <figure class="pipeline-step">
+              <div class="sketch-frame"><img id="extracted-strokes" src="assets/images/skeleton/bicycle.webp" width="512" height="512" loading="lazy" alt="Skeleton extracted from the bicycle sketch"></div>
+              <figcaption><span class="step-number">02</span> Extract strokes</figcaption>
+            </figure>
+            <figure class="pipeline-step demo">
+              <div class="video-frame">
+                <video id="pipeline-video" muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_bicycle.mp4" poster="assets/posters/g_bicycle.jpg" aria-label="Generated bicycle trajectory replayed in simulation"></video>
+                <span class="video-tag" id="pipeline-speed">8.3×</span><button class="video-toggle" type="button" aria-label="Play generated demonstration" data-name="generated demonstration"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><span class="step-number">03</span> Execute &amp; record</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="recorded-data"><span>Each episode records</span><p>RGB observations <b aria-hidden="true">·</b> Robot state <b aria-hidden="true">·</b> Actions <b aria-hidden="true">·</b> Instruction</p></div>
+        <div class="release-note">
+          <p><strong>Build data for your own objects, styles, and instructions.</strong>
+            We’ll release the generator alongside the benchmark dataset.</p>
+          <span class="release-label">Code &amp; data forthcoming</span>
+        </div>
+        <div class="export-options"><p><span>Simulators</span>ManiSkill · MuJoCo · Isaac Sim</p><p><span>Dataset exports</span>LIBERO · LeRobot</p></div>
+        <article class="content-block throughput-placeholder">
+          <h3 class="content-title">Generation throughput · measurement to add</h3>
+          <div class="content-body"><p>Pending: demonstrations per hour, hardware and parallelism, and whether the timing includes sketch generation, simulation, and dataset export.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container results-start" id="circle" aria-labelledby="circle-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">What the benchmark reveals</p><h2 id="circle-title">Even a circle separates the models.</h2></div>
+        <p>The training data varies starting points and directions around one circle.
+          Models differ in both execution and how much of that variation they retain.</p>
+      </div>
+      <div class="circle-grid">
+        <figure class="demo">
+          <div class="video-frame">
+            <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_openvla.mp4" poster="assets/posters/circ_openvla.jpg" aria-label="OpenVLA circle-drawing rollout"></video>
+            <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play OpenVLA rollout" data-name="OpenVLA rollout"><span aria-hidden="true">▶</span></button>
+          </div>
+          <figcaption><strong>OpenVLA</strong><span>Stalls in local loops</span></figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame">
+            <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_oft1.mp4" poster="assets/posters/circ_oft1.jpg" aria-label="OpenVLA-OFT circle rollout with chunk length 1"></video>
+            <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play OFT chunk 1 rollout" data-name="OFT chunk 1 rollout"><span aria-hidden="true">▶</span></button>
+          </div>
+          <figcaption><strong>OFT · chunk 1</strong><span>Often misses contact</span></figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame">
+            <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_oft8.mp4" poster="assets/posters/circ_oft8.jpg" aria-label="OpenVLA-OFT circle rollout with chunk length 8"></video>
+            <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play OFT chunk 8 rollout" data-name="OFT chunk 8 rollout"><span aria-hidden="true">▶</span></button>
+          </div>
+          <figcaption><strong>OFT · chunk 8</strong><span>Draws, then overdraws</span></figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame">
+            <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_fast.mp4" poster="assets/posters/circ_fast.jpg" aria-label="Pi zero FAST circle-drawing rollout"></video>
+            <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play pi zero FAST rollout" data-name="pi zero FAST rollout"><span aria-hidden="true">▶</span></button>
+          </div>
+          <figcaption><strong>π<sub>0</sub>-FAST</strong><span>Favors one direction</span></figcaption>
+        </figure>
+        <figure class="demo">
+          <div class="video-frame">
+            <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_pi05.mp4" poster="assets/posters/circ_pi05.jpg" aria-label="Pi zero point five circle-drawing rollout"></video>
+            <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play pi zero point five rollout" data-name="pi zero point five rollout"><span aria-hidden="true">▶</span></button>
+          </div>
+          <figcaption><strong>π<sub>0.5</sub></strong><span>Retains both directions</span></figcaption>
+        </figure>
+      </div>
+      <p class="caption">Learned policies in simulation. One example per setting; the findings below use 20 rollouts each.</p>
+      <div class="finding-pair">
+        <p><strong>Longer chunks help execution.</strong> OFT makes contact in 6/20 rollouts at chunk length 1,
+          and 20/20 at length 8.</p>
+        <p><strong>A coherent circle can still hide a bias.</strong> π<sub>0</sub>-FAST draws clockwise in 95% of rollouts,
+          compared with 56% of demonstrations.</p>
+      </div>
+      <article class="content-block">
+        <h3 class="content-title">Circle rollouts and measurements</h3>
+        <div class="content-body">
+          <img class="wide-figure" src="assets/figures/fig9_circle.webp" width="1390" height="373" loading="lazy" alt="Twenty circle rollouts per model setting, overlaid and colored by drawing direction.">
+          <div class="table-scroll" role="region" aria-label="Circle results" tabindex="0">
+            <table>
+              <caption>100 training demonstrations; 20 rollouts per model setting.</caption>
+              <thead><tr><th scope="col">Source</th><th scope="col">Contact</th><th scope="col">Clockwise</th><th scope="col">Start entropy</th><th scope="col">Mean sweep</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Demonstrations</th><td>100/100</td><td>56%</td><td>0.97</td><td>359.8°</td></tr>
+                <tr><th scope="row">OpenVLA</th><td>20/20</td><td>40%</td><td>0.82</td><td>874.6°</td></tr>
+                <tr><th scope="row">OFT · chunk 1</th><td>6/20</td><td>100%</td><td>0.35</td><td>129.3°</td></tr>
+                <tr><th scope="row">OFT · chunk 8</th><td>20/20</td><td>55%</td><td>0.58</td><td>586.1°</td></tr>
+                <tr><th scope="row">π<sub>0</sub>-FAST</th><td>20/20</td><td>95%</td><td>0.63</td><td>563.2°</td></tr>
+                <tr><th scope="row">π<sub>0.5</sub></th><td>20/20</td><td>55%</td><td>0.84</td><td>355.2°</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="caption">Clockwise percentages use rollouts that make contact. Higher start entropy indicates more
+            uniform starting points; a sweep near 360° indicates a single revolution.</p>
+        </div>
+      </article>
+      <article class="content-block">
+          <h3 class="content-title">How drawing quality changes with more data</h3>
+          <div class="content-body scaling-layout">
+            <div>
+              <h4>More data helps π<sub>0</sub> and π<sub>0.5</sub> more consistently.</h4>
+              <p>We vary training classes from 10 to 132 and demonstrations per class from 10 to 100.
+                π<sub>0</sub>-FAST shows more variable trends.</p>
+              <p class="caption">The score measures similarity to the target object class in a learned sketch embedding.</p>
+            </div>
+            <figure>
+              <div class="model-picker" role="group" aria-label="Choose a scaling result">
+                <button type="button" aria-pressed="true" data-model="pi0">π<sub>0</sub></button>
+                <button type="button" aria-pressed="false" data-model="pi05">π<sub>0.5</sub></button>
+                <button type="button" aria-pressed="false" data-model="pi0fast">π<sub>0</sub>-FAST</button>
+              </div>
+              <img id="scaling-figure" src="assets/figures/fig6_pi0.webp" width="1200" height="870" loading="lazy" alt="Pi zero drawing score across numbers of training classes and demonstrations per class.">
+            </figure>
+          </div>
+        </article>
+      <article class="content-block">
+          <h3 class="content-title">How we evaluate drawings</h3>
+          <div class="content-body scaling-layout">
+            <p>We train a projection head on frozen DINOv3 features to score drawings against their target class.
+              In a study of 10 single-object classes, 66 participants ranked five drawings per class.
+              The metric agrees more closely with their judgments than CLIPScore.</p>
+            <div class="table-scroll" role="region" aria-label="Human agreement results" tabindex="0">
+              <table>
+                <caption>Agreement with human rankings</caption>
+                <thead><tr><th scope="col">Metric</th><th scope="col">Spearman ρ</th><th scope="col">Kendall τ<sub>b</sub></th><th scope="col">Pairwise</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">CLIPScore</th><td>0.592</td><td>0.433</td><td>0.803</td></tr>
+                  <tr><th scope="row">BURGER metric</th><td>0.834</td><td>0.655</td><td>0.875</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+    </section>
+
+    <section class="section container" id="diversity" aria-labelledby="diversity-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Learning a distribution of behaviors</p><h2 id="diversity-title">One instruction,<br>more than one way to draw.</h2></div>
+        <p>Helmets can differ in shape and stroke order. After training, π<sub>0.5</sub> also produces
+          different drawings for the same instruction.</p>
+      </div>
+      <figure class="paper-figure">
+        <img src="assets/figures/learned-multimodality.png" width="1484" height="525" loading="lazy" alt="Helmet training demonstrations in the top two rows and different learned pi zero point five drawing sequences in the bottom row.">
+        <figcaption>Training demonstrations above; learned policy executions below. Figure from the paper.</figcaption>
+      </figure>
+      <p class="retained-modes">Across four representative tasks, π<sub>0.5</sub> retains <strong>3.6–5.1 effective trajectory modes</strong>
+        per instruction, compared with about 7.5 in the training data.</p>
+
+    </section>
+
+    <section class="section band" id="composition" aria-labelledby="composition-title">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">Combining familiar objects</p><h2 id="composition-title">Draw familiar objects<br>in new combinations.</h2></div>
+          <p>π<sub>0</sub> can put familiar objects together in pairs it never saw during training.
+            At inference, it sees the canvas and receives the instruction—no target sketch.</p>
+        </div>
+        <div class="composition-grid">
+          <figure class="demo composition-demo">
+            <div class="demo-heading"><span class="status-label">Pair seen in training</span><span>π<sub>0</sub> · simulation</span></div>
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/comp_leaf_moon.mp4" poster="assets/posters/comp_leaf_moon.jpg" aria-label="Pi zero draws a leaf to the left of a moon, a training pair"></video>
+              <button class="video-toggle" type="button" aria-label="Play seen composition" data-name="seen composition"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><q>Draw a leaf left of a moon.</q></figcaption>
+          </figure>
+          <figure class="demo composition-demo">
+            <div class="demo-heading"><span class="status-label accent">Pair held out from training</span><span>π<sub>0</sub> · simulation</span></div>
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/comp_apple_berry.mp4" poster="assets/posters/comp_apple_berry.jpg" aria-label="Pi zero draws an apple left of a blueberry, a pair absent from training"></video>
+              <button class="video-toggle" type="button" aria-label="Play unseen composition" data-name="unseen composition"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><q>Draw an apple left of a blueberry.</q></figcaption>
+          </figure>
+        </div>
+        <div class="pending-comparison" aria-labelledby="pending-title">
+          <div class="pending-heading"><h3 id="pending-title">Same objects, different relations</h3><span class="pending-label">Footage to add</span></div>
+          <p class="caption">Planned comparison: keep the policy and object pair fixed; change only the relation.</p>
+          <div class="placeholder-grid">
+            <div class="result-placeholder"><span class="placeholder-mark" aria-hidden="true">＋</span><p>“A left of B”</p><span>Result pending</span></div>
+            <div class="result-placeholder"><span class="placeholder-mark" aria-hidden="true">＋</span><p>“A above B”</p><span>Result pending</span></div>
+            <div class="result-placeholder"><span class="placeholder-mark" aria-hidden="true">＋</span><p>“A below B”</p><span>Result pending</span></div>
+          </div>
+        </div>
+        <article class="content-block">
+          <h3 class="content-title">Composition examples and failure cases</h3>
+          <div class="content-body">
+            <img class="wide-figure" src="assets/figures/fig5_eval.webp" width="2000" height="807" loading="lazy" alt="Training demonstrations and learned rollouts for single objects, seen compositions, and unseen combinations of familiar objects.">
+            <p>Composition can reduce drawing quality, particularly with vertical relations. These results concern
+              new combinations of familiar objects; the evaluated policies struggle with object categories absent from training.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="real" aria-labelledby="real-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">On a real robot</p><h2 id="real-title">Continue from a human’s strokes.</h2></div>
+        <p>After a person adds the rear wheel, the policy continues the bicycle from the updated canvas.
+          π<sub>0.5</sub> is fine-tuned on 100 real demonstrations across 10 tasks.</p>
+      </div>
+      <figure class="demo real-demo">
+        <div class="video-frame">
+          <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_human.mp4" poster="assets/posters/real_bike_human.jpg" aria-label="Human adds a bicycle wheel and the learned policy continues drawing on a Franka Panda"></video>
+          <span class="video-tag">Franka Panda · 4.9×</span><button class="video-toggle" type="button" aria-label="Play collaborative bicycle drawing" data-name="collaborative bicycle drawing"><span aria-hidden="true">▶</span></button>
+        </div>
+        <figcaption>The robot pauses for the human edit, then resumes from the changed canvas.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section closing band" id="overview" aria-labelledby="overview-title">
+      <div class="container closing-grid">
+        <div>
+          <p class="eyebrow">The full picture</p>
+          <h2 id="overview-title">BURGER in three minutes.</h2>
+          <p class="caption">Narrated overview · 2:52</p>
+          <video class="overview-video" controls preload="none" playsinline poster="assets/posters/overview.jpg" aria-label="Narrated BURGER overview">
+            <source src="assets/videos/overview.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="closing-info">
+          <article class="content-block">
+            <h3 class="content-title">Scope and limitations</h3>
+            <div class="content-body">
+              <p>BURGER studies line drawing with a rigid tool. It simplifies the contact physics of painting
+                and manipulation. Generated sketches and stroke-order heuristics shape the data distribution.</p>
+              <p>The evaluated policies can compose known objects, but struggle to draw unseen object categories.
+                Drawing performance does not establish general manipulation ability.</p>
+            </div>
+          </article>
+          <article class="content-block" id="cite">
+            <h3 class="content-title">Cite BURGER</h3>
+            <div class="content-body">
+              <button class="copy-button" type="button" data-copy="citation">Copy BibTeX</button>
+              <span class="copy-status" role="status" aria-live="polite"></span>
+<pre id="citation"><code>@misc{xu2026burger,
+  title = {{BURGER}: Benchmarking and Understanding Robotic Generalization via Embodied dRawing},
+  author = {Xu, Xiangyu and Peng, Bangshuai and Liu, Ziyi and Zhao, Mengjie and Lu, Chenhao and Fan, Zhengyang and Xu, Huazhe and Hu, Kaizhe},
+  year = {2026}
+}</code></pre>
+            </div>
+          </article>
+          <p class="closing-note">Paper, code, and dataset links will be added with the release.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="container footer"><span>BURGER · Tsinghua University</span><a href="index.html">Compare with the current page <span aria-hidden="true">↗</span></a></footer>
+</body>
+</html>
