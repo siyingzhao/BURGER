@@ -72,39 +72,30 @@
 
   const pipeline = document.querySelector('[data-pipeline]');
   if (pipeline) {
-    const speed = { bicycle: '8.3×', cat: '6.9×', sailboat: '6.0×', elephant: '8.6×' };
+    const speed = { bicycle: '8.3×', cat: '6.9×', owl: '7.2×', sailboat: '6.0×', birthday_cake: '7.7×', elephant: '8.6×', guitar: '6.5×', house: '9.5×' };
     const video = pipeline.querySelector('video');
     pipeline.querySelectorAll('[data-object]').forEach(button => {
       button.addEventListener('click', () => {
         const object = button.dataset.object;
+        const name = object.replaceAll('_', ' ');
         pipeline.querySelectorAll('[data-object]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
         const sketch = document.getElementById('input-sketch');
         const strokes = document.getElementById('extracted-strokes');
         sketch.src = `assets/images/sketch/${object}.webp`;
-        sketch.alt = `Input line sketch: ${object}`;
+        sketch.alt = `Generated line sketch: ${name}`;
         strokes.src = `assets/images/skeleton/${object}.webp`;
-        strokes.alt = `Skeleton extracted from the ${object} sketch`;
+        strokes.alt = `Skeleton extracted from the ${name} sketch`;
         video.pause();
         video.removeAttribute('src');
         video.dataset.src = `assets/videos/g_${object}.mp4`;
         video.poster = `assets/posters/g_${object}.jpg`;
-        video.setAttribute('aria-label', `Generated ${object} trajectory replayed in simulation`);
+        video.setAttribute('aria-label', `Generated ${name} trajectory replayed in simulation`);
         document.getElementById('pipeline-speed').textContent = speed[object];
         video.load();
         if (visibility.get(video) && !reducedMotion && !userPaused.has(video)) play(video);
       });
     });
   }
-
-  const modelNames = { pi0: 'Pi zero', pi05: 'Pi zero point five', pi0fast: 'Pi zero FAST' };
-  document.querySelectorAll('[data-model]').forEach(button => {
-    button.addEventListener('click', () => {
-      document.querySelectorAll('[data-model]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      const image = document.getElementById('scaling-figure');
-      image.src = `assets/figures/fig6_${button.dataset.model}.webp`;
-      image.alt = `${modelNames[button.dataset.model]} drawing score across numbers of training classes and demonstrations per class.`;
-    });
-  });
 
   document.querySelectorAll('[data-copy]').forEach(button => {
     button.addEventListener('click', async () => {

@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/alternative.css">
   <script src="js/modes-alternative.js" defer></script>
+  <script src="js/pipeline-alternative.js" defer></script>
   <script src="js/alternative.js" defer></script>
 </head>
 <body>
@@ -219,33 +220,56 @@
             replays them in simulation, and records training data in batches.</p>
         </div>
         <div class="pipeline" data-pipeline>
+          <h3 class="pipeline-title">From a prompt to a robot trajectory</h3>
           <div class="pipeline-toolbar">
             <div class="object-picker" role="group" aria-label="Choose a pipeline example">
               <button type="button" aria-pressed="true" data-object="bicycle">Bicycle</button>
               <button type="button" aria-pressed="false" data-object="cat">Cat</button>
+              <button type="button" aria-pressed="false" data-object="owl">Owl</button>
               <button type="button" aria-pressed="false" data-object="sailboat">Sailboat</button>
+              <button type="button" aria-pressed="false" data-object="birthday_cake">Birthday cake</button>
               <button type="button" aria-pressed="false" data-object="elephant">Elephant</button>
+              <button type="button" aria-pressed="false" data-object="guitar">Guitar</button>
+              <button type="button" aria-pressed="false" data-object="house">House</button>
             </div>
             <span class="caption">Generated demonstration</span>
           </div>
           <div class="pipeline-grid">
             <figure class="pipeline-step">
-              <div class="sketch-frame"><img id="input-sketch" src="assets/images/sketch/bicycle.webp" width="512" height="512" loading="lazy" alt="Input line sketch of a bicycle"></div>
-              <figcaption><span class="step-number">01</span> Input sketch</figcaption>
+              <div class="sketch-frame prompt-frame"><q id="pipeline-prompt">Draw a bicycle.</q></div>
+              <figcaption><span class="step-number">01</span> Prompt</figcaption>
+              <p>Describe an object or spatial composition.</p>
+            </figure>
+            <figure class="pipeline-step">
+              <div class="sketch-frame"><img id="input-sketch" src="assets/images/sketch/bicycle.webp" width="512" height="512" loading="lazy" alt="Generated line sketch of a bicycle"></div>
+              <figcaption><span class="step-number">02</span> Sketch</figcaption>
+              <p>Generate a line-art image from the prompt, or supply your own.</p>
             </figure>
             <figure class="pipeline-step">
               <div class="sketch-frame"><img id="extracted-strokes" src="assets/images/skeleton/bicycle.webp" width="512" height="512" loading="lazy" alt="Skeleton extracted from the bicycle sketch"></div>
-              <figcaption><span class="step-number">02</span> Extract strokes</figcaption>
+              <figcaption><span class="step-number">03</span> Skeleton</figcaption>
+              <p>Binarize the image and skeletonize connected components into one-pixel strokes.</p>
+            </figure>
+            <figure class="pipeline-step">
+              <div class="sketch-frame stroke-frame">
+                <canvas id="ordered-strokes" width="512" height="512" aria-label="Ordered bicycle strokes, drawn from light to dark"></canvas>
+                <button class="stroke-toggle" type="button" aria-label="Play stroke-order animation"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><span class="step-number">04</span> Ordered strokes</figcaption>
+              <p>Trace and order strokes: top to bottom, outlines before details, nearby strokes next. Darker strokes come later.</p>
             </figure>
             <figure class="pipeline-step demo">
               <div class="video-frame">
                 <video id="pipeline-video" muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_bicycle.mp4" poster="assets/posters/g_bicycle.jpg" aria-label="Generated bicycle trajectory replayed in simulation"></video>
                 <span class="video-tag" id="pipeline-speed">8.3×</span><button class="video-toggle" type="button" aria-label="Play generated demonstration" data-name="generated demonstration"><span aria-hidden="true">▶</span></button>
               </div>
-              <figcaption><span class="step-number">03</span> Execute &amp; record</figcaption>
+              <figcaption><span class="step-number">05</span> Robot execution</figcaption>
+              <p>Follow the strokes with an end-effector controller, lifting the pen between strokes and recording each step.</p>
             </figure>
           </div>
         </div>
+        <p class="caption">Actual intermediate files for sample 001 of each class; skeleton lines are thickened for display.
+          The video replays the corresponding SVG in ManiSkill / SAPIEN.</p>
         <div class="recorded-data"><span>Each episode records</span><p>RGB observations <b aria-hidden="true">·</b> Robot state <b aria-hidden="true">·</b> Actions <b aria-hidden="true">·</b> Instruction</p></div>
         <div class="release-note">
           <p><strong>Build data for your own objects, styles, and instructions.</strong>
@@ -334,26 +358,29 @@
       </article>
       <article class="content-block">
           <h3 class="content-title">How drawing quality changes with more data</h3>
-          <div class="content-body scaling-layout">
-            <div>
-              <h4>More data helps π<sub>0</sub> and π<sub>0.5</sub> more consistently.</h4>
-              <p>We vary training classes from 10 to 132 and demonstrations per class from 10 to 100.
-                π<sub>0</sub>-FAST shows more variable trends.</p>
-              <p class="caption">The score measures similarity to the target object class in a learned sketch embedding.</p>
+          <div class="content-body">
+            <p>We vary training classes from 10 to 132 and demonstrations per class from 10 to 100.
+              More data helps π<sub>0</sub> and π<sub>0.5</sub> more consistently; π<sub>0</sub>-FAST shows more variable trends.</p>
+            <div class="scaling-gallery">
+              <figure>
+                <figcaption>π<sub>0</sub></figcaption>
+                <img src="assets/figures/fig6_pi0.webp" width="1200" height="870" loading="lazy" alt="Pi zero drawing score across numbers of training classes and demonstrations per class.">
+              </figure>
+              <figure>
+                <figcaption>π<sub>0.5</sub></figcaption>
+                <img src="assets/figures/fig6_pi05.webp" width="1200" height="870" loading="lazy" alt="Pi zero point five drawing score across numbers of training classes and demonstrations per class.">
+              </figure>
+              <figure>
+                <figcaption>π<sub>0</sub>-FAST</figcaption>
+                <img src="assets/figures/fig6_pi0fast.webp" width="1200" height="870" loading="lazy" alt="Pi zero FAST drawing score across numbers of training classes and demonstrations per class.">
+              </figure>
             </div>
-            <figure>
-              <div class="model-picker" role="group" aria-label="Choose a scaling result">
-                <button type="button" aria-pressed="true" data-model="pi0">π<sub>0</sub></button>
-                <button type="button" aria-pressed="false" data-model="pi05">π<sub>0.5</sub></button>
-                <button type="button" aria-pressed="false" data-model="pi0fast">π<sub>0</sub>-FAST</button>
-              </div>
-              <img id="scaling-figure" src="assets/figures/fig6_pi0.webp" width="1200" height="870" loading="lazy" alt="Pi zero drawing score across numbers of training classes and demonstrations per class.">
-            </figure>
+            <p class="caption">The score measures similarity to the target object class in a learned sketch embedding.</p>
           </div>
         </article>
       <article class="content-block">
           <h3 class="content-title">How we evaluate drawings</h3>
-          <div class="content-body scaling-layout">
+          <div class="content-body evaluation-layout">
             <p>We train a projection head on frozen DINOv3 features to score drawings against their target class.
               In a study of 10 single-object classes, 66 participants ranked five drawings per class.
               The metric agrees more closely with their judgments than CLIPScore.</p>
@@ -433,17 +460,100 @@
 
     <section class="section container" id="real" aria-labelledby="real-title">
       <div class="section-heading">
-        <div><p class="eyebrow">On a real robot</p><h2 id="real-title">Continue from a human’s strokes.</h2></div>
-        <p>After a person adds the rear wheel, the policy continues the bicycle from the updated canvas.
-          π<sub>0.5</sub> is fine-tuned on 100 real demonstrations across 10 tasks.</p>
+        <div><p class="eyebrow">Real-robot results</p><h2 id="real-title">Drawing on a real robot.</h2></div>
+        <p>π<sub>0.5</sub> draws objects, completes partial sketches, and continues after a human edit.
+          These clips show learned policies on a Franka Panda.</p>
       </div>
-      <figure class="demo real-demo">
-        <div class="video-frame">
-          <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_human.mp4" poster="assets/posters/real_bike_human.jpg" aria-label="Human adds a bicycle wheel and the learned policy continues drawing on a Franka Panda"></video>
-          <span class="video-tag">Franka Panda · 4.9×</span><button class="video-toggle" type="button" aria-label="Play collaborative bicycle drawing" data-name="collaborative bicycle drawing"><span aria-hidden="true">▶</span></button>
+      <article class="real-group">
+        <div class="real-group-heading"><h3>Drawing different objects</h3><p>100 real demonstrations across 10 tasks.</p></div>
+        <div class="real-gallery">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cake.mp4" poster="assets/posters/real_cake.jpg" aria-label="Birthday cake, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Birthday cake" data-name="Birthday cake"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Birthday cake</strong></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_guitar.mp4" poster="assets/posters/real_guitar.jpg" aria-label="Guitar, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.5×</span><button class="video-toggle" type="button" aria-label="Play Guitar" data-name="Guitar"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Guitar</strong></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_train.mp4" poster="assets/posters/real_train.jpg" aria-label="Train, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Train" data-name="Train"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Train</strong></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_butterfly.mp4" poster="assets/posters/real_butterfly.jpg" aria-label="Butterfly, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Butterfly" data-name="Butterfly"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Butterfly</strong></figcaption>
+          </figure>
         </div>
-        <figcaption>The robot pauses for the human edit, then resumes from the changed canvas.</figcaption>
-      </figure>
+      </article>
+      <article class="real-group">
+        <div class="real-group-heading"><h3>Responding to the canvas</h3><p>Complete a missing part, or continue from a person’s strokes.</p></div>
+        <div class="real-pair">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cup_complete.mp4" poster="assets/posters/real_cup_complete.jpg" aria-label="Add the missing cup handle, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 4.9×</span><button class="video-toggle" type="button" aria-label="Play Add the missing cup handle" data-name="Add the missing cup handle"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Add the missing cup handle</strong><span>Training: 100 simulated demonstrations (10 tasks) + 30 real demonstrations (3 tasks).</span></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_human.mp4" poster="assets/posters/real_bike_human.jpg" aria-label="Continue after a human draws the rear wheel, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 4.9×</span><button class="video-toggle" type="button" aria-label="Play Continue after a human draws the rear wheel" data-name="Continue after a human draws the rear wheel"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Continue after a human draws the rear wheel</strong><span>Training: 100 real demonstrations across 10 tasks. The robot is paused during the human edit.</span></figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="real-group">
+        <div class="real-group-heading"><h3>Same instruction, different stroke orders</h3><p>“Draw a bicycle.” · 100 real demonstrations across 10 tasks.</p></div>
+        <div class="real-pair">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_mode_a.mp4" poster="assets/posters/real_bike_mode_a.jpg" aria-label="Start with the left wheel, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Start with the left wheel" data-name="Start with the left wheel"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Start with the left wheel</strong></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_mode_b.mp4" poster="assets/posters/real_bike_mode_b.jpg" aria-label="Start with the right wheel, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Start with the right wheel" data-name="Start with the right wheel"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Start with the right wheel</strong></figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="real-group">
+        <div class="real-group-heading"><h3>Drawing after the camera moves</h3><p>“Draw an apple.” · 30 real demonstrations across 3 tasks.</p></div>
+        <div class="real-pair">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cam_front.mp4" poster="assets/posters/real_cam_front.jpg" aria-label="Default front view, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Default front view" data-name="Default front view"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Default front view</strong></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cam_moved.mp4" poster="assets/posters/real_cam_moved.jpg" aria-label="Oblique view, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Oblique view" data-name="Oblique view"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Oblique view</strong></figcaption>
+          </figure>
+        </div>
+      </article>
     </section>
 
     <section class="section closing band" id="overview" aria-labelledby="overview-title">
