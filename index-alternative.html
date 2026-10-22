@@ -460,100 +460,17 @@
 
     <section class="section container" id="real" aria-labelledby="real-title">
       <div class="section-heading">
-        <div><p class="eyebrow">Real-robot results</p><h2 id="real-title">Drawing on a real robot.</h2></div>
-        <p>π<sub>0.5</sub> draws objects, completes partial sketches, and continues after a human edit.
-          These clips show learned policies on a Franka Panda.</p>
+        <div><p class="eyebrow">On a real robot</p><h2 id="real-title">Continue from a human’s strokes.</h2></div>
+        <p>After a person adds the rear wheel, the policy continues the bicycle from the updated canvas.
+          π<sub>0.5</sub> is fine-tuned on 100 real demonstrations across 10 tasks.</p>
       </div>
-      <article class="real-group">
-        <div class="real-group-heading"><h3>Drawing different objects</h3><p>100 real demonstrations across 10 tasks.</p></div>
-        <div class="real-gallery">
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cake.mp4" poster="assets/posters/real_cake.jpg" aria-label="Birthday cake, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Birthday cake" data-name="Birthday cake"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Birthday cake</strong></figcaption>
-          </figure>
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_guitar.mp4" poster="assets/posters/real_guitar.jpg" aria-label="Guitar, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 6.5×</span><button class="video-toggle" type="button" aria-label="Play Guitar" data-name="Guitar"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Guitar</strong></figcaption>
-          </figure>
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_train.mp4" poster="assets/posters/real_train.jpg" aria-label="Train, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Train" data-name="Train"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Train</strong></figcaption>
-          </figure>
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_butterfly.mp4" poster="assets/posters/real_butterfly.jpg" aria-label="Butterfly, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Butterfly" data-name="Butterfly"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Butterfly</strong></figcaption>
-          </figure>
+      <figure class="demo real-demo">
+        <div class="video-frame">
+          <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_human.mp4" poster="assets/posters/real_bike_human.jpg" aria-label="Human adds a bicycle wheel and the learned policy continues drawing on a Franka Panda"></video>
+          <span class="video-tag">Franka Panda · 4.9×</span><button class="video-toggle" type="button" aria-label="Play collaborative bicycle drawing" data-name="collaborative bicycle drawing"><span aria-hidden="true">▶</span></button>
         </div>
-      </article>
-      <article class="real-group">
-        <div class="real-group-heading"><h3>Responding to the canvas</h3><p>Complete a missing part, or continue from a person’s strokes.</p></div>
-        <div class="real-pair">
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cup_complete.mp4" poster="assets/posters/real_cup_complete.jpg" aria-label="Add the missing cup handle, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 4.9×</span><button class="video-toggle" type="button" aria-label="Play Add the missing cup handle" data-name="Add the missing cup handle"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Add the missing cup handle</strong><span>Training: 100 simulated demonstrations (10 tasks) + 30 real demonstrations (3 tasks).</span></figcaption>
-          </figure>
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_human.mp4" poster="assets/posters/real_bike_human.jpg" aria-label="Continue after a human draws the rear wheel, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 4.9×</span><button class="video-toggle" type="button" aria-label="Play Continue after a human draws the rear wheel" data-name="Continue after a human draws the rear wheel"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Continue after a human draws the rear wheel</strong><span>Training: 100 real demonstrations across 10 tasks. The robot is paused during the human edit.</span></figcaption>
-          </figure>
-        </div>
-      </article>
-      <article class="real-group">
-        <div class="real-group-heading"><h3>Same instruction, different stroke orders</h3><p>“Draw a bicycle.” · 100 real demonstrations across 10 tasks.</p></div>
-        <div class="real-pair">
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_mode_a.mp4" poster="assets/posters/real_bike_mode_a.jpg" aria-label="Start with the left wheel, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Start with the left wheel" data-name="Start with the left wheel"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Start with the left wheel</strong></figcaption>
-          </figure>
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_mode_b.mp4" poster="assets/posters/real_bike_mode_b.jpg" aria-label="Start with the right wheel, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Start with the right wheel" data-name="Start with the right wheel"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Start with the right wheel</strong></figcaption>
-          </figure>
-        </div>
-      </article>
-      <article class="real-group">
-        <div class="real-group-heading"><h3>Drawing after the camera moves</h3><p>“Draw an apple.” · 30 real demonstrations across 3 tasks.</p></div>
-        <div class="real-pair">
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cam_front.mp4" poster="assets/posters/real_cam_front.jpg" aria-label="Default front view, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Default front view" data-name="Default front view"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Default front view</strong></figcaption>
-          </figure>
-          <figure class="demo">
-            <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cam_moved.mp4" poster="assets/posters/real_cam_moved.jpg" aria-label="Oblique view, learned pi zero point five policy on a Franka Panda"></video>
-              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Oblique view" data-name="Oblique view"><span aria-hidden="true">▶</span></button>
-            </div>
-            <figcaption><strong>Oblique view</strong></figcaption>
-          </figure>
-        </div>
-      </article>
+        <figcaption>The robot pauses for the human edit, then resumes from the changed canvas.</figcaption>
+      </figure>
     </section>
 
     <section class="section closing band" id="overview" aria-labelledby="overview-title">

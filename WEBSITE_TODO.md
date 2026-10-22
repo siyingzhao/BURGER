@@ -1,7 +1,7 @@
 # Website results TODO
 
 Release checklist for [the alternative website](index-alternative.html).
-Updated October 21, 2026.
+Updated October 22, 2026.
 
 ## Fill the two result placeholders
 
@@ -20,10 +20,12 @@ Updated October 21, 2026.
 
 ## Strengthen the real-robot ending
 
-- [x] **Show more existing results.** The [closing real-robot section](index-alternative.html#real)
-  now includes ten policy rollouts: four objects, cup completion, a human edit,
-  two bicycle stroke orders, and two camera viewpoints. Training configurations
-  and playback speeds are included.
+- [ ] **Add more real-world results at the end.** Keep this as a todo for now.
+  Select author-confirmed footage showing more objects, sketch completion,
+  different stroke orders, and camera-view changes. Verify each clip and its
+  training configuration before adding it to the
+  [closing real-robot section](index-alternative.html#real). The current page
+  retains the previously shown bicycle/human-edit example.
 - [ ] **Add repeated-trial measurements, if available.** For the shown tasks,
   report the number of attempts and successes using a stated criterion.
   Include representative failures alongside selected successes. Report the cup,
