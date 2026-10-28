@@ -10,9 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/alternative-v3.css?v=20261028-media-sizing">
+    <link rel="stylesheet" href="css/alternative-v3.css?v=20261028-scroll-focus-v3">
     <script src="js/pipeline-alternative.js" defer></script>
-    <script src="js/alternative-v3.js?v=20261028-media-sizing" defer></script>
+    <script src="js/alternative-v3.js?v=20261028-scroll-focus-v4" defer></script>
     <script src="js/dataset-relations.js?v=20261023-animation" defer></script>
   </head>
   <body class="v2 v3">
@@ -215,7 +215,7 @@
         <p class="caption">Drawing similarity across numbers of training classes and demonstrations per class. Higher scores indicate greater similarity to the target object class in the learned sketch embedding.</p>
         <p class="study-finding">π<sub>0</sub> and π<sub>0.5</sub> improve more consistently as data scale increases. π<sub>0</sub>-FAST shows more variable trends. The models differ in <span class="keyphrase">how effectively they use additional drawing demonstrations</span>.</p>
         <p class="section-lead">The <a href="#generate">demonstration generator</a> provides a way to vary task diversity and examples per task within one robot setup, supporting further studies of how training data shapes learned behavior.</p>
-        <div class="evidence-block"><h3 class="content-title">How drawing quality is measured</h3><div class="details-body reading-width">
+        <div class="evidence-block"><h3 class="content-title section-title">How drawing quality is measured</h3><div class="details-body reading-width">
 
             <p>We train a projection head on frozen DINOv3 features to score drawings against their target class.
               In a study of 10 single-object classes, 66 participants ranked five drawings per class.

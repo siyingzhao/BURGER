@@ -66,7 +66,7 @@ q { quotes: "“" "”"; }
 .band + .section { border-top: 0 !important; }
 .section-heading { max-width: 800px; margin-bottom: 28px; }
 .eyebrow { margin-bottom: 8px; color: var(--accent); font-size: 12px; font-weight: 500; }
-h2 { font: 600 clamp(26px, 2.7vw, 32px)/1.3 var(--sans); letter-spacing: -.018em; text-wrap: pretty; }
+h2, .evidence-block > .section-title { font: 600 clamp(26px, 2.7vw, 32px)/1.3 var(--sans); letter-spacing: -.018em; text-wrap: pretty; }
 .section-heading > p { max-width: 760px; margin-top: 16px; color: var(--secondary); font-size: 16px; line-height: 1.75; text-wrap: pretty; }
 h3 { font-size: 18px; font-weight: 600; line-height: 1.45; }
 .caption, figcaption { margin-top: 12px; color: var(--secondary); font-size: 13px; line-height: 1.65; }
@@ -684,6 +684,20 @@ pre { margin: 12px 0 0; padding: 14px; background: var(--paper); border: 1px sol
 }
 /* Compact evidence follows the prose width; dense comparisons retain the wider grid. */
 .v3 .reading-width { width: min(100%, 760px); max-width: 100%; }
+
+/* Fade neighboring passages into the paper while the current passage stays clear. */
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-focus-enabled .scroll-focus-card {
+    opacity: .18;
+    transition: opacity 450ms cubic-bezier(.2, .65, .3, 1);
+  }
+  .scroll-focus-enabled .scroll-focus-card.is-scroll-focused,
+  .scroll-focus-enabled .scroll-focus-card:has(:focus-visible),
+  .scroll-focus-enabled .scroll-focus-card:fullscreen,
+  .scroll-focus-enabled .scroll-focus-card:has(:fullscreen) {
+    opacity: 1;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .section-nav .nav-tick, .section-nav .nav-label { transition: none; }
@@ -691,6 +705,7 @@ pre { margin: 12px 0 0; padding: 14px; background: var(--paper); border: 1px sol
   .v3 .resource-link { transition: none; }
 }
 @media print {
+  .scroll-focus-enabled .scroll-focus-card { opacity: 1; transition: none; }
   .site-nav, .section-nav, .video-toggle, .stroke-toggle, .skip-link, .copy-button, .footer a { display: none; }
   .v2 main, .v2 > .footer { margin-left: 0; }
   body, .band { background: white; }

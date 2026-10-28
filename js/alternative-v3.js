@@ -1,7 +1,8 @@
 /* Independent playback, navigation, and media controls for the v3 page. */
 (() => {
   'use strict';
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reducedMotion = motionPreference.matches;
   const videos = [...document.querySelectorAll('video[data-src]')];
   const visibility = new WeakMap();
   const userPaused = new WeakSet();
@@ -81,6 +82,93 @@
       else if (visibility.get(video) && !reducedMotion && !userPaused.has(video) && video.hasAttribute('data-autoplay')) play(video);
     });
   });
+
+  // Keep each explanation, comparison, and caption in one focus group.
+  // Group existing siblings without wrappers so their layout and widths stay intact.
+  // Later chapters stay clear as a whole while readers browse their examples.
+  // The title and authors stay clear even when a tall viewport focuses the introduction.
+  const focusGroups = [
+    '#why', '#comparison',
+    '#circle > :is(.section-heading, .circle-grid, .caption, .finding-pair, .study-finding)',
+    '#circle > .evidence-block', '#diversity', '#composition',
+    '#scaling > :not(.evidence-block)', '#scaling > .evidence-block',
+    '#real', '#dataset', '#overview',
+  ].map(selector => ({
+    elements: [...document.querySelectorAll(selector)],
+  })).filter(group => group.elements.length);
+  if ('IntersectionObserver' in window && focusGroups.length) {
+    const focusCards = focusGroups.flatMap(group => group.elements);
+    const visibleCards = new Set();
+    const nav = document.querySelector('.site-nav');
+    let focusedGroup = null;
+    let focusFrame = 0;
+    focusCards.forEach(card => card.classList.add('scroll-focus-card'));
+
+    const setFocusedGroup = nextGroup => {
+      if (nextGroup === focusedGroup) return;
+      focusedGroup?.elements.forEach(card => card.classList.remove('is-scroll-focused'));
+      nextGroup?.elements.forEach(card => card.classList.add('is-scroll-focused'));
+      focusedGroup = nextGroup;
+    };
+    const updateScrollFocus = () => {
+      focusFrame = 0;
+      if (motionPreference.matches) return;
+      const viewportTop = nav?.getBoundingClientRect().bottom || 0;
+      const readingLine = viewportTop + (window.innerHeight - viewportTop) * .45;
+      const keyboardTarget = document.activeElement?.matches(':focus-visible') ? document.activeElement : null;
+      let nextGroup = null;
+      let nearestDistance = Infinity;
+      focusGroups.forEach(group => {
+        if (!group.elements.some(card => visibleCards.has(card))) return;
+        const rects = group.elements.map(card => card.getBoundingClientRect()).filter(rect => rect.height);
+        const top = Math.min(...rects.map(rect => rect.top));
+        const bottom = Math.max(...rects.map(rect => rect.bottom));
+        if (bottom <= viewportTop || top >= window.innerHeight) return;
+        // A tall passage stays clear until the reading line reaches the next one.
+        let distance = Math.max(top - readingLine, readingLine - bottom, 0);
+        if (group === focusedGroup) distance -= 24; // Prevent flicker near a boundary.
+        if (keyboardTarget && group.elements.some(card => card.contains(keyboardTarget))) distance = -Infinity;
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nextGroup = group;
+        }
+      });
+      setFocusedGroup(nextGroup);
+    };
+    const scheduleScrollFocus = () => {
+      if (!motionPreference.matches && !focusFrame) focusFrame = requestAnimationFrame(updateScrollFocus);
+    };
+    const focusObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) visibleCards.add(entry.target);
+        else visibleCards.delete(entry.target);
+      });
+      scheduleScrollFocus();
+    });
+    focusCards.forEach(card => focusObserver.observe(card));
+    const syncMotionPreference = () => {
+      document.body.classList.toggle('scroll-focus-enabled', !motionPreference.matches);
+      if (motionPreference.matches) {
+        cancelAnimationFrame(focusFrame);
+        focusFrame = 0;
+        setFocusedGroup(null);
+      } else {
+        scheduleScrollFocus();
+      }
+    };
+    window.addEventListener('scroll', scheduleScrollFocus, { passive: true });
+    window.addEventListener('resize', scheduleScrollFocus);
+    window.addEventListener('load', scheduleScrollFocus);
+    window.addEventListener('hashchange', scheduleScrollFocus);
+    document.addEventListener('focusin', scheduleScrollFocus);
+    document.addEventListener('focusout', scheduleScrollFocus);
+    if ('ResizeObserver' in window) {
+      const focusResizeObserver = new ResizeObserver(scheduleScrollFocus);
+      focusCards.forEach(card => focusResizeObserver.observe(card));
+    }
+    motionPreference.addEventListener('change', syncMotionPreference);
+    syncMotionPreference();
+  }
 
   // The two recordings keep their own timing; the range controls only the reveal.
   const comparison = document.querySelector('.video-compare');
