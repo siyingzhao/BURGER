@@ -10,9 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/alternative-v3.css?v=20261028-emphasis">
+    <link rel="stylesheet" href="css/alternative-v3.css?v=20261028-media-sizing">
     <script src="js/pipeline-alternative.js" defer></script>
-    <script src="js/alternative-v3.js?v=20261028-emphasis" defer></script>
+    <script src="js/alternative-v3.js?v=20261028-media-sizing" defer></script>
     <script src="js/dataset-relations.js?v=20261023-animation" defer></script>
   </head>
   <body class="v2 v3">
@@ -132,7 +132,7 @@
         <div class="evidence-block"><h3 class="content-title">All circle rollouts and measurements</h3><div class="details-body">
 
             <img class="wide-figure" src="assets/figures/fig9_circle.webp" width="1390" height="373" loading="lazy" alt="Twenty circle rollouts per model setting, overlaid and colored by drawing direction.">
-            <div class="table-scroll" role="region" aria-label="Circle results" tabindex="0">
+            <div class="table-scroll reading-width" role="region" aria-label="Circle results" tabindex="0">
               <table>
                 <caption>100 training demonstrations; 20 rollouts per model setting.</caption>
                 <thead><tr><th scope="col">Source</th><th scope="col">Contact</th><th scope="col">Clockwise</th><th scope="col">Start entropy</th><th scope="col">Mean sweep</th></tr></thead>
@@ -146,7 +146,7 @@
                 </tbody>
               </table>
             </div>
-            <p class="caption">Clockwise percentages use rollouts that make contact. Higher start entropy indicates more
+            <p class="caption reading-width">Clockwise percentages use rollouts that make contact. Higher start entropy indicates more
               uniform starting points; a sweep near 360° indicates a single revolution.</p>
 
           </div></div>
@@ -168,7 +168,7 @@
         </div>
 
         <p class="section-lead">We also ask whether a policy can combine familiar objects in <span class="keyphrase">pairs absent from training</span>. The examples below show π<sub>0</sub> executing a seen pair and a held-out pair.</p>
-        <div class="composition-grid">
+        <div class="composition-grid reading-width">
           <figure class="demo composition-demo">
             <div class="demo-heading"><span class="status-label">Pair seen in training</span><span>π<sub>0</sub> · simulation</span></div>
             <div class="video-frame">
@@ -186,7 +186,7 @@
             <figcaption><q>Draw an apple left of a blueberry.</q></figcaption>
           </figure>
         </div>
-        <p class="caption">Selected learned-policy rollouts in simulation. Both objects in the held-out pair are familiar from training.</p>
+        <p class="caption reading-width">Selected learned-policy rollouts in simulation. Both objects in the held-out pair are familiar from training.</p>
         <p class="study-finding">The evaluated policies can produce new combinations of familiar objects, while object categories absent from training remain difficult. Composition can also reduce drawing quality, especially when the instruction set includes vertical relations.</p>
 
 
@@ -215,7 +215,7 @@
         <p class="caption">Drawing similarity across numbers of training classes and demonstrations per class. Higher scores indicate greater similarity to the target object class in the learned sketch embedding.</p>
         <p class="study-finding">π<sub>0</sub> and π<sub>0.5</sub> improve more consistently as data scale increases. π<sub>0</sub>-FAST shows more variable trends. The models differ in <span class="keyphrase">how effectively they use additional drawing demonstrations</span>.</p>
         <p class="section-lead">The <a href="#generate">demonstration generator</a> provides a way to vary task diversity and examples per task within one robot setup, supporting further studies of how training data shapes learned behavior.</p>
-        <div class="evidence-block"><h3 class="content-title">How drawing quality is measured</h3><div class="details-body">
+        <div class="evidence-block"><h3 class="content-title">How drawing quality is measured</h3><div class="details-body reading-width">
 
             <p>We train a projection head on frozen DINOv3 features to score drawings against their target class.
               In a study of 10 single-object classes, 66 participants ranked five drawings per class.
@@ -301,7 +301,7 @@
                 </figure>
               </div>
             </article>
-            <article class="real-group">
+            <article class="real-group reading-width">
               <div class="real-group-heading"><h3>Same instruction, different stroke orders</h3><p>“Draw a bicycle.” · 100 real demonstrations across 10 tasks.</p></div>
               <div class="real-pair">
                 <figure class="demo">
@@ -322,7 +322,7 @@
                 </figure>
               </div>
             </article>
-            <article class="real-group">
+            <article class="real-group reading-width">
               <div class="real-group-heading"><h3>Drawing after the camera moves</h3><p>“Draw an apple.” · 30 real demonstrations across 3 tasks.</p></div>
               <div class="real-pair">
                 <figure class="demo">
@@ -405,7 +405,7 @@
         <div class="resource-intro">
           <p>The benchmark contains <span class="keyphrase">28,200 simulated demonstrations</span>: 132 single-object tasks and 150 compositional tasks, with 100 demonstrations per task. The compositional set contains 100 horizontal and 50 vertical tasks.</p>
         </div>
-        <dl class="dataset-facts">
+        <dl class="dataset-facts reading-width">
           <div><dt>Simulated demonstrations</dt><dd>28,200</dd></div>
           <div><dt>Single-object tasks</dt><dd>132</dd></div>
           <div><dt>Composition tasks</dt><dd>150</dd></div>
@@ -588,7 +588,7 @@
                 <div><h3 id="relation-title">Generated spatial-composition demonstrations</h3></div>
                 <p>Explore 18 tasks with three recorded demonstrations each. The inside / contains examples illustrate additional generated tasks beyond the paper’s horizontal and vertical composition set.</p>
               </div>
-              <div class="relation-browser">
+              <div class="relation-browser reading-width">
                 <div class="relation-toolbar gallery-control">
                   <div class="relation-filters" role="group" aria-label="Spatial relation"><button type="button" data-relation="horizontal" aria-pressed="true">Left / right</button><button type="button" data-relation="vertical" aria-pressed="false">Above / below</button><button type="button" data-relation="containment" aria-pressed="false">Inside / contains</button></div>
                   <span class="relation-kind">54 demonstrations</span>
@@ -758,7 +758,7 @@
                 </div>
                 <div class="relation-footer gallery-control"><span role="status" aria-live="polite" data-relation-status></span><span>Expand any clip to explore its drawing.</span></div>
               </div>
-              <p class="relation-footnote">Generated demonstrations recorded in simulation, shown at 6× speed with a final hold. These recordings show the generation pipeline’s output.</p>
+              <p class="relation-footnote reading-width">Generated demonstrations recorded in simulation, shown at 6× speed with a final hold. These recordings show the generation pipeline’s output.</p>
 
               <dialog class="relation-lightbox" aria-labelledby="relation-lightbox-title">
                 <div class="relation-lightbox-heading"><p id="relation-lightbox-title"></p><button type="button" data-close-lightbox aria-label="Close enlarged demonstration">×</button></div>
@@ -795,11 +795,11 @@
                 </div><figcaption><span class="step-number">03</span> Execute and record</figcaption><p>Follow the strokes while recording observations and actions.</p></figure>
     </div>
   </div>
-  <div class="backend-section">
+  <div class="backend-section reading-width">
     <h4>One pipeline, three simulation backends</h4>
     <div class="backend-gallery"><figure><img src="assets/posters/sim_sapien.jpg" width="640" height="480" loading="lazy" alt="Hamburger drawing executed in ManiSkill / SAPIEN"><figcaption>ManiSkill / SAPIEN</figcaption></figure><figure><img src="assets/posters/sim_mujoco.jpg" width="640" height="480" loading="lazy" alt="Hamburger drawing executed in MuJoCo / LIBERO"><figcaption>MuJoCo / LIBERO</figcaption></figure><figure><img src="assets/posters/sim_isaac.jpg" width="640" height="480" loading="lazy" alt="Hamburger drawing executed in Isaac Sim"><figcaption>Isaac Sim</figcaption></figure></div>
   </div>
-  <div class="generation-summary"><p>Each demonstration contains RGB observations, robot state, actions, and its language instruction.</p><p>Export datasets in <strong>LIBERO</strong> or <strong>LeRobot</strong> format.</p></div>
+  <div class="generation-summary reading-width"><p>Each demonstration contains RGB observations, robot state, actions, and its language instruction.</p><p>Export datasets in <strong>LIBERO</strong> or <strong>LeRobot</strong> format.</p></div>
 </article>
 
 
@@ -811,11 +811,11 @@
 
             <h2 id="overview-title">Project overview</h2>
             <p class="caption">Narrated overview · 2:52</p>
-            <video class="overview-video" controls preload="none" playsinline poster="assets/posters/overview.jpg" aria-label="Narrated BURGER overview">
+            <video class="overview-video reading-width" controls preload="none" playsinline poster="assets/posters/overview.jpg" aria-label="Narrated BURGER overview">
               <source src="assets/videos/overview.mp4" type="video/mp4">
             </video>
           </div>
-          <div class="closing-info">
+          <div class="closing-info reading-width">
             <article class="content-block">
               <h3 class="content-title">Scope and limitations</h3>
               <div class="content-body">
@@ -841,6 +841,6 @@
         </div>
       </section>
     </main>
-    <footer class="container footer"><span>BURGER · Tsinghua University</span><a href="index-alternative.html">Compare with the alternative page <span aria-hidden="true">↗</span></a></footer>
+    <footer class="container footer"><span>BURGER · Tsinghua University</span></footer>
   </body>
 </html>

@@ -682,6 +682,8 @@ pre { margin: 12px 0 0; padding: 14px; background: var(--paper); border: 1px sol
   .v3 .resource-link svg { width: 16px; height: 16px; }
   .v3 .resource-link[data-copy] { min-width: 0; }
 }
+/* Compact evidence follows the prose width; dense comparisons retain the wider grid. */
+.v3 .reading-width { width: min(100%, 760px); max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .section-nav .nav-tick, .section-nav .nav-label { transition: none; }
