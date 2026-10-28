@@ -10,16 +10,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/alternative-v3.css?v=20261027-v3-opening">
+    <link rel="stylesheet" href="css/alternative-v3.css?v=20261028-emphasis">
     <script src="js/pipeline-alternative.js" defer></script>
-    <script src="js/alternative-v3.js?v=20261027-v3-opening" defer></script>
+    <script src="js/alternative-v3.js?v=20261028-emphasis" defer></script>
     <script src="js/dataset-relations.js?v=20261023-animation" defer></script>
   </head>
-  <body class="v2 v3 emphasis-on">
+  <body class="v2 v3">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-nav"><div class="nav-inner">
-  <a class="brand" href="#top"><span class="brand-name">BURGER</span><span class="brand-title">Benchmarking and Understanding Robotic Generalization via Embodied dRawing</span></a>
-  <nav aria-label="Compare page versions"><button class="emphasis-toggle" type="button" data-emphasis-toggle aria-pressed="true"><span class="emphasis-indicator" aria-hidden="true"></span>Red emphasis</button><a class="compare-link" href="index-alternative.html">Compare alternative ↗</a></nav>
+  <a class="brand" href="#top"><span class="brand-name">BURGER</span><span class="brand-title"><span class="accent">B</span>enchmarking and <span class="accent">U</span>nderstanding <span class="accent">R</span>obotic <span class="accent">G</span>eneralization via <span class="accent">E</span>mbodied d<span class="accent">R</span>awing</span></a>
 </div></header>
 <nav class="section-nav" id="section-nav" aria-label="Jump to a section"><a href="#top" aria-label="BURGER"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">BURGER</span></a><a href="#why" aria-label="Why drawing"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Why drawing</span></a><a href="#comparison" aria-label="BURGER &amp; LIBERO"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">BURGER &amp; LIBERO</span></a><a href="#circle" aria-label="Multimodal data"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Multimodal data</span></a><a href="#diversity" aria-label="Learned behaviors"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Learned behaviors</span></a><a href="#composition" aria-label="Compositional generalization"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Compositional generalization</span></a><a href="#scaling" aria-label="Data scaling"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Data scaling</span></a><a href="#real" aria-label="Real robot"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Real robot</span></a><a href="#real-transfer" aria-label="Simulated &amp; real data"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Simulated &amp; real data</span></a><a href="#dataset" aria-label="Dataset"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Dataset</span></a><a href="#motivation" aria-label="Demonstration diversity"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Demonstration diversity</span></a><a href="#single-categories" aria-label="Single-object gallery"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Single-object gallery</span></a><a href="#dataset-relations" aria-label="Spatial compositions"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Spatial compositions</span></a><a href="#generate" aria-label="Data generation"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Data generation</span></a><a href="#overview" aria-label="Overview"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Overview</span></a><a href="#cite" aria-label="Citation"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Citation</span></a></nav>
 
@@ -70,7 +69,7 @@
 
   <figure class="trajectory-comparison" id="evidence">
   <div class="trajectory-video video-frame">
-    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/trajectory-comparison-v3.mp4" poster="assets/posters/trajectory-comparison-v3.jpg" width="1280" height="720" aria-label="Animated four-column trajectory comparison, showing LIBERO demonstrations, BURGER demonstrations, and learned policy rollouts"></video>
+    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/trajectory-diversity-1080p.mp4" poster="assets/posters/trajectory-diversity-1080p.jpg" width="1920" height="1080" aria-label="Animated four-column trajectory comparison, showing LIBERO demonstrations, BURGER demonstrations, and learned policy rollouts"></video>
     <button class="video-toggle" type="button" aria-label="Play trajectory comparison" data-name="trajectory comparison"><span aria-hidden="true">▶</span></button>
   </div>
   <figcaption><strong>Top:</strong> LIBERO demonstrations. <strong>Middle:</strong> BURGER demonstrations. <strong>Bottom:</strong> learned policy rollouts. Each panel accumulates 42 trajectories.</figcaption>
@@ -418,34 +417,34 @@
   <div class="training-examples">
           <figure class="demo">
             <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/same_helmet_0.mp4" poster="assets/posters/same_helmet_0.jpg" aria-label="Helmet demonstration 1"></video>
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/helmet_order_01.mp4" poster="assets/posters/helmet_order_01.jpg" aria-label="Helmet demonstration 1"></video>
               <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 1" data-name="Helmet demonstration 1"><span aria-hidden="true">▶</span></button>
             </div>
-            <figcaption>Demonstration 01</figcaption>
+            <figcaption><strong>Demonstration 01 · Helmet A</strong><span>Outline first · clockwise</span></figcaption>
           </figure>
           <figure class="demo">
             <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/same_helmet_1.mp4" poster="assets/posters/same_helmet_1.jpg" aria-label="Helmet demonstration 2"></video>
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/helmet_order_02.mp4" poster="assets/posters/helmet_order_02.jpg" aria-label="Helmet demonstration 2"></video>
               <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 2" data-name="Helmet demonstration 2"><span aria-hidden="true">▶</span></button>
             </div>
-            <figcaption>Demonstration 02</figcaption>
+            <figcaption><strong>Demonstration 02 · Helmet A</strong><span>Visor first · counterclockwise</span></figcaption>
           </figure>
           <figure class="demo">
             <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/same_helmet_2.mp4" poster="assets/posters/same_helmet_2.jpg" aria-label="Helmet demonstration 3"></video>
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/helmet_order_03.mp4" poster="assets/posters/helmet_order_03.jpg" aria-label="Helmet demonstration 3"></video>
               <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 3" data-name="Helmet demonstration 3"><span aria-hidden="true">▶</span></button>
             </div>
-            <figcaption>Demonstration 03</figcaption>
+            <figcaption><strong>Demonstration 03 · Helmet B</strong><span>Outline first · clockwise</span></figcaption>
           </figure>
           <figure class="demo">
             <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/same_helmet_3.mp4" poster="assets/posters/same_helmet_3.jpg" aria-label="Helmet demonstration 4"></video>
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/helmet_order_04.mp4" poster="assets/posters/helmet_order_04.jpg" aria-label="Helmet demonstration 4"></video>
               <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 4" data-name="Helmet demonstration 4"><span aria-hidden="true">▶</span></button>
             </div>
-            <figcaption>Demonstration 04</figcaption>
+            <figcaption><strong>Demonstration 04 · Helmet B</strong><span>Lining first · counterclockwise</span></figcaption>
           </figure>
         </div>
-  <p class="caption">Four generated demonstrations of “draw a helmet,” replayed in simulation at 3× speed.</p>
+  <p class="caption">Each pair draws the same helmet with a different stroke order, direction, and starting point. Generated in simulation · 3× speed.</p>
 </article>
 <article class="content-block" id="single-categories" aria-labelledby="single-categories-title">
   <div class="gallery-heading"><div><h3 class="content-title" id="single-categories-title">Single-object demonstrations</h3><p class="caption">32 category previews · 132 categories in the full dataset</p></div>

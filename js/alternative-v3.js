@@ -1,17 +1,7 @@
-/* Independent playback, navigation, and draft comparison behavior for the v3 page. */
+/* Independent playback, navigation, and media controls for the v3 page. */
 (() => {
   'use strict';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const emphasisToggle = document.querySelector('[data-emphasis-toggle]');
-  if (emphasisToggle) {
-    document.body.classList.add('emphasis-on');
-    emphasisToggle.setAttribute('aria-pressed', 'true');
-    emphasisToggle.addEventListener('click', () => {
-      const enabled = document.body.classList.toggle('emphasis-on');
-      emphasisToggle.setAttribute('aria-pressed', String(enabled));
-    });
-  }
-
   const videos = [...document.querySelectorAll('video[data-src]')];
   const visibility = new WeakMap();
   const userPaused = new WeakSet();

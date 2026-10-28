@@ -1,0 +1,19 @@
+{
+  "source": "../02_Trajectory_Diversity_10s.mp4",
+  "video": "BURGER_homepage/assets/videos/trajectory-diversity-1080p.mp4",
+  "poster": "BURGER_homepage/assets/posters/trajectory-diversity-1080p.jpg",
+  "source_sha256": "4e8630f104456130f460a460a89a46a18c7569db22e199deab9e41693908783e",
+  "video_sha256": "4e8630f104456130f460a460a89a46a18c7569db22e199deab9e41693908783e",
+  "poster_sha256": "84b34440ba609e64950021756ec92838646efb3f02709545236a583ce012cec1",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "frames": 300,
+  "duration_seconds": 10,
+  "video_processing": "Byte-for-byte copy. Source already uses H.264 and has its MP4 index before the media data.",
+  "poster_time_seconds": 9.966667,
+  "content": "Four task columns comparing LIBERO demonstrations, BURGER demonstrations, and learned-policy rollouts; 42 trajectories per panel.",
+  "source_date": "2026-10-28"
+}

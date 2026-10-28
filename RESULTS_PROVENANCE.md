@@ -2,6 +2,39 @@
 
 Checked October 28, 2026. This accompanies `index-alternative.html`.
 
+## Clearer trajectory-diversity animation
+
+The animated comparison in `index-alternative-v3.html` now uses the author-supplied
+`../02_Trajectory_Diversity_10s.mp4`, copied without re-encoding to
+`BURGER_homepage/assets/videos/trajectory-diversity-1080p.mp4`.
+It retains the original 1920 × 1080 resolution, 30 fps, and 10-second duration.
+The video shows the same four task columns and 42 trajectories per panel as the
+previous animation, without the subtitles that covered some lower labels.
+`BURGER_homepage/assets/posters/trajectory-diversity-1080p.jpg` comes from the
+final frame. Source and asset hashes are recorded in
+[`trajectory-diversity-video.json`](assets/data/trajectory-diversity-video.json).
+
+## Helmet drawing-order demonstrations
+
+The four diversity examples were generated on October 28 from the supplied SVG
+archive using ManiSkill on an NVIDIA L4. Demonstrations 1–2 use
+`BURGER_homepage/assets/data/helmet-orders/source/helmet_001.svg`; demonstrations
+3–4 use `BURGER_homepage/assets/data/helmet-orders/source/helmet_018.svg`.
+Each pair preserves the same segments, scale, and canvas position. The second
+variant changes stroke order, reverses traversal, and changes the starting point
+of closed strokes: outline-first versus visor-first for helmet A, and
+outline-first versus lining-first for helmet B.
+
+These are newly generated SVG demonstrations, not learned-policy evaluations
+or additional benchmark measurements. All four complete episodes were checked
+against the saved trajectories and rendered intermediate/final frames.
+The camera recordings are 640 × 480 at 20 control steps per second. Every frame
+is retained at 60 fps for 3× playback, with a fixed crop `[128,80,384,288]`
+resized to 640 × 480 and a 1.5-second final-frame hold. The crop is identical
+across all four clips. Source hashes, stroke orders, geometry checks, generation
+settings, and media paths are recorded in
+[`helmet-orders/manifest.json`](assets/data/helmet-orders/manifest.json).
+
 ## Spatial relations: dataset animations
 
 The October 23 revision replaces the source-image gallery with **54 actual
