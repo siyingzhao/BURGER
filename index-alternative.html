@@ -10,10 +10,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/alternative.css">
+  <link rel="stylesheet" href="css/alternative.css?v=20261028-real-v2">
   <script src="js/modes-alternative.js" defer></script>
   <script src="js/pipeline-alternative.js" defer></script>
-  <script src="js/alternative.js" defer></script>
+  <script src="js/alternative.js?v=20261023-animation" defer></script>
+  <script src="js/dataset-relations.js?v=20261023-animation" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -62,12 +63,13 @@
           <a class="text-link" href="#generate">Build your own drawing dataset <span aria-hidden="true">↓</span></a>
         </div>
         <figure class="demo opening-demo">
-          <div class="demo-heading"><span class="instruction">“Draw a hamburger.”</span><span>Generated demonstration · simulation</span></div>
+          <div class="demo-heading"><span class="instruction">“Draw a hamburger.”</span><span>Learned policy · real robot</span></div>
           <div class="video-frame">
-            <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/hero.mp4" poster="assets/posters/hero.jpg" aria-label="Generated demonstration of a robot drawing a hamburger"></video>
-            <span class="video-tag">8.5×</span><button class="video-toggle" type="button" aria-label="Play hamburger demonstration" data-name="hamburger demonstration"><span aria-hidden="true">▶</span></button>
+            <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_burger_opening.mp4?v=20261028-2" poster="assets/posters/real_burger_opening.jpg?v=20261028-2" aria-label="Real Franka Panda drawing a hamburger, selected policy rollout"></video>
+            <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play real hamburger rollout" data-name="real hamburger rollout"><span aria-hidden="true">▶</span></button>
           </div>
-          <figcaption>At evaluation, a policy receives language, the current canvas, and robot state. No target sketch.</figcaption>
+          <figcaption>A learned policy draws on a real canvas. <a href="#real-transfer">Explore more real-robot results <span aria-hidden="true">↓</span></a></figcaption>
+          <details class="opening-details clip-details"><summary>About this recording</summary><p>Selected hamburger rollout, run <code>20261027-223541</code>. Playback is 3× the encoded recording, with a brief final hold. Its deployment checkpoint and training setup have not yet been verified.</p><a class="result-link" href="assets/data/real-transfer-results.json" download>Recording details (JSON)</a></details>
         </figure>
       </div>
       <div class="principles">
@@ -208,6 +210,199 @@
           </div>
         </div>
         <p class="caption">Generated training demonstrations, replayed in simulation. Different shapes, starting points, and stroke orders.</p>
+
+        <section class="dataset-relations" id="dataset-relations" aria-labelledby="relation-title" data-dataset-relations>
+          <div class="relation-intro">
+            <div><p class="eyebrow">Composing the dataset</p><h3 id="relation-title">One canvas. Many relationships.</h3></div>
+            <p>Watch generated demonstrations draw objects beside, above and inside one another. Explore 18 tasks, with three recorded demonstrations for each.</p>
+          </div>
+          <div class="relation-browser">
+            <div class="relation-toolbar gallery-control">
+              <div class="relation-filters" role="group" aria-label="Spatial relation"><button type="button" data-relation="horizontal" aria-pressed="true">Left / right</button><button type="button" data-relation="vertical" aria-pressed="false">Above / below</button><button type="button" data-relation="containment" aria-pressed="false">Inside / contains</button></div>
+              <span class="relation-kind">54 demonstrations</span>
+            </div>
+            <div class="relation-context gallery-control">
+              <p data-relation-description></p>
+              <div class="relation-variants" role="group" aria-label="Demonstration set"><span>Demonstration</span><button type="button" data-variant="0" aria-pressed="true" aria-label="Demonstration set 1">01</button><button type="button" data-variant="1" aria-pressed="false" aria-label="Demonstration set 2">02</button><button type="button" data-variant="2" aria-pressed="false" aria-label="Demonstration set 3">03</button></div>
+            </div>
+            <div class="relation-panel" data-relation-panel="horizontal" data-description="Side-by-side compositions, including the same objects with their positions exchanged." aria-label="Left / right dataset animations">
+              <h4 class="relation-fallback-title">Left / right</h4>
+              <div class="relation-grid">
+                <figure class="relation-card" data-sample="leaf_left_moon" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_moon_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_moon_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_moon_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_moon_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_moon_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_moon_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a leaf left moon" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/leaf_left_moon_ep00.mp4" poster="assets/posters/relations/leaf_left_moon_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Leaf left of moon"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Leaf left of moon" data-name="Leaf left of moon"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/leaf_left_moon_ep00.mp4" data-enlarge aria-label="Enlarge Leaf left of moon"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Leaf <em>left of</em> moon</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="moon_left_leaf" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/moon_left_leaf_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/moon_left_leaf_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/moon_left_leaf_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/moon_left_leaf_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/moon_left_leaf_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/moon_left_leaf_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a moon left leaf" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/moon_left_leaf_ep00.mp4" poster="assets/posters/relations/moon_left_leaf_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Moon left of leaf"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Moon left of leaf" data-name="Moon left of leaf"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/moon_left_leaf_ep00.mp4" data-enlarge aria-label="Enlarge Moon left of leaf"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Moon <em>left of</em> leaf</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="snowman_left_leaf" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/snowman_left_leaf_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/snowman_left_leaf_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/snowman_left_leaf_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/snowman_left_leaf_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/snowman_left_leaf_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/snowman_left_leaf_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a snowman left leaf" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/snowman_left_leaf_ep00.mp4" poster="assets/posters/relations/snowman_left_leaf_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Snowman left of leaf"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Snowman left of leaf" data-name="Snowman left of leaf"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/snowman_left_leaf_ep00.mp4" data-enlarge aria-label="Enlarge Snowman left of leaf"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Snowman <em>left of</em> leaf</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="leaf_left_snowman" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_snowman_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_snowman_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_snowman_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_snowman_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_snowman_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_snowman_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a leaf left snowman" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/leaf_left_snowman_ep00.mp4" poster="assets/posters/relations/leaf_left_snowman_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Leaf left of snowman"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Leaf left of snowman" data-name="Leaf left of snowman"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/leaf_left_snowman_ep00.mp4" data-enlarge aria-label="Enlarge Leaf left of snowman"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Leaf <em>left of</em> snowman</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="mug_left_pizza" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/mug_left_pizza_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/mug_left_pizza_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/mug_left_pizza_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/mug_left_pizza_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/mug_left_pizza_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/mug_left_pizza_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a mug left pizza" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/mug_left_pizza_ep00.mp4" poster="assets/posters/relations/mug_left_pizza_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Mug left of pizza"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Mug left of pizza" data-name="Mug left of pizza"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/mug_left_pizza_ep00.mp4" data-enlarge aria-label="Enlarge Mug left of pizza"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Mug <em>left of</em> pizza</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="purse_left_star" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/purse_left_star_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_left_star_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/purse_left_star_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_left_star_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/purse_left_star_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_left_star_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a purse left star" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/purse_left_star_ep00.mp4" poster="assets/posters/relations/purse_left_star_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Purse left of star"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Purse left of star" data-name="Purse left of star"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/purse_left_star_ep00.mp4" data-enlarge aria-label="Enlarge Purse left of star"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Purse <em>left of</em> star</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="relation-panel" data-relation-panel="vertical" data-description="Stacked compositions with distinct shapes, scales and stroke orders across demonstrations." aria-label="Above / below dataset animations">
+              <h4 class="relation-fallback-title">Above / below</h4>
+              <div class="relation-grid">
+                <figure class="relation-card" data-sample="camera_over_baseball" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/camera_over_baseball_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/camera_over_baseball_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/camera_over_baseball_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/camera_over_baseball_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/camera_over_baseball_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/camera_over_baseball_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a camera over baseball" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/camera_over_baseball_ep00.mp4" poster="assets/posters/relations/camera_over_baseball_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Camera above baseball"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Camera above baseball" data-name="Camera above baseball"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/camera_over_baseball_ep00.mp4" data-enlarge aria-label="Enlarge Camera above baseball"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Camera <em>above</em> baseball</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="umbrella_over_butterfly" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/umbrella_over_butterfly_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/umbrella_over_butterfly_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/umbrella_over_butterfly_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/umbrella_over_butterfly_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/umbrella_over_butterfly_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/umbrella_over_butterfly_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw an umbrella over butterfly" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/umbrella_over_butterfly_ep00.mp4" poster="assets/posters/relations/umbrella_over_butterfly_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Umbrella above butterfly"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Umbrella above butterfly" data-name="Umbrella above butterfly"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/umbrella_over_butterfly_ep00.mp4" data-enlarge aria-label="Enlarge Umbrella above butterfly"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Umbrella <em>above</em> butterfly</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="guitar_over_owl" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/guitar_over_owl_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/guitar_over_owl_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/guitar_over_owl_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/guitar_over_owl_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/guitar_over_owl_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/guitar_over_owl_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a guitar over owl" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/guitar_over_owl_ep00.mp4" poster="assets/posters/relations/guitar_over_owl_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Guitar above owl"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Guitar above owl" data-name="Guitar above owl"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/guitar_over_owl_ep00.mp4" data-enlarge aria-label="Enlarge Guitar above owl"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Guitar <em>above</em> owl</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="bicycle_under_book" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/bicycle_under_book_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bicycle_under_book_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/bicycle_under_book_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bicycle_under_book_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/bicycle_under_book_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bicycle_under_book_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a bicycle under book" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/bicycle_under_book_ep00.mp4" poster="assets/posters/relations/bicycle_under_book_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Bicycle below book"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Bicycle below book" data-name="Bicycle below book"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/bicycle_under_book_ep00.mp4" data-enlarge aria-label="Enlarge Bicycle below book"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Bicycle <em>below</em> book</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="bucket_under_cloud" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/bucket_under_cloud_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bucket_under_cloud_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/bucket_under_cloud_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bucket_under_cloud_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/bucket_under_cloud_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bucket_under_cloud_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a bucket under cloud" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/bucket_under_cloud_ep00.mp4" poster="assets/posters/relations/bucket_under_cloud_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Bucket below cloud"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Bucket below cloud" data-name="Bucket below cloud"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/bucket_under_cloud_ep00.mp4" data-enlarge aria-label="Enlarge Bucket below cloud"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Bucket <em>below</em> cloud</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="ice_cream_under_flower" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/ice_cream_under_flower_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/ice_cream_under_flower_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/ice_cream_under_flower_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/ice_cream_under_flower_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/ice_cream_under_flower_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/ice_cream_under_flower_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw an ice cream under flower" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/ice_cream_under_flower_ep00.mp4" poster="assets/posters/relations/ice_cream_under_flower_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Ice cream below flower"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Ice cream below flower" data-name="Ice cream below flower"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/ice_cream_under_flower_ep00.mp4" data-enlarge aria-label="Enlarge Ice cream below flower"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Ice cream <em>below</em> flower</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="relation-panel" data-relation-panel="containment" data-description="Nested compositions: an object inside another, or a container holding an object." aria-label="Inside / contains dataset animations">
+              <h4 class="relation-fallback-title">Inside / contains</h4>
+              <div class="relation-grid">
+                <figure class="relation-card" data-sample="book_inside_backpack" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/book_inside_backpack_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/book_inside_backpack_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/book_inside_backpack_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/book_inside_backpack_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/book_inside_backpack_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/book_inside_backpack_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a book inside backpack" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/book_inside_backpack_ep00.mp4" poster="assets/posters/relations/book_inside_backpack_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Book inside backpack"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Book inside backpack" data-name="Book inside backpack"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/book_inside_backpack_ep00.mp4" data-enlarge aria-label="Enlarge Book inside backpack"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Book <em>inside</em> backpack</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="cat_inside_tent" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/cat_inside_tent_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/cat_inside_tent_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/cat_inside_tent_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/cat_inside_tent_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/cat_inside_tent_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/cat_inside_tent_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a cat inside tent" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/cat_inside_tent_ep00.mp4" poster="assets/posters/relations/cat_inside_tent_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Cat inside tent"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Cat inside tent" data-name="Cat inside tent"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/cat_inside_tent_ep00.mp4" data-enlarge aria-label="Enlarge Cat inside tent"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Cat <em>inside</em> tent</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="rabbit_inside_house" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/rabbit_inside_house_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/rabbit_inside_house_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/rabbit_inside_house_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/rabbit_inside_house_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/rabbit_inside_house_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/rabbit_inside_house_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a rabbit inside house" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/rabbit_inside_house_ep00.mp4" poster="assets/posters/relations/rabbit_inside_house_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Rabbit inside house"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Rabbit inside house" data-name="Rabbit inside house"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/rabbit_inside_house_ep00.mp4" data-enlarge aria-label="Enlarge Rabbit inside house"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Rabbit <em>inside</em> house</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="house_contains_bed" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/house_contains_bed_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/house_contains_bed_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/house_contains_bed_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/house_contains_bed_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/house_contains_bed_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/house_contains_bed_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a house contains bed" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/house_contains_bed_ep00.mp4" poster="assets/posters/relations/house_contains_bed_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: House contains bed"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play House contains bed" data-name="House contains bed"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/house_contains_bed_ep00.mp4" data-enlarge aria-label="Enlarge House contains bed"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>House <em>contains</em> bed</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="purse_contains_key" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/purse_contains_key_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_contains_key_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/purse_contains_key_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_contains_key_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/purse_contains_key_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_contains_key_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a purse contains key" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/purse_contains_key_ep00.mp4" poster="assets/posters/relations/purse_contains_key_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Purse contains key"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Purse contains key" data-name="Purse contains key"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/purse_contains_key_ep00.mp4" data-enlarge aria-label="Enlarge Purse contains key"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Purse <em>contains</em> key</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+                <figure class="relation-card" data-sample="train_contains_suitcase" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/train_contains_suitcase_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/train_contains_suitcase_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/train_contains_suitcase_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/train_contains_suitcase_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/train_contains_suitcase_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/train_contains_suitcase_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a train contains suitcase" data-episode="0">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/train_contains_suitcase_ep00.mp4" poster="assets/posters/relations/train_contains_suitcase_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Train contains suitcase"></video>
+                    <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Train contains suitcase" data-name="Train contains suitcase"><span aria-hidden="true">▶</span></button>
+                    <a class="relation-expand" href="assets/videos/relations/train_contains_suitcase_ep00.mp4" data-enlarge aria-label="Enlarge Train contains suitcase"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                  </div>
+                  <figcaption><span>Train <em>contains</em> suitcase</span><small data-sample-label>Demonstration 01</small></figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="relation-footer gallery-control"><span role="status" aria-live="polite" data-relation-status></span><span>Expand any clip to explore its drawing.</span></div>
+          </div>
+          <p class="relation-footnote">Generated training demonstrations, recorded in simulation. Full drawing sequences at 6× speed, with a brief hold on the completed canvas.</p>
+          <details class="data-details relation-sources">
+            <summary>About these demonstrations</summary>
+            <div class="details-body">
+              <p>Each category shows six selected tasks and three archived episodes per task. Left / right includes reversed object arrangements; vertical tasks use above and below; containment tasks use inside and contains.</p>
+              <p>Clips come from the dataset’s recorded observation camera. A fixed crop brings the drawing closer, and each poster is the completed frame from that same recording. These examples illustrate generated data; learned-policy rollouts appear in their own section below.</p>
+              <p><a href="assets/data/dataset-relations.json" download>Download episode index and source records (JSON)</a></p>
+            </div>
+          </details>
+          <dialog class="relation-lightbox" aria-labelledby="relation-lightbox-title">
+            <div class="relation-lightbox-heading"><p id="relation-lightbox-title"></p><button type="button" data-close-lightbox aria-label="Close enlarged demonstration">×</button></div>
+            <video controls muted loop playsinline preload="none"></video>
+            <p class="relation-lightbox-prompt" data-lightbox-prompt></p>
+            <p class="relation-lightbox-detail" data-lightbox-detail></p>
+            <a data-lightbox-source href="assets/data/dataset-relations.json" target="_blank" rel="noopener">Open video ↗</a>
+          </dialog>
+        </section>
 
       </div>
     </section>
@@ -416,9 +611,8 @@
     <section class="section band" id="composition" aria-labelledby="composition-title">
       <div class="container">
         <div class="section-heading">
-          <div><p class="eyebrow">Combining familiar objects</p><h2 id="composition-title">Draw familiar objects<br>in new combinations.</h2></div>
-          <p>π<sub>0</sub> can put familiar objects together in pairs it never saw during training.
-            At inference, it sees the canvas and receives the instruction—no target sketch.</p>
+          <div><p class="eyebrow">Learned-policy rollouts</p><h2 id="composition-title">Familiar objects.<br>New combinations.</h2></div>
+          <p>Two selected left-of rollouts show π<sub>0</sub> composing familiar objects, including a pair held out from training. At inference, it receives the canvas and instruction—no target sketch.</p>
         </div>
         <div class="composition-grid">
           <figure class="demo composition-demo">
@@ -438,39 +632,471 @@
             <figcaption><q>Draw an apple left of a blueberry.</q></figcaption>
           </figure>
         </div>
-        <div class="pending-comparison" aria-labelledby="pending-title">
-          <div class="pending-heading"><h3 id="pending-title">Same objects, different relations</h3><span class="pending-label">Footage to add</span></div>
-          <p class="caption">Planned comparison: keep the policy and object pair fixed; change only the relation.</p>
-          <div class="placeholder-grid">
-            <div class="result-placeholder"><span class="placeholder-mark" aria-hidden="true">＋</span><p>“A left of B”</p><span>Result pending</span></div>
-            <div class="result-placeholder"><span class="placeholder-mark" aria-hidden="true">＋</span><p>“A above B”</p><span>Result pending</span></div>
-            <div class="result-placeholder"><span class="placeholder-mark" aria-hidden="true">＋</span><p>“A below B”</p><span>Result pending</span></div>
-          </div>
-        </div>
-        <article class="content-block">
-          <h3 class="content-title">Composition examples and failure cases</h3>
-          <div class="content-body">
+        <p class="caption">Learned π<sub>0</sub> policy executions in simulation. The clips above show selected qualitative results.</p>
+        <details class="data-details composition-evidence">
+          <summary>More composition results and limitations</summary>
+          <div class="details-body">
             <img class="wide-figure" src="assets/figures/fig5_eval.webp" width="2000" height="807" loading="lazy" alt="Training demonstrations and learned rollouts for single objects, seen compositions, and unseen combinations of familiar objects.">
             <p>Composition can reduce drawing quality, particularly with vertical relations. These results concern
               new combinations of familiar objects; the evaluated policies struggle with object categories absent from training.</p>
           </div>
-        </article>
+        </details>
       </div>
     </section>
 
     <section class="section container" id="real" aria-labelledby="real-title">
       <div class="section-heading">
-        <div><p class="eyebrow">On a real robot</p><h2 id="real-title">Continue from a human’s strokes.</h2></div>
-        <p>After a person adds the rear wheel, the policy continues the bicycle from the updated canvas.
-          π<sub>0.5</sub> is fine-tuned on 100 real demonstrations across 10 tasks.</p>
+        <div><p class="eyebrow">Real-robot results</p><h2 id="real-title">Drawing on a real robot.</h2></div>
+        <p>π<sub>0.5</sub> draws objects, completes partial sketches, and continues after a human edit.
+          These clips show learned policies on a Franka Panda.</p>
       </div>
-      <figure class="demo real-demo">
-        <div class="video-frame">
-          <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_human.mp4" poster="assets/posters/real_bike_human.jpg" aria-label="Human adds a bicycle wheel and the learned policy continues drawing on a Franka Panda"></video>
-          <span class="video-tag">Franka Panda · 4.9×</span><button class="video-toggle" type="button" aria-label="Play collaborative bicycle drawing" data-name="collaborative bicycle drawing"><span aria-hidden="true">▶</span></button>
+      <article class="real-transfer" id="real-transfer" aria-labelledby="transfer-title">
+        <div class="transfer-intro">
+          <div><p class="eyebrow">Simulation-to-real transfer</p><h3 id="transfer-title">Drawing beyond the<br>real demonstrations.</h3></div>
+          <p>A small set of real demonstrations is mixed with a much larger set from a simulated version of the drawing setup. These real rollouts use an intermediate π<sub>0.5</sub> checkpoint.</p>
         </div>
-        <figcaption>The robot pauses for the human edit, then resumes from the changed canvas.</figcaption>
-      </figure>
+        <dl class="transfer-facts">
+          <div><dt>Simulated demonstrations</dt><dd>14,751<span>across 132 tasks</span></dd></div>
+          <div><dt>Real demonstrations</dt><dd>100<span>across 10 tasks</span></dd></div>
+          <div><dt>Training progress</dt><dd>~1.2 <small>/ 2</small><span>epochs · intermediate checkpoint</span></dd></div>
+        </dl>
+        <div class="transfer-coverage"><span class="status-label accent">No real demonstrations for these tasks</span><p>The objects below appear in simulation training. Their tasks are absent from the real-training set.</p></div>
+        <div class="real-gallery transfer-gallery">
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_moon.mp4?v=20261028-2" poster="assets/posters/real_transfer_moon.jpg?v=20261028-2" width="576" height="432" aria-label="Moon, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Moon" data-name="mixed-data Moon"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Moon</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw a moon</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation; no real demonstrations for this task</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-203917</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_moon.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_moon_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_banana.mp4?v=20261028-2" poster="assets/posters/real_transfer_banana.jpg?v=20261028-2" width="576" height="432" aria-label="Banana, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Banana" data-name="mixed-data Banana"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Banana</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw a banana</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation; no real demonstrations for this task</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-201425</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_banana.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_banana_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_star.mp4?v=20261028-2" poster="assets/posters/real_transfer_star.jpg?v=20261028-2" width="576" height="432" aria-label="Star, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Star" data-name="mixed-data Star"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Star</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw a star</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation; no real demonstrations for this task</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-214240</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_star.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_star_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_tree.mp4?v=20261028-2" poster="assets/posters/real_transfer_tree.jpg?v=20261028-2" width="576" height="432" aria-label="Tree, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Tree" data-name="mixed-data Tree"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Tree</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw a tree</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation; no real demonstrations for this task</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-215109</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_tree.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_tree_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+        </div>
+        <details class="transfer-more">
+          <summary>Explore six more tasks and their training coverage <span aria-hidden="true">+</span></summary>
+          <div class="transfer-more-body">
+            <h4>Four more tasks trained in simulation only</h4>
+            <p>Additional rollouts show how drawing fidelity varies across objects at this intermediate checkpoint.</p>
+            <div class="real-gallery transfer-gallery">
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_cup.mp4?v=20261028-2" poster="assets/posters/real_transfer_cup.jpg?v=20261028-2" width="576" height="432" aria-label="Cup, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Cup" data-name="mixed-data Cup"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Cup</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw a cup</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation; no real demonstrations for this task</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-201822</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_cup.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_cup_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_apple.mp4?v=20261028-2" poster="assets/posters/real_transfer_apple.jpg?v=20261028-2" width="576" height="432" aria-label="Apple, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Apple" data-name="mixed-data Apple"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Apple</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw an apple</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation; no real demonstrations for this task</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-202120</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_apple.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_apple_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_owl.mp4?v=20261028-2" poster="assets/posters/real_transfer_owl.jpg?v=20261028-2" width="576" height="432" aria-label="Owl, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Owl" data-name="mixed-data Owl"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Owl</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw an owl</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation; no real demonstrations for this task</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-215342</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_owl.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_owl_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_cat.mp4?v=20261028-2" poster="assets/posters/real_transfer_cat.jpg?v=20261028-2" width="576" height="432" aria-label="Cat, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Cat" data-name="mixed-data Cat"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Cat</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw a cat</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation; no real demonstrations for this task</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-220823</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_cat.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_cat_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+            </div>
+            <h4>Reference tasks with real demonstrations</h4>
+            <p>Bicycle and alarm clock both appear in the real-training task list, as well as in simulation.</p>
+            <div class="real-pair transfer-references">
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_bicycle.mp4?v=20261028-2" poster="assets/posters/real_transfer_bicycle.jpg?v=20261028-2" width="576" height="432" aria-label="Bicycle, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Bicycle" data-name="mixed-data Bicycle"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Bicycle</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw a bicycle</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation and real training data</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-203446</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_bicycle.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_bicycle_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+          <div class="transfer-card">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_alarm_clock.mp4?v=20261028-2" poster="assets/posters/real_transfer_alarm_clock.jpg?v=20261028-2" width="576" height="432" aria-label="Alarm clock, real-robot rollout from the mixed-data checkpoint"></video>
+                <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Alarm clock" data-name="mixed-data Alarm clock"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Alarm clock</strong></figcaption>
+            </figure>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Task</dt><dd><q>Draw an alarm clock</q> · inferred from recording filename</dd>
+                <dt>Training coverage</dt><dd>Present in simulation and real training data</dd>
+                <dt>Training stage</dt><dd>π<sub>0.5</sub> · approximately 1.2 of 2 planned epochs, reported by the authors</dd>
+                <dt>Run / seed</dt><dd><code>20261027-221012</code> / 1234 in filename; deployment config unavailable</dd>
+                <dt>Playback</dt><dd>3× encoded recording time, with a 1.2-second final hold. Robot wall-time speed is unverified.</dd>
+              </dl>
+              <a class="result-link" href="assets/videos/real_transfer_alarm_clock.mp4?v=20261028-2" target="_blank" rel="noopener">Open full clip ↗</a>
+              <a class="result-link" href="assets/images/results/real_transfer_alarm_clock_final.jpg" target="_blank" rel="noopener">Final camera frame ↗</a>
+            </details>
+          </div>
+            </div>
+          </div>
+        </details>
+        <p class="transfer-note">Selected qualitative rollouts at approximately 1.2 epochs, before the planned two-epoch endpoint. Training coverage was checked against the dataset task lists; no repeated-trial success rate is inferred.</p>
+        <a class="result-link" href="assets/data/real-transfer-results.json" download>Training coverage and recording details (JSON)</a>
+      </article>
+
+      <article class="real-group">
+        <div class="real-group-heading"><h3>Earlier real-only training</h3><p>π<sub>0.5</sub> · 100 real demonstrations across 10 tasks.</p></div>
+        <div class="real-gallery">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cake.mp4" poster="assets/posters/real_cake.jpg" aria-label="Birthday cake, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Birthday cake" data-name="Birthday cake"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Birthday cake</strong></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw a birthday cake</q></dd>
+                <dt>Checkpoint / seed</dt><dd>7294 / 1234</dd>
+                <dt>Run ID</dt><dd><code>20260916-004122</code></dd>
+                <dt>Canvas / intervention</dt><dd>No intervention annotated</dd>
+                <dt>Playback</dt><dd>6.6× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_cake_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_guitar.mp4" poster="assets/posters/real_guitar.jpg" aria-label="Guitar, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.5×</span><button class="video-toggle" type="button" aria-label="Play Guitar" data-name="Guitar"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Guitar</strong></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw a guitar</q></dd>
+                <dt>Checkpoint / seed</dt><dd>7294 / 234</dd>
+                <dt>Run ID</dt><dd><code>20260916-012703</code></dd>
+                <dt>Canvas / intervention</dt><dd>No intervention annotated</dd>
+                <dt>Playback</dt><dd>6.5× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_guitar_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_train.mp4" poster="assets/posters/real_train.jpg" aria-label="Train, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Train" data-name="Train"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Train</strong></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw a train</q></dd>
+                <dt>Checkpoint / seed</dt><dd>7294 / 1234</dd>
+                <dt>Run ID</dt><dd><code>20260919-235534</code></dd>
+                <dt>Canvas / intervention</dt><dd>No intervention annotated</dd>
+                <dt>Playback</dt><dd>6.6× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_train_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_butterfly.mp4" poster="assets/posters/real_butterfly.jpg" aria-label="Butterfly, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Butterfly" data-name="Butterfly"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Butterfly</strong></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw a butterfly</q></dd>
+                <dt>Checkpoint / seed</dt><dd>7294 / 1234</dd>
+                <dt>Run ID</dt><dd><code>20260920-000001</code></dd>
+                <dt>Canvas / intervention</dt><dd>No intervention annotated</dd>
+                <dt>Playback</dt><dd>6.6× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_butterfly_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+        </div>
+      </article>
+      <article class="real-group">
+        <div class="real-group-heading"><h3>Responding to the canvas</h3><p>Complete a missing part, or continue from a person’s strokes.</p></div>
+        <div class="real-pair">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cup_complete.mp4" poster="assets/posters/real_cup_complete.jpg" aria-label="Add the missing cup handle, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 4.9×</span><button class="video-toggle" type="button" aria-label="Play Add the missing cup handle" data-name="Add the missing cup handle"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Add the missing cup handle</strong><span>Training: 100 simulated demonstrations (10 tasks) + 30 real demonstrations (3 tasks).</span></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw a cup</q></dd>
+                <dt>Checkpoint / seed</dt><dd>23284 / 1234</dd>
+                <dt>Run ID</dt><dd><code>20260914-215647</code></dd>
+                <dt>Canvas / intervention</dt><dd>Starts with a pre-drawn cup lacking its handle</dd>
+                <dt>Playback</dt><dd>4.9× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_cup_complete_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_human.mp4" poster="assets/posters/real_bike_human.jpg" aria-label="Continue after a human draws the rear wheel, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 4.9×</span><button class="video-toggle" type="button" aria-label="Play Continue after a human draws the rear wheel" data-name="Continue after a human draws the rear wheel"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Continue after a human draws the rear wheel</strong><span>Training: 100 real demonstrations across 10 tasks. The robot is paused during the human edit.</span></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw a bicycle</q></dd>
+                <dt>Checkpoint / seed</dt><dd>7294 / 1234</dd>
+                <dt>Run ID</dt><dd><code>20260916-015542</code></dd>
+                <dt>Canvas / intervention</dt><dd>Human adds a wheel during the rollout</dd>
+                <dt>Playback</dt><dd>4.9× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_bike_human_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+        </div>
+      </article>
+      <article class="real-group">
+        <div class="real-group-heading"><h3>Same instruction, different stroke orders</h3><p>“Draw a bicycle.” · 100 real demonstrations across 10 tasks.</p></div>
+        <div class="real-pair">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_mode_a.mp4" poster="assets/posters/real_bike_mode_a.jpg" aria-label="Start with the left wheel, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Start with the left wheel" data-name="Start with the left wheel"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Start with the left wheel</strong></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw a bicycle</q></dd>
+                <dt>Checkpoint / seed</dt><dd>7294 / 1234</dd>
+                <dt>Run ID</dt><dd><code>20260915-193831</code></dd>
+                <dt>Canvas / intervention</dt><dd>No intervention annotated</dd>
+                <dt>Playback</dt><dd>6.6× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_bike_mode_a_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_mode_b.mp4" poster="assets/posters/real_bike_mode_b.jpg" aria-label="Start with the right wheel, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Start with the right wheel" data-name="Start with the right wheel"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Start with the right wheel</strong></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw a bicycle</q></dd>
+                <dt>Checkpoint / seed</dt><dd>7294 / 4242</dd>
+                <dt>Run ID</dt><dd><code>20260916-015156</code></dd>
+                <dt>Canvas / intervention</dt><dd>No intervention annotated</dd>
+                <dt>Playback</dt><dd>6.6× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_bike_mode_b_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+        </div>
+      </article>
+      <article class="real-group">
+        <div class="real-group-heading"><h3>Drawing after the camera moves</h3><p>“Draw an apple.” · 30 real demonstrations across 3 tasks.</p></div>
+        <div class="real-pair">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cam_front.mp4" poster="assets/posters/real_cam_front.jpg" aria-label="Default front view, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Default front view" data-name="Default front view"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Default front view</strong></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw an apple</q></dd>
+                <dt>Checkpoint / seed</dt><dd>5889 / 42</dd>
+                <dt>Run ID</dt><dd><code>20260914-012824</code></dd>
+                <dt>Canvas / intervention</dt><dd>Default camera viewpoint</dd>
+                <dt>Playback</dt><dd>6.6× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_cam_front_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cam_moved.mp4" poster="assets/posters/real_cam_moved.jpg" aria-label="Oblique view, learned pi zero point five policy on a Franka Panda"></video>
+              <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Oblique view" data-name="Oblique view"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Oblique view</strong></figcaption>
+            <details class="clip-details">
+              <summary>Run details &amp; final frame</summary>
+              <dl>
+                <dt>Instruction</dt><dd><q>Draw an apple</q></dd>
+                <dt>Checkpoint / seed</dt><dd>5889 / 500</dd>
+                <dt>Run ID</dt><dd><code>20260914-014422</code></dd>
+                <dt>Canvas / intervention</dt><dd>Camera moved to an oblique viewpoint</dd>
+                <dt>Playback</dt><dd>6.6× logged wall time</dd>
+              </dl>
+              <a class="result-link" href="assets/images/results/real_cam_moved_final.jpg">Final camera frame ↗</a>
+            </details>
+          </figure>
+        </div>
+      </article>
+      <div class="real-evidence-note">
+        <p>These are selected qualitative demonstrations. Complete attempt counts and a shared success criterion are not available,
+          so no real-robot success rate is reported. Cup, bicycle and camera results use the separate training settings shown above.</p>
+        <p>The camera comparison uses checkpoint 5889 with seeds 42 and 500; the viewpoint is not the only variable that changes.
+          Final frames are the last available camera observations, which may include the arm.</p>
+        <a href="assets/data/real-results.json" download>Metadata for the 10 earlier real-robot clips (JSON)</a>
+      </div>
     </section>
 
     <section class="section closing band" id="overview" aria-labelledby="overview-title">

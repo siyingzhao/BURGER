@@ -47,6 +47,16 @@
     video.addEventListener('play', () => syncButton(video));
     video.addEventListener('pause', () => syncButton(video));
     video.addEventListener('ended', () => syncButton(video));
+    const resumeVisible = () => {
+      if (visibility.get(video) && !document.hidden && !reducedMotion && !userPaused.has(video) && video.hasAttribute('data-autoplay')) play(video);
+    };
+    video.addEventListener('sourcechange', () => {
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+      resumeVisible();
+    });
+    video.addEventListener('resumevisible', resumeVisible);
     button.addEventListener('click', () => {
       if (video.paused) {
         userPaused.delete(video);
