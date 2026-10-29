@@ -341,8 +341,8 @@ pre { margin: 12px 0 0; padding: 14px; background: var(--paper); border: 1px sol
 
 .site .why-lead { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 36px; }
 .site .why-lead > * { min-width: 0; }
-.video-compare { --split: 50%; isolation: isolate; touch-action: pan-y; background: #eef0ea; }
-.video-compare .compare-layer { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; background: #eef0ea; }
+.video-compare { --split: 50%; isolation: isolate; touch-action: pan-y pinch-zoom; cursor: ew-resize; -webkit-user-select: none; user-select: none; background: #eef0ea; }
+.video-compare .compare-layer { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; background: #eef0ea; }
 .video-compare .compare-layer video { width: 100%; height: 100%; object-fit: contain; }
 .video-compare .compare-real { z-index: 0; }
 .video-compare .compare-sim { z-index: 1; clip-path: inset(0 calc(100% - var(--split, 50%)) 0 0); }
@@ -351,7 +351,7 @@ pre { margin: 12px 0 0; padding: 14px; background: var(--paper); border: 1px sol
 .real-label { right: 10px; }
 .compare-divider { position: absolute; z-index: 2; top: 0; bottom: 0; left: var(--split, 50%); width: 2px; margin-left: -1px; background: white; box-shadow: 0 0 0 1px rgba(32, 36, 31, .18); pointer-events: none; }
 .compare-divider::after { content: "↔"; position: absolute; top: 50%; left: 50%; display: grid; place-items: center; width: 38px; height: 38px; transform: translate(-50%, -50%); border: 1px solid rgba(32, 36, 31, .18); border-radius: 50%; background: #fff; color: var(--ink); box-shadow: 0 2px 8px rgba(32, 36, 31, .12); font-size: 22px; line-height: 1; }
-.compare-range { appearance: none; -webkit-appearance: none; position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; margin: 0; border: 0; border-radius: 0; background: transparent; cursor: ew-resize; touch-action: pan-y; }
+.compare-range { appearance: none; -webkit-appearance: none; position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; margin: 0; border: 0; border-radius: 0; background: transparent; pointer-events: none; }
 .compare-range::-webkit-slider-runnable-track { height: 100%; border: 0; background: transparent; }
 .compare-range::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 1px; height: 100%; border: 0; background: transparent; }
 .compare-range::-moz-range-track { height: 100%; border: 0; background: transparent; }

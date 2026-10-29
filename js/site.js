@@ -242,8 +242,51 @@
     };
 
     if (range) {
+      // Handle dragging on the whole surface, without relying on a mobile
+      // browser's native range thumb. Keep the range for keyboard and AT input.
+      let drag = null;
+      const splitAtPointer = event => {
+        const bounds = comparison.getBoundingClientRect();
+        if (bounds.width) updateSplit((event.clientX - bounds.left) / bounds.width * 100);
+      };
+      const endDrag = event => {
+        if (!drag || event.pointerId !== drag.id) return;
+        drag = null;
+        if (comparison.hasPointerCapture(event.pointerId)) comparison.releasePointerCapture(event.pointerId);
+      };
+      comparison.addEventListener('pointerdown', event => {
+        if (!event.isPrimary || event.button !== 0 || event.target.closest('button')) return;
+        takeControl();
+        event.preventDefault();
+        range.focus({ preventScroll: true });
+        drag = { id: event.pointerId, x: event.clientX, y: event.clientY, horizontal: event.pointerType === 'mouse' };
+        comparison.setPointerCapture(event.pointerId);
+        if (drag.horizontal) splitAtPointer(event);
+      });
+      comparison.addEventListener('pointermove', event => {
+        if (!drag || event.pointerId !== drag.id) return;
+        if (!drag.horizontal) {
+          const dx = Math.abs(event.clientX - drag.x);
+          const dy = Math.abs(event.clientY - drag.y);
+          if (Math.max(dx, dy) < 6) return;
+          // Let a vertical swipe scroll the page without moving the divider.
+          if (dy > dx) {
+            endDrag(event);
+            return;
+          }
+          drag.horizontal = true;
+        }
+        splitAtPointer(event);
+      });
+      comparison.addEventListener('pointerup', event => {
+        if (!drag || event.pointerId !== drag.id) return;
+        splitAtPointer(event);
+        endDrag(event);
+      });
+      comparison.addEventListener('pointercancel', endDrag);
+      comparison.addEventListener('lostpointercapture', endDrag);
+
       updateSplit(range.value || 50);
-      range.addEventListener('pointerdown', takeControl);
       range.addEventListener('focus', takeControl);
       range.addEventListener('keydown', takeControl);
       range.addEventListener('input', () => {
