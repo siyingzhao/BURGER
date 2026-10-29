@@ -2,7 +2,9 @@
 
 Project website for **BURGER: Benchmarking and Understanding Robotic Generalization via Embodied dRawing**.
 
-Xiangyu Xu*, Bangshuai Peng*, Ziyi Liu*, Mengjie Zhao, Chenhao Lu, Zhengyang Fan, Huazhe Xu†, and Kaizhe Hu† — Tsinghua University.
+Xiangyu Xu<sup>1,*</sup>, Bangshuai Peng<sup>1,*</sup>, Ziyi Liu<sup>1,*</sup>, Mengjie Zhao<sup>1</sup>, Chenhao Lu<sup>1,2</sup>, Zhengyang Fan<sup>1</sup>, Huazhe Xu<sup>1,2,†</sup>, and Kaizhe Hu<sup>1,2,†</sup>.
+
+<sup>1</sup> Tsinghua University · <sup>2</sup> Shanghai Qizhi Institute.
 
 *Equal contribution. †Corresponding authors.
 
@@ -19,6 +21,7 @@ Open <http://127.0.0.1:8000/>.
 ## Files
 
 - `index.html`: project page, results, and demonstration galleries.
+- `assets/paper/BURGER.pdf`: compiled paper, available through the Paper button.
 - `css/site.css`: responsive layout and scroll-focus styles.
 - `js/site.js`: navigation, media controls, and scroll focus.
 - `js/pipeline.js`: bundled stroke geometry and pipeline animation.
@@ -29,4 +32,6 @@ Open <http://127.0.0.1:8000/>.
 
 The site can be served from this branch's root directory by GitHub Pages or another static host. `.nojekyll` disables Jekyll processing on GitHub Pages.
 
-Paper, arXiv, dataset, code, and announcement links remain marked as coming soon. Replace their disabled buttons in `index.html` when the corresponding resources are public.
+The Paper button opens `assets/paper/BURGER.pdf`. Replace this file when the manuscript is updated.
+
+The arXiv, dataset, code, and announcement links remain marked as coming soon. Replace their disabled buttons in `index.html` when the corresponding resources are public.
