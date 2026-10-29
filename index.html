@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BURGER — Robotic Drawing Benchmark</title>
+    <meta name="description" content="BURGER studies how vision-language-action models learn from diverse robot demonstrations through drawing, with a 28,200-demonstration benchmark and a prompt-to-trajectory data pipeline.">
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+    <script src="js/pipeline.js" defer></script>
+    <script src="js/site.js" defer></script>
+    <script src="js/dataset-relations.js" defer></script>
+  </head>
+  <body class="site">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-nav"><div class="nav-inner">
+  <a class="brand" href="#top"><span class="brand-name">BURGER</span><span class="brand-title"><span class="accent">B</span>enchmarking and <span class="accent">U</span>nderstanding <span class="accent">R</span>obotic <span class="accent">G</span>eneralization via <span class="accent">E</span>mbodied d<span class="accent">R</span>awing</span></a>
+</div></header>
+<nav class="section-nav" id="section-nav" aria-label="Jump to a section"><a href="#top" aria-label="BURGER"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">BURGER</span></a><a href="#why" aria-label="Why drawing"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Why drawing</span></a><a href="#comparison" aria-label="BURGER &amp; LIBERO"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">BURGER &amp; LIBERO</span></a><a href="#circle" aria-label="Multimodal data"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Multimodal data</span></a><a href="#diversity" aria-label="Learned behaviors"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Learned behaviors</span></a><a href="#composition" aria-label="Compositional generalization"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Compositional generalization</span></a><a href="#scaling" aria-label="Data scaling"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Data scaling</span></a><a href="#real" aria-label="Real robot"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Real robot</span></a><a href="#real-transfer" aria-label="Simulated &amp; real data"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Simulated &amp; real data</span></a><a href="#dataset" aria-label="Dataset"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Dataset</span></a><a href="#motivation" aria-label="Demonstration diversity"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Demonstration diversity</span></a><a href="#single-categories" aria-label="Single-object gallery"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Single-object gallery</span></a><a href="#dataset-relations" aria-label="Spatial compositions"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Spatial compositions</span></a><a href="#generate" aria-label="Data generation"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Data generation</span></a><a href="#overview" aria-label="Overview"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Overview</span></a><a href="#cite" aria-label="Citation"><span class="nav-tick" aria-hidden="true"></span><span class="nav-label">Citation</span></a></nav>
+
+    <main id="main">
+      <section class="hero container" id="top" aria-labelledby="paper-title">
+        <h1 id="paper-title"><span class="wordmark">BURGER</span>
+          <span class="paper-title"><span class="accent">B</span>enchmarking and <span class="accent">U</span>nderstanding <span class="accent">R</span>obotic <span class="accent">G</span>eneralization<br class="desktop-break"> via <span class="accent">E</span>mbodied d<span class="accent">R</span>awing</span>
+        </h1>
+        <ul class="authors" aria-label="Authors">
+          <li>Xiangyu Xu<sup aria-label="Equal contribution">*</sup></li>
+          <li>Bangshuai Peng<sup aria-label="Equal contribution">*</sup></li>
+          <li><a href="https://taichi-pink.github.io/Ziyi-Liu/">Ziyi Liu</a><sup aria-label="Equal contribution">*</sup></li>
+          <li><a href="https://qxjyqzw.github.io/">Mengjie Zhao</a></li>
+          <li><a href="https://ctp314.github.io/">Chenhao Lu</a></li>
+          <li>Zhengyang Fan</li>
+          <li><a href="https://iiis.tsinghua.edu.cn/en/People/Faculty/XuHuazhe.htm">Huazhe Xu</a><sup aria-label="Corresponding author">†</sup></li>
+          <li><a href="https://hukz18.github.io/">Kaizhe Hu</a><sup aria-label="Corresponding author">†</sup></li>
+        </ul>
+        <p class="affiliation">Tsinghua University</p>
+        <p class="author-notes">* Equal contribution <span>† Corresponding authors</span></p>
+        <div class="resources resource-links" aria-label="Project resources"><button class="resource-link" type="button" disabled aria-label="Paper link coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" class="ic doc"><path d="M6.5 2.75h7.25l4.75 4.75v12.25a1.5 1.5 0 0 1-1.5 1.5h-10.5a1.5 1.5 0 0 1-1.5-1.5V4.25a1.5 1.5 0 0 1 1.5-1.5Z"/><path d="M13.5 3v4.75h4.75M8.5 12.5h7M8.5 16h7"/></svg><span>Paper</span></button><button class="resource-link" type="button" disabled aria-label="arXiv link coming soon"><svg viewBox="0 0 24 24" aria-hidden="true" class="ic brand arxiv"><path d="M3.8423 0a1.0037 1.0037 0 0 0-.922.6078c-.1536.3687-.0438.6275.2938 1.1113l6.9185 8.3597-1.0223 1.1058a1.0393 1.0393 0 0 0 .003 1.4229l1.2292 1.3135-5.4391 6.4444c-.2803.299-.4538.823-.2971 1.1986a1.0253 1.0253 0 0 0 .9585.635.9133.9133 0 0 0 .6891-.3405l5.783-6.126 7.4902 8.0051a.8527.8527 0 0 0 .6835.2597.9575.9575 0 0 0 .8777-.6138c.1577-.377-.017-.7502-.306-1.1407l-7.0518-8.3418 1.0632-1.13a.9626.9626 0 0 0 .0089-1.3165L4.6336.4639s-.3733-.4535-.768-.463zm0 .272h.0166c.2179.0052.4874.2715.5644.3639l.005.006.0052.0055 10.169 10.9905a.6915.6915 0 0 1-.0072.945l-1.0666 1.133-1.4982-1.7724-8.5994-10.39c-.3286-.472-.352-.6183-.2592-.841a.7307.7307 0 0 1 .6704-.4401Zm14.341 1.5701a.877.877 0 0 0-.6554.2418l-5.6962 6.1584 1.6944 1.8319 5.3089-6.5138c.3251-.4335.479-.6603.3247-1.0292a1.1205 1.1205 0 0 0-.9763-.689zm-7.6557 12.2823 1.3186 1.4135-5.7864 6.1295a.6494.6494 0 0 1-.4959.26.7516.7516 0 0 1-.706-.4669c-.1119-.2682.0359-.6864.2442-.9083l.0051-.0055.0047-.0055z"/></svg><span>arXiv</span></button><button class="resource-link" type="button" disabled aria-label="Hugging Face data link coming soon"><span class="hugging-face" aria-hidden="true">🤗</span><span>Data</span></button><button class="resource-link" type="button" disabled aria-label="Code link coming soon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .8a11.2 11.2 0 0 0-3.54 21.83c.56.1.76-.24.76-.54v-2.1c-3.12.68-3.78-1.32-3.78-1.32-.51-1.3-1.24-1.65-1.24-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.62 1.22 3.26.93.1-.73.39-1.22.71-1.5-2.49-.29-5.1-1.25-5.1-5.54 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.08 1.15A10.72 10.72 0 0 1 12 6.2c.95 0 1.9.13 2.8.38 2.13-1.45 3.07-1.15 3.07-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.3-2.62 5.25-5.12 5.53.4.35.76 1.03.76 2.08v3.09c0 .3.2.65.77.54A11.2 11.2 0 0 0 12 .8z"/></svg><span>Code</span></button><button class="resource-link" type="button" disabled aria-label="Twitter link coming soon"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 4.7a9.5 9.5 0 0 1-2.6.7 4.5 4.5 0 0 0 2-2.5 9.1 9.1 0 0 1-2.9 1.1 4.5 4.5 0 0 0-7.7 4.1A12.8 12.8 0 0 1 2.5 3.4a4.5 4.5 0 0 0 1.4 6 4.5 4.5 0 0 1-2-.6v.1a4.5 4.5 0 0 0 3.6 4.4 4.5 4.5 0 0 1-2 .1 4.5 4.5 0 0 0 4.2 3.1A9 9 0 0 1 1 18.4a12.8 12.8 0 0 0 19.7-10.8v-.6A9.2 9.2 0 0 0 23 4.7z"/></svg><span>Twitter</span></button><button class="resource-link" type="button" data-copy="citation" aria-label="Copy BibTeX citation"><svg viewBox="0 0 24 24" aria-hidden="true" class="ic doc"><path d="M7 4.5h10v15.25l-5-3.5-5 3.5Z"/></svg><span data-copy-label>BibTeX</span></button><span class="copy-status resource-copy-status" role="status" aria-live="polite"></span></div><p class="resource-status">Paper, data, code, and announcement links coming soon</p>
+      </section>
+
+      <section class="section container why-section" id="why" aria-labelledby="why-title">
+  <div class="why-lead">
+    <div class="intro-copy">
+  <h2 id="why-title">Drawing as a robotic task</h2>
+  <p>How effectively can VLA models learn diverse behaviors as training data scales? Answering this requires large, varied robot datasets, which remain costly to collect on physical robots. We propose to study this question through <span class="keyphrase">drawing</span>.</p>
+  <p>A robot starts from a blank canvas and follows a language instruction, yet each instruction allows many valid drawings and stroke orders. This makes the data naturally <span class="keyphrase">multimodal</span>, while compositions of familiar objects let us test <span class="keyphrase">spatial understanding</span> and <span class="keyphrase">generalization</span> to new combinations.</p>
+  <p>Text-to-image models supply the sketches that our pipeline converts into robot demonstrations, while learned visual features let us evaluate the resulting drawings. Together, these make drawing an ideal setting for studying how vision-language-action models learn as <span class="keyphrase">demonstrations scale</span>—and where their execution breaks down.</p>
+</div>
+    <figure class="demo opening-demo">
+      <div class="demo-heading"><span class="instruction">“Draw a hamburger.”</span></div>
+      <div class="video-compare video-frame" id="video-compare" style="--split:50%">
+        <div class="compare-layer compare-real"><video muted loop playsinline preload="none" data-compare-src="assets/videos/real_burger_opening.mp4?v=20261028-2" poster="assets/posters/real_burger_opening.jpg?v=20261028-2" aria-label="Real robot drawing a hamburger"></video></div>
+        <div class="compare-layer compare-sim"><video muted loop playsinline preload="none" data-compare-src="assets/videos/sim_sapien.mp4" poster="assets/posters/sim_sapien.jpg" aria-label="Simulated robot drawing a hamburger"></video></div>
+        <span class="compare-label sim-label">Simulation</span><span class="compare-label real-label">Real robot</span>
+        <div class="compare-divider" aria-hidden="true"></div>
+        <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Reveal simulation or real robot">
+        <button class="compare-play" type="button" aria-label="Play simulation and real-robot videos"><span aria-hidden="true">▶</span></button>
+      </div>
+      <figcaption class="compare-hint">Drag to compare. Simulation: generated demonstration. Real robot: learned policy.</figcaption>
+    </figure>
+  </div>
+</section>
+<section class="section container" id="comparison" aria-labelledby="comparison-title">
+      <div class="section-heading"><h2 id="comparison-title">Compare BURGER and LIBERO trajectories</h2><p>The same drawing instruction admits different <span class="keyphrase">shapes, stroke orders, and execution routes</span>. These four comparisons show the resulting diversity in BURGER alongside manipulation demonstrations from LIBERO.</p></div>
+
+  <figure class="trajectory-comparison" id="evidence">
+  <div class="trajectory-video video-frame">
+    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/trajectory-diversity-1080p.mp4" poster="assets/posters/trajectory-diversity-1080p.jpg" width="1920" height="1080" aria-label="Animated four-column trajectory comparison, showing LIBERO demonstrations, BURGER demonstrations, and learned policy rollouts"></video>
+    <button class="video-toggle" type="button" aria-label="Play trajectory comparison" data-name="trajectory comparison"><span aria-hidden="true">▶</span></button>
+  </div>
+  <figcaption><strong>Top:</strong> LIBERO demonstrations. <strong>Middle:</strong> BURGER demonstrations. <strong>Bottom:</strong> learned policy rollouts. Each panel accumulates 42 trajectories.</figcaption>
+</figure>
+  <p class="study-finding">Across 40 sampled instructions per dataset, BURGER averages <strong><span class="keyphrase">7.13 effective trajectory modes</span></strong>, compared with <strong>1.09 in LIBERO</strong>. The four examples above show how this variation appears in demonstrations and learned behavior.</p>
+
+    </section>
+
+
+
+      <section class="section container" id="circle" aria-labelledby="circle-title">
+        <div class="section-heading">
+          <h2 id="circle-title">What happens when VLAs deal with multimodal data?</h2>
+          <p>A circle can be drawn <span class="keyphrase">clockwise or counterclockwise</span>. We train on 100 demonstrations with the same shape and radius, using both directions in roughly equal proportions (56% clockwise, 44% counterclockwise). Position and starting point also vary. Can a VLA learn these alternatives and execute one consistently?</p>
+        </div>
+
+        <div class="circle-grid">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_openvla.mp4" poster="assets/posters/circ_openvla.jpg" aria-label="OpenVLA circle-drawing rollout"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play OpenVLA rollout" data-name="OpenVLA rollout"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>OpenVLA</strong><span>Stalls in local loops</span></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_oft1.mp4" poster="assets/posters/circ_oft1.jpg" aria-label="OpenVLA-OFT circle rollout with chunk length 1"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play OFT chunk 1 rollout" data-name="OFT chunk 1 rollout"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>OFT · chunk 1</strong><span>Often misses contact</span></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_oft8.mp4" poster="assets/posters/circ_oft8.jpg" aria-label="OpenVLA-OFT circle rollout with chunk length 8"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play OFT chunk 8 rollout" data-name="OFT chunk 8 rollout"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>OFT · chunk 8</strong><span>Draws, then overdraws</span></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_fast.mp4" poster="assets/posters/circ_fast.jpg" aria-label="Pi zero FAST circle-drawing rollout"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play pi zero FAST rollout" data-name="pi zero FAST rollout"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>π<sub>0</sub>-FAST</strong><span>Favors one direction</span></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/circ_pi05.mp4" poster="assets/posters/circ_pi05.jpg" aria-label="Pi zero point five circle-drawing rollout"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play pi zero point five rollout" data-name="pi zero point five rollout"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>π<sub>0.5</sub></strong><span>Completes a single circle</span></figcaption>
+          </figure>
+        </div>
+        <p class="caption">Learned policies in simulation, shown at 3× speed. One example per setting; the measurements use 20 rollouts for each setting.</p>
+        <div class="finding-pair">
+          <p><strong>Execution changes with action chunking.</strong> OpenVLA-OFT makes contact in 6/20 rollouts at chunk length 1 and 20/20 at length 8.</p>
+          <p><strong>Does the policy preserve both directions?</strong> π<sub>0</sub>-FAST draws clockwise in 95% of rollouts, compared with 56% of demonstrations. It also continues beyond a single revolution.</p>
+        </div>
+        <p class="study-finding">The same task exposes differences in contact, progress, termination, and <span class="keyphrase">coverage of the demonstrated behaviors</span>. Inspecting the drawing process lets us distinguish these failure patterns.</p>
+        <div class="evidence-block"><h3 class="content-title">All circle rollouts and measurements</h3><div class="details-body">
+
+            <img class="wide-figure" src="assets/figures/fig9_circle.webp" width="1390" height="373" loading="lazy" alt="Twenty circle rollouts per model setting, overlaid and colored by drawing direction.">
+            <div class="table-scroll reading-width" role="region" aria-label="Circle results" tabindex="0">
+              <table>
+                <caption>100 training demonstrations; 20 rollouts per model setting.</caption>
+                <thead><tr><th scope="col">Source</th><th scope="col">Contact</th><th scope="col">Clockwise</th><th scope="col">Start entropy</th><th scope="col">Mean sweep</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Demonstrations</th><td>100/100</td><td>56%</td><td>0.97</td><td>359.8°</td></tr>
+                  <tr><th scope="row">OpenVLA</th><td>20/20</td><td>40%</td><td>0.82</td><td>874.6°</td></tr>
+                  <tr><th scope="row">OFT · chunk 1</th><td>6/20</td><td>100%</td><td>0.35</td><td>129.3°</td></tr>
+                  <tr><th scope="row">OFT · chunk 8</th><td>20/20</td><td>55%</td><td>0.58</td><td>586.1°</td></tr>
+                  <tr><th scope="row">π<sub>0</sub>-FAST</th><td>20/20</td><td>95%</td><td>0.63</td><td>563.2°</td></tr>
+                  <tr><th scope="row">π<sub>0.5</sub></th><td>20/20</td><td>55%</td><td>0.84</td><td>355.2°</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="caption reading-width">Clockwise percentages use rollouts that make contact. Higher start entropy indicates more
+              uniform starting points; a sweep near 360° indicates a single revolution.</p>
+
+          </div></div>
+        <article class="content-block" id="diversity" aria-labelledby="diversity-title">
+          <h3 class="content-title" id="diversity-title">Learning more than one drawing behavior</h3>
+          <p class="section-lead">On more varied tasks, π<sub>0.5</sub> also learns to produce <span class="keyphrase">different drawings for the same instruction</span>. The helmet examples below compare training demonstrations with learned policy executions.</p>
+          <figure class="paper-figure">
+            <img src="assets/figures/learned-multimodality.png" width="1484" height="525" loading="lazy" alt="Helmet training demonstrations in the top two rows and different learned pi zero point five drawing sequences in the bottom row.">
+            <figcaption>Training demonstrations above; learned policy executions below. Figure from the paper.</figcaption>
+          </figure>
+        </article>
+
+      </section>
+
+      <section class="section container" id="composition" aria-labelledby="composition-title">
+        <div class="section-heading">
+          <h2 id="composition-title">Language following and compositional generalization</h2>
+          <p>The initial blank canvas does not reveal which object to draw. The instruction specifies the object and, for a composition, its spatial relation to another object. As the drawing develops, the policy uses the changing canvas as visual feedback.</p>
+        </div>
+
+        <p class="section-lead">We also ask whether a policy can combine familiar objects in <span class="keyphrase">pairs absent from training</span>. The examples below show π<sub>0</sub> executing a seen pair and a held-out pair.</p>
+        <div class="composition-grid reading-width">
+          <figure class="demo composition-demo">
+            <div class="demo-heading"><span class="status-label">Pair seen in training</span><span>π<sub>0</sub> · simulation</span></div>
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/comp_leaf_moon.mp4" poster="assets/posters/comp_leaf_moon.jpg" aria-label="Pi zero draws a leaf to the left of a moon, a training pair"></video>
+              <button class="video-toggle" type="button" aria-label="Play seen composition" data-name="seen composition"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><q>Draw a leaf left of a moon.</q></figcaption>
+          </figure>
+          <figure class="demo composition-demo">
+            <div class="demo-heading"><span class="status-label accent">Pair held out from training</span><span>π<sub>0</sub> · simulation</span></div>
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/comp_apple_berry.mp4" poster="assets/posters/comp_apple_berry.jpg" aria-label="Pi zero draws an apple left of a blueberry, a pair absent from training"></video>
+              <button class="video-toggle" type="button" aria-label="Play unseen composition" data-name="unseen composition"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><q>Draw an apple left of a blueberry.</q></figcaption>
+          </figure>
+        </div>
+        <p class="caption reading-width">Selected learned-policy rollouts in simulation. Both objects in the held-out pair are familiar from training.</p>
+        <p class="study-finding">The evaluated policies can produce new combinations of familiar objects, while object categories absent from training remain difficult. Composition can also reduce drawing quality, especially when the instruction set includes vertical relations.</p>
+
+
+      </section>
+
+      <section class="section container" id="scaling" aria-labelledby="scaling-title">
+        <div class="section-heading">
+          <h2 id="scaling-title">How learning changes with data scale</h2>
+          <p>The generation pipeline lets us vary the number of object classes from 10 to 132 and demonstrations per class from 10 to 100. We use this sweep to study how three OpenPI-family models respond to additional data: the flow-matching models π₀ and π₀.₅, and the autoregressive π₀-FAST.</p>
+        </div>
+
+        <div class="scaling-gallery">
+          <figure>
+            <figcaption>π<sub>0</sub></figcaption>
+            <img src="assets/figures/fig6_pi0.webp" width="1200" height="870" loading="lazy" alt="Pi zero drawing score across numbers of training classes and demonstrations per class.">
+          </figure>
+          <figure>
+            <figcaption>π<sub>0.5</sub></figcaption>
+            <img src="assets/figures/fig6_pi05.webp" width="1200" height="870" loading="lazy" alt="Pi zero point five drawing score across numbers of training classes and demonstrations per class.">
+          </figure>
+          <figure>
+            <figcaption>π<sub>0</sub>-FAST</figcaption>
+            <img src="assets/figures/fig6_pi0fast.webp" width="1200" height="870" loading="lazy" alt="Pi zero FAST drawing score across numbers of training classes and demonstrations per class.">
+          </figure>
+        </div>
+        <p class="caption">Drawing similarity across numbers of training classes and demonstrations per class. Higher scores indicate greater similarity to the target object class in the learned sketch embedding.</p>
+        <p class="study-finding">π<sub>0</sub> and π<sub>0.5</sub> improve more consistently as data scale increases. π<sub>0</sub>-FAST shows more variable trends. The models differ in <span class="keyphrase">how effectively they use additional drawing demonstrations</span>.</p>
+        <p class="section-lead">The <a href="#generate">demonstration generator</a> provides a way to vary task diversity and examples per task within one robot setup, supporting further studies of how training data shapes learned behavior.</p>
+        <div class="evidence-block"><h3 class="content-title section-title">How drawing quality is measured</h3><div class="details-body reading-width">
+
+            <p>We train a projection head on frozen DINOv3 features to score drawings against their target class.
+              In a study of 10 single-object classes, 66 participants ranked five drawings per class.
+              The metric agrees more closely with their judgments than CLIPScore.</p>
+            <div class="table-scroll" role="region" aria-label="Human agreement results" tabindex="0">
+              <table>
+                <caption>Agreement with human rankings</caption>
+                <thead><tr><th scope="col">Metric</th><th scope="col">Spearman ρ</th><th scope="col">Kendall τ<sub>b</sub></th><th scope="col">Pairwise</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">CLIPScore</th><td>0.592</td><td>0.433</td><td>0.803</td></tr>
+                  <tr><th scope="row">BURGER metric</th><td>0.834</td><td>0.655</td><td>0.875</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div></div>
+
+      </section>
+
+      <section class="section container" id="real" aria-labelledby="real-title">
+        <div class="section-heading">
+          <h2 id="real-title">Drawing with visual feedback on a real robot</h2>
+          <p>On a Franka Panda, fine-tuned π₀.₅ policies <span class="keyphrase">complete partial drawings and continue after a human edit</span>. The experiments below use different training datasets, indicated with each result. These are selected qualitative examples.</p>
+        </div>
+
+        <article class="real-group hardware-feature">
+
+          <div class="real-pair">
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cup_complete.mp4" poster="assets/posters/real_cup_complete.jpg" aria-label="Add the missing cup handle, learned pi zero point five policy on a Franka Panda"></video>
+                <span class="video-tag">Real robot · 4.9×</span><button class="video-toggle" type="button" aria-label="Play Add the missing cup handle" data-name="Add the missing cup handle"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Add the missing cup handle</strong><span>Training: 100 simulated demonstrations (10 tasks) + 30 real demonstrations (3 tasks).</span></figcaption>
+
+            </figure>
+            <figure class="demo">
+              <div class="video-frame">
+                <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_human.mp4" poster="assets/posters/real_bike_human.jpg" aria-label="Continue after a human draws the rear wheel, learned pi zero point five policy on a Franka Panda"></video>
+                <span class="video-tag">Real robot · 4.9×</span><button class="video-toggle" type="button" aria-label="Play Continue after a human draws the rear wheel" data-name="Continue after a human draws the rear wheel"><span aria-hidden="true">▶</span></button>
+              </div>
+              <figcaption><strong>Continue after a human draws the rear wheel</strong><span>Training: 100 real demonstrations across 10 tasks. The robot is paused during the human edit.</span></figcaption>
+
+            </figure>
+          </div>
+        </article>
+        <p class="study-finding">In the bicycle experiment, the robot pauses while a person adds the rear wheel, then resumes from the updated canvas. The learned policy continues with the remaining structure.</p>
+        <div class="evidence-block"><div class="details-body">
+            <article class="real-group">
+              <div class="real-group-heading"><h3>Real-only training</h3><p>π<sub>0.5</sub> · 100 real demonstrations across 10 tasks.</p></div>
+              <div class="real-gallery">
+                <figure class="demo">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cake.mp4" poster="assets/posters/real_cake.jpg" aria-label="Birthday cake, learned pi zero point five policy on a Franka Panda"></video>
+                    <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Birthday cake" data-name="Birthday cake"><span aria-hidden="true">▶</span></button>
+                  </div>
+                  <figcaption><strong>Birthday cake</strong></figcaption>
+
+                </figure>
+                <figure class="demo">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_guitar.mp4" poster="assets/posters/real_guitar.jpg" aria-label="Guitar, learned pi zero point five policy on a Franka Panda"></video>
+                    <span class="video-tag">Real robot · 6.5×</span><button class="video-toggle" type="button" aria-label="Play Guitar" data-name="Guitar"><span aria-hidden="true">▶</span></button>
+                  </div>
+                  <figcaption><strong>Guitar</strong></figcaption>
+
+                </figure>
+                <figure class="demo">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_train.mp4" poster="assets/posters/real_train.jpg" aria-label="Train, learned pi zero point five policy on a Franka Panda"></video>
+                    <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Train" data-name="Train"><span aria-hidden="true">▶</span></button>
+                  </div>
+                  <figcaption><strong>Train</strong></figcaption>
+
+                </figure>
+                <figure class="demo">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_butterfly.mp4" poster="assets/posters/real_butterfly.jpg" aria-label="Butterfly, learned pi zero point five policy on a Franka Panda"></video>
+                    <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Butterfly" data-name="Butterfly"><span aria-hidden="true">▶</span></button>
+                  </div>
+                  <figcaption><strong>Butterfly</strong></figcaption>
+
+                </figure>
+              </div>
+            </article>
+            <article class="real-group reading-width">
+              <div class="real-group-heading"><h3>Same instruction, different stroke orders</h3><p>“Draw a bicycle.” · 100 real demonstrations across 10 tasks.</p></div>
+              <div class="real-pair">
+                <figure class="demo">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_mode_a.mp4" poster="assets/posters/real_bike_mode_a.jpg" aria-label="Start with the left wheel, learned pi zero point five policy on a Franka Panda"></video>
+                    <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Start with the left wheel" data-name="Start with the left wheel"><span aria-hidden="true">▶</span></button>
+                  </div>
+                  <figcaption><strong>Start with the left wheel</strong></figcaption>
+
+                </figure>
+                <figure class="demo">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_bike_mode_b.mp4" poster="assets/posters/real_bike_mode_b.jpg" aria-label="Start with the right wheel, learned pi zero point five policy on a Franka Panda"></video>
+                    <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Start with the right wheel" data-name="Start with the right wheel"><span aria-hidden="true">▶</span></button>
+                  </div>
+                  <figcaption><strong>Start with the right wheel</strong></figcaption>
+
+                </figure>
+              </div>
+            </article>
+            <article class="real-group reading-width">
+              <div class="real-group-heading"><h3>Drawing after the camera moves</h3><p>“Draw an apple.” · 30 real demonstrations across 3 tasks.</p></div>
+              <div class="real-pair">
+                <figure class="demo">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cam_front.mp4" poster="assets/posters/real_cam_front.jpg" aria-label="Default front view, learned pi zero point five policy on a Franka Panda"></video>
+                    <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Default front view" data-name="Default front view"><span aria-hidden="true">▶</span></button>
+                  </div>
+                  <figcaption><strong>Default front view</strong></figcaption>
+
+                </figure>
+                <figure class="demo">
+                  <div class="video-frame">
+                    <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_cam_moved.mp4" poster="assets/posters/real_cam_moved.jpg" aria-label="Oblique view, learned pi zero point five policy on a Franka Panda"></video>
+                    <span class="video-tag">Real robot · 6.6×</span><button class="video-toggle" type="button" aria-label="Play Oblique view" data-name="Oblique view"><span aria-hidden="true">▶</span></button>
+                  </div>
+                  <figcaption><strong>Oblique view</strong></figcaption>
+
+                </figure>
+              </div>
+            </article>
+
+          </div></div>
+        <div class="evidence-block"><div class="details-body">
+            <article class="real-transfer" id="real-transfer" aria-labelledby="transfer-title">
+  <div class="transfer-intro"><div><h3 id="transfer-title">From simulated data to real-robot drawing</h3></div>
+    <p>We mix generated simulation demonstrations with a small real-robot dataset to fine-tune π<sub>0.5</sub>. These four objects appear in simulation training but are <span class="keyphrase">absent from the real-training set</span>.</p>
+  </div>
+  <dl class="transfer-facts">
+    <div><dt>Simulated demonstrations</dt><dd>14,751<span>across 132 tasks</span></dd></div>
+    <div><dt>Real demonstrations</dt><dd>100<span>across 10 tasks</span></dd></div>
+  </dl>
+  <div class="real-gallery transfer-gallery"><div class="transfer-card">
+                  <figure class="demo">
+                    <div class="video-frame">
+                      <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_moon.mp4?v=20261028-2" poster="assets/posters/real_transfer_moon.jpg?v=20261028-2" width="576" height="432" aria-label="Moon, real-robot rollout from the mixed-data checkpoint"></video>
+                      <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Moon" data-name="mixed-data Moon"><span aria-hidden="true">▶</span></button>
+                    </div>
+                    <figcaption><strong>Moon</strong></figcaption>
+                  </figure>
+
+                </div><div class="transfer-card">
+                  <figure class="demo">
+                    <div class="video-frame">
+                      <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_banana.mp4?v=20261028-2" poster="assets/posters/real_transfer_banana.jpg?v=20261028-2" width="576" height="432" aria-label="Banana, real-robot rollout from the mixed-data checkpoint"></video>
+                      <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Banana" data-name="mixed-data Banana"><span aria-hidden="true">▶</span></button>
+                    </div>
+                    <figcaption><strong>Banana</strong></figcaption>
+                  </figure>
+
+                </div><div class="transfer-card">
+                      <figure class="demo">
+                        <div class="video-frame">
+                          <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_owl.mp4?v=20261028-2" poster="assets/posters/real_transfer_owl.jpg?v=20261028-2" width="576" height="432" aria-label="Owl, real-robot rollout from the mixed-data checkpoint"></video>
+                          <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Owl" data-name="mixed-data Owl"><span aria-hidden="true">▶</span></button>
+                        </div>
+                        <figcaption><strong>Owl</strong></figcaption>
+                      </figure>
+
+                    </div><div class="transfer-card">
+                      <figure class="demo">
+                        <div class="video-frame">
+                          <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/real_transfer_cat.mp4?v=20261028-2" poster="assets/posters/real_transfer_cat.jpg?v=20261028-2" width="576" height="432" aria-label="Cat, real-robot rollout from the mixed-data checkpoint"></video>
+                          <span class="video-tag">3× recording</span><button class="video-toggle" type="button" aria-label="Play mixed-data Cat" data-name="mixed-data Cat"><span aria-hidden="true">▶</span></button>
+                        </div>
+                        <figcaption><strong>Cat</strong></figcaption>
+                      </figure>
+
+                    </div></div>
+</article>
+          </div></div>
+
+      </section>
+
+      <section class="section container" id="dataset" aria-labelledby="dataset-title">
+        <div class="section-heading">
+          <h2 id="dataset-title">Dataset and demonstration generation</h2>
+          <p>BURGER is designed to support studies of language-conditioned robot data. The dataset provides a starting point, and the generation pipeline lets researchers extend the task set and construct new training demonstrations.</p>
+        </div>
+
+        <div class="resource-intro">
+          <p>The benchmark contains <span class="keyphrase">28,200 simulated demonstrations</span>: 132 single-object tasks and 150 compositional tasks, with 100 demonstrations per task. The compositional set contains 100 horizontal and 50 vertical tasks.</p>
+        </div>
+        <dl class="dataset-facts reading-width">
+          <div><dt>Simulated demonstrations</dt><dd>28,200</dd></div>
+          <div><dt>Single-object tasks</dt><dd>132</dd></div>
+          <div><dt>Composition tasks</dt><dd>150</dd></div>
+          <div><dt>Demonstrations per task</dt><dd>100</dd></div>
+        </dl>
+        <article class="content-block" id="motivation" aria-labelledby="motivation-title">
+  <h3 class="content-title" id="motivation-title">Diversity in drawing demonstrations</h3>
+  <p class="section-lead">Consider “draw a helmet.” Both its shape and its stroke sequence can vary. A drawing dataset contains <span class="keyphrase">variation within each instruction</span> as well as across categories.</p>
+  <div class="training-examples">
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/helmet_order_01.mp4" poster="assets/posters/helmet_order_01.jpg" aria-label="Helmet demonstration 1"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 1" data-name="Helmet demonstration 1"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Demonstration 01 · Helmet A</strong><span>Outline first · clockwise</span></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/helmet_order_02.mp4" poster="assets/posters/helmet_order_02.jpg" aria-label="Helmet demonstration 2"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 2" data-name="Helmet demonstration 2"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Demonstration 02 · Helmet A</strong><span>Visor first · counterclockwise</span></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/helmet_order_03.mp4" poster="assets/posters/helmet_order_03.jpg" aria-label="Helmet demonstration 3"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 3" data-name="Helmet demonstration 3"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Demonstration 03 · Helmet B</strong><span>Outline first · clockwise</span></figcaption>
+          </figure>
+          <figure class="demo">
+            <div class="video-frame">
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/helmet_order_04.mp4" poster="assets/posters/helmet_order_04.jpg" aria-label="Helmet demonstration 4"></video>
+              <span class="video-tag">3×</span><button class="video-toggle" type="button" aria-label="Play Helmet demonstration 4" data-name="Helmet demonstration 4"><span aria-hidden="true">▶</span></button>
+            </div>
+            <figcaption><strong>Demonstration 04 · Helmet B</strong><span>Lining first · counterclockwise</span></figcaption>
+          </figure>
+        </div>
+  <p class="caption">Each pair draws the same helmet with a different stroke order, direction, and starting point. Generated in simulation · 3× speed.</p>
+</article>
+<article class="content-block" id="single-categories" aria-labelledby="single-categories-title">
+  <div class="gallery-heading"><div><h3 class="content-title" id="single-categories-title">Single-object demonstrations</h3><p class="caption">32 category previews · 132 categories in the full dataset</p></div>
+    <div class="gallery-controls"><button type="button" data-gallery-prev aria-controls="single-gallery" aria-label="Previous categories">←</button><button type="button" data-gallery-next aria-controls="single-gallery" aria-label="Next categories">→</button></div>
+  </div>
+  <div class="single-gallery" id="single-gallery" role="region" aria-label="Single-object demonstration gallery" tabindex="0"><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_apple.mp4" poster="assets/posters/g_apple.jpg" aria-label="Generated apple demonstration"></video>
+        <span class="video-tag">7.8×</span><button class="video-toggle" type="button" aria-label="Play apple demonstration" data-name="apple demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Apple</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_backpack.mp4" poster="assets/posters/g_backpack.jpg" aria-label="Generated backpack demonstration"></video>
+        <span class="video-tag">13×</span><button class="video-toggle" type="button" aria-label="Play backpack demonstration" data-name="backpack demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Backpack</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_bicycle.mp4" poster="assets/posters/g_bicycle.jpg" aria-label="Generated bicycle demonstration"></video>
+        <span class="video-tag">8.3×</span><button class="video-toggle" type="button" aria-label="Play bicycle demonstration" data-name="bicycle demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Bicycle</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_birthday_cake.mp4" poster="assets/posters/g_birthday_cake.jpg" aria-label="Generated birthday cake demonstration"></video>
+        <span class="video-tag">7.7×</span><button class="video-toggle" type="button" aria-label="Play birthday cake demonstration" data-name="birthday cake demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Birthday cake</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_book.mp4" poster="assets/posters/g_book.jpg" aria-label="Generated book demonstration"></video>
+        <span class="video-tag">9×</span><button class="video-toggle" type="button" aria-label="Play book demonstration" data-name="book demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Book</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_butterfly.mp4" poster="assets/posters/g_butterfly.jpg" aria-label="Generated butterfly demonstration"></video>
+        <span class="video-tag">6.7×</span><button class="video-toggle" type="button" aria-label="Play butterfly demonstration" data-name="butterfly demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Butterfly</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_camera.mp4" poster="assets/posters/g_camera.jpg" aria-label="Generated camera demonstration"></video>
+        <span class="video-tag">10.6×</span><button class="video-toggle" type="button" aria-label="Play camera demonstration" data-name="camera demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Camera</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_car.mp4" poster="assets/posters/g_car.jpg" aria-label="Generated car demonstration"></video>
+        <span class="video-tag">7.1×</span><button class="video-toggle" type="button" aria-label="Play car demonstration" data-name="car demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Car</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_cat.mp4" poster="assets/posters/g_cat.jpg" aria-label="Generated cat demonstration"></video>
+        <span class="video-tag">6.9×</span><button class="video-toggle" type="button" aria-label="Play cat demonstration" data-name="cat demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Cat</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_chair.mp4" poster="assets/posters/g_chair.jpg" aria-label="Generated chair demonstration"></video>
+        <span class="video-tag">4.7×</span><button class="video-toggle" type="button" aria-label="Play chair demonstration" data-name="chair demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Chair</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_cup.mp4" poster="assets/posters/g_cup.jpg" aria-label="Generated cup demonstration"></video>
+        <span class="video-tag">7.1×</span><button class="video-toggle" type="button" aria-label="Play cup demonstration" data-name="cup demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Cup</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_elephant.mp4" poster="assets/posters/g_elephant.jpg" aria-label="Generated elephant demonstration"></video>
+        <span class="video-tag">8.6×</span><button class="video-toggle" type="button" aria-label="Play elephant demonstration" data-name="elephant demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Elephant</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_fish.mp4" poster="assets/posters/g_fish.jpg" aria-label="Generated fish demonstration"></video>
+        <span class="video-tag">4.4×</span><button class="video-toggle" type="button" aria-label="Play fish demonstration" data-name="fish demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Fish</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_flower.mp4" poster="assets/posters/g_flower.jpg" aria-label="Generated flower demonstration"></video>
+        <span class="video-tag">8.2×</span><button class="video-toggle" type="button" aria-label="Play flower demonstration" data-name="flower demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Flower</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_guitar.mp4" poster="assets/posters/g_guitar.jpg" aria-label="Generated guitar demonstration"></video>
+        <span class="video-tag">6.5×</span><button class="video-toggle" type="button" aria-label="Play guitar demonstration" data-name="guitar demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Guitar</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_horse.mp4" poster="assets/posters/g_horse.jpg" aria-label="Generated horse demonstration"></video>
+        <span class="video-tag">7.1×</span><button class="video-toggle" type="button" aria-label="Play horse demonstration" data-name="horse demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Horse</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_house.mp4" poster="assets/posters/g_house.jpg" aria-label="Generated house demonstration"></video>
+        <span class="video-tag">9.5×</span><button class="video-toggle" type="button" aria-label="Play house demonstration" data-name="house demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>House</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_moon.mp4" poster="assets/posters/g_moon.jpg" aria-label="Generated moon demonstration"></video>
+        <span class="video-tag">3.4×</span><button class="video-toggle" type="button" aria-label="Play moon demonstration" data-name="moon demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Moon</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_mug.mp4" poster="assets/posters/g_mug.jpg" aria-label="Generated mug demonstration"></video>
+        <span class="video-tag">8.2×</span><button class="video-toggle" type="button" aria-label="Play mug demonstration" data-name="mug demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Mug</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_owl.mp4" poster="assets/posters/g_owl.jpg" aria-label="Generated owl demonstration"></video>
+        <span class="video-tag">7.2×</span><button class="video-toggle" type="button" aria-label="Play owl demonstration" data-name="owl demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Owl</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_palm_tree.mp4" poster="assets/posters/g_palm_tree.jpg" aria-label="Generated palm tree demonstration"></video>
+        <span class="video-tag">8.2×</span><button class="video-toggle" type="button" aria-label="Play palm tree demonstration" data-name="palm tree demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Palm tree</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_piano.mp4" poster="assets/posters/g_piano.jpg" aria-label="Generated piano demonstration"></video>
+        <span class="video-tag">7.5×</span><button class="video-toggle" type="button" aria-label="Play piano demonstration" data-name="piano demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Piano</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_pineapple.mp4" poster="assets/posters/g_pineapple.jpg" aria-label="Generated pineapple demonstration"></video>
+        <span class="video-tag">7.2×</span><button class="video-toggle" type="button" aria-label="Play pineapple demonstration" data-name="pineapple demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Pineapple</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_rabbit.mp4" poster="assets/posters/g_rabbit.jpg" aria-label="Generated rabbit demonstration"></video>
+        <span class="video-tag">7.3×</span><button class="video-toggle" type="button" aria-label="Play rabbit demonstration" data-name="rabbit demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Rabbit</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_sailboat.mp4" poster="assets/posters/g_sailboat.jpg" aria-label="Generated sailboat demonstration"></video>
+        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play sailboat demonstration" data-name="sailboat demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Sailboat</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_shoe.mp4" poster="assets/posters/g_shoe.jpg" aria-label="Generated shoe demonstration"></video>
+        <span class="video-tag">5×</span><button class="video-toggle" type="button" aria-label="Play shoe demonstration" data-name="shoe demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Shoe</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_snowman.mp4" poster="assets/posters/g_snowman.jpg" aria-label="Generated snowman demonstration"></video>
+        <span class="video-tag">4.8×</span><button class="video-toggle" type="button" aria-label="Play snowman demonstration" data-name="snowman demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Snowman</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_sun.mp4" poster="assets/posters/g_sun.jpg" aria-label="Generated sun demonstration"></video>
+        <span class="video-tag">6.9×</span><button class="video-toggle" type="button" aria-label="Play sun demonstration" data-name="sun demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Sun</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_television.mp4" poster="assets/posters/g_television.jpg" aria-label="Generated television demonstration"></video>
+        <span class="video-tag">12.6×</span><button class="video-toggle" type="button" aria-label="Play television demonstration" data-name="television demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Television</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_train.mp4" poster="assets/posters/g_train.jpg" aria-label="Generated train demonstration"></video>
+        <span class="video-tag">8.9×</span><button class="video-toggle" type="button" aria-label="Play train demonstration" data-name="train demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Train</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_umbrella.mp4" poster="assets/posters/g_umbrella.jpg" aria-label="Generated umbrella demonstration"></video>
+        <span class="video-tag">4×</span><button class="video-toggle" type="button" aria-label="Play umbrella demonstration" data-name="umbrella demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Umbrella</figcaption>
+    </figure><figure class="single-card demo">
+      <div class="video-frame"><video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_vase.mp4" poster="assets/posters/g_vase.jpg" aria-label="Generated vase demonstration"></video>
+        <span class="video-tag">3.7×</span><button class="video-toggle" type="button" aria-label="Play vase demonstration" data-name="vase demonstration"><span aria-hidden="true">▶</span></button></div>
+      <figcaption>Vase</figcaption>
+    </figure><div class="single-card gallery-placeholder"><strong>100 more categories</strong><p>Demonstration previews coming soon.</p></div></div>
+  <p class="caption">Scroll to browse generated demonstrations, replayed in simulation.</p>
+</article>
+
+        <div class="evidence-block"><div class="details-body">
+            <section class="dataset-relations" id="dataset-relations" aria-labelledby="relation-title" data-dataset-relations>
+              <div class="relation-intro">
+                <div><h3 id="relation-title">Generated spatial-composition demonstrations</h3></div>
+                <p>Explore 18 tasks with three recorded demonstrations each. The inside / contains examples illustrate additional generated tasks beyond the paper’s horizontal and vertical composition set.</p>
+              </div>
+              <div class="relation-browser reading-width">
+                <div class="relation-toolbar gallery-control">
+                  <div class="relation-filters" role="group" aria-label="Spatial relation"><button type="button" data-relation="horizontal" aria-pressed="true">Left / right</button><button type="button" data-relation="vertical" aria-pressed="false">Above / below</button><button type="button" data-relation="containment" aria-pressed="false">Inside / contains</button></div>
+                  <span class="relation-kind">54 demonstrations</span>
+                </div>
+                <div class="relation-context gallery-control">
+                  <p data-relation-description></p>
+                  <div class="relation-variants" role="group" aria-label="Demonstration set"><span>Demonstration</span><button type="button" data-variant="0" aria-pressed="true" aria-label="Demonstration set 1">01</button><button type="button" data-variant="1" aria-pressed="false" aria-label="Demonstration set 2">02</button><button type="button" data-variant="2" aria-pressed="false" aria-label="Demonstration set 3">03</button></div>
+                </div>
+                <div class="relation-panel" data-relation-panel="horizontal" data-description="Side-by-side compositions, including the same objects with their positions exchanged." aria-label="Left / right dataset animations">
+                  <h4 class="relation-fallback-title">Left / right</h4>
+                  <div class="relation-grid">
+                    <figure class="relation-card" data-sample="leaf_left_moon" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_moon_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_moon_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_moon_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_moon_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_moon_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_moon_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a leaf left moon" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/leaf_left_moon_ep00.mp4" poster="assets/posters/relations/leaf_left_moon_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Leaf left of moon"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Leaf left of moon" data-name="Leaf left of moon"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/leaf_left_moon_ep00.mp4" data-enlarge aria-label="Enlarge Leaf left of moon"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Leaf <em>left of</em> moon</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="moon_left_leaf" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/moon_left_leaf_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/moon_left_leaf_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/moon_left_leaf_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/moon_left_leaf_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/moon_left_leaf_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/moon_left_leaf_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a moon left leaf" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/moon_left_leaf_ep00.mp4" poster="assets/posters/relations/moon_left_leaf_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Moon left of leaf"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Moon left of leaf" data-name="Moon left of leaf"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/moon_left_leaf_ep00.mp4" data-enlarge aria-label="Enlarge Moon left of leaf"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Moon <em>left of</em> leaf</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="snowman_left_leaf" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/snowman_left_leaf_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/snowman_left_leaf_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/snowman_left_leaf_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/snowman_left_leaf_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/snowman_left_leaf_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/snowman_left_leaf_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a snowman left leaf" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/snowman_left_leaf_ep00.mp4" poster="assets/posters/relations/snowman_left_leaf_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Snowman left of leaf"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Snowman left of leaf" data-name="Snowman left of leaf"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/snowman_left_leaf_ep00.mp4" data-enlarge aria-label="Enlarge Snowman left of leaf"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Snowman <em>left of</em> leaf</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="leaf_left_snowman" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_snowman_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_snowman_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_snowman_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_snowman_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/leaf_left_snowman_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/leaf_left_snowman_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a leaf left snowman" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/leaf_left_snowman_ep00.mp4" poster="assets/posters/relations/leaf_left_snowman_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Leaf left of snowman"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Leaf left of snowman" data-name="Leaf left of snowman"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/leaf_left_snowman_ep00.mp4" data-enlarge aria-label="Enlarge Leaf left of snowman"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Leaf <em>left of</em> snowman</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="mug_left_pizza" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/mug_left_pizza_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/mug_left_pizza_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/mug_left_pizza_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/mug_left_pizza_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/mug_left_pizza_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/mug_left_pizza_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a mug left pizza" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/mug_left_pizza_ep00.mp4" poster="assets/posters/relations/mug_left_pizza_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Mug left of pizza"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Mug left of pizza" data-name="Mug left of pizza"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/mug_left_pizza_ep00.mp4" data-enlarge aria-label="Enlarge Mug left of pizza"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Mug <em>left of</em> pizza</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="purse_left_star" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/purse_left_star_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_left_star_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/purse_left_star_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_left_star_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/purse_left_star_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_left_star_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a purse left star" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/purse_left_star_ep00.mp4" poster="assets/posters/relations/purse_left_star_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Purse left of star"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Purse left of star" data-name="Purse left of star"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/purse_left_star_ep00.mp4" data-enlarge aria-label="Enlarge Purse left of star"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Purse <em>left of</em> star</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                  </div>
+                </div>
+                <div class="relation-panel" data-relation-panel="vertical" data-description="Stacked compositions with distinct shapes, scales and stroke orders across demonstrations." aria-label="Above / below dataset animations">
+                  <h4 class="relation-fallback-title">Above / below</h4>
+                  <div class="relation-grid">
+                    <figure class="relation-card" data-sample="camera_over_baseball" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/camera_over_baseball_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/camera_over_baseball_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/camera_over_baseball_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/camera_over_baseball_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/camera_over_baseball_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/camera_over_baseball_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a camera over baseball" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/camera_over_baseball_ep00.mp4" poster="assets/posters/relations/camera_over_baseball_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Camera above baseball"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Camera above baseball" data-name="Camera above baseball"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/camera_over_baseball_ep00.mp4" data-enlarge aria-label="Enlarge Camera above baseball"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Camera <em>above</em> baseball</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="umbrella_over_butterfly" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/umbrella_over_butterfly_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/umbrella_over_butterfly_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/umbrella_over_butterfly_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/umbrella_over_butterfly_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/umbrella_over_butterfly_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/umbrella_over_butterfly_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw an umbrella over butterfly" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/umbrella_over_butterfly_ep00.mp4" poster="assets/posters/relations/umbrella_over_butterfly_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Umbrella above butterfly"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Umbrella above butterfly" data-name="Umbrella above butterfly"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/umbrella_over_butterfly_ep00.mp4" data-enlarge aria-label="Enlarge Umbrella above butterfly"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Umbrella <em>above</em> butterfly</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="guitar_over_owl" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/guitar_over_owl_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/guitar_over_owl_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/guitar_over_owl_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/guitar_over_owl_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/guitar_over_owl_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/guitar_over_owl_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a guitar over owl" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/guitar_over_owl_ep00.mp4" poster="assets/posters/relations/guitar_over_owl_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Guitar above owl"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Guitar above owl" data-name="Guitar above owl"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/guitar_over_owl_ep00.mp4" data-enlarge aria-label="Enlarge Guitar above owl"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Guitar <em>above</em> owl</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="bicycle_under_book" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/bicycle_under_book_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bicycle_under_book_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/bicycle_under_book_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bicycle_under_book_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/bicycle_under_book_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bicycle_under_book_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a bicycle under book" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/bicycle_under_book_ep00.mp4" poster="assets/posters/relations/bicycle_under_book_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Bicycle below book"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Bicycle below book" data-name="Bicycle below book"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/bicycle_under_book_ep00.mp4" data-enlarge aria-label="Enlarge Bicycle below book"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Bicycle <em>below</em> book</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="bucket_under_cloud" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/bucket_under_cloud_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bucket_under_cloud_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/bucket_under_cloud_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bucket_under_cloud_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/bucket_under_cloud_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/bucket_under_cloud_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a bucket under cloud" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/bucket_under_cloud_ep00.mp4" poster="assets/posters/relations/bucket_under_cloud_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Bucket below cloud"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Bucket below cloud" data-name="Bucket below cloud"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/bucket_under_cloud_ep00.mp4" data-enlarge aria-label="Enlarge Bucket below cloud"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Bucket <em>below</em> cloud</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="ice_cream_under_flower" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/ice_cream_under_flower_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/ice_cream_under_flower_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/ice_cream_under_flower_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/ice_cream_under_flower_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/ice_cream_under_flower_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/ice_cream_under_flower_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw an ice cream under flower" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/ice_cream_under_flower_ep00.mp4" poster="assets/posters/relations/ice_cream_under_flower_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Ice cream below flower"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Ice cream below flower" data-name="Ice cream below flower"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/ice_cream_under_flower_ep00.mp4" data-enlarge aria-label="Enlarge Ice cream below flower"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Ice cream <em>below</em> flower</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                  </div>
+                </div>
+                <div class="relation-panel" data-relation-panel="containment" data-description="Nested compositions: an object inside another, or a container holding an object." aria-label="Inside / contains dataset animations">
+                  <h4 class="relation-fallback-title">Inside / contains</h4>
+                  <div class="relation-grid">
+                    <figure class="relation-card" data-sample="book_inside_backpack" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/book_inside_backpack_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/book_inside_backpack_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/book_inside_backpack_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/book_inside_backpack_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/book_inside_backpack_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/book_inside_backpack_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a book inside backpack" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/book_inside_backpack_ep00.mp4" poster="assets/posters/relations/book_inside_backpack_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Book inside backpack"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Book inside backpack" data-name="Book inside backpack"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/book_inside_backpack_ep00.mp4" data-enlarge aria-label="Enlarge Book inside backpack"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Book <em>inside</em> backpack</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="cat_inside_tent" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/cat_inside_tent_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/cat_inside_tent_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/cat_inside_tent_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/cat_inside_tent_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/cat_inside_tent_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/cat_inside_tent_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a cat inside tent" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/cat_inside_tent_ep00.mp4" poster="assets/posters/relations/cat_inside_tent_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Cat inside tent"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Cat inside tent" data-name="Cat inside tent"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/cat_inside_tent_ep00.mp4" data-enlarge aria-label="Enlarge Cat inside tent"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Cat <em>inside</em> tent</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="rabbit_inside_house" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/rabbit_inside_house_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/rabbit_inside_house_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/rabbit_inside_house_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/rabbit_inside_house_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/rabbit_inside_house_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/rabbit_inside_house_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a rabbit inside house" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/rabbit_inside_house_ep00.mp4" poster="assets/posters/relations/rabbit_inside_house_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Rabbit inside house"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Rabbit inside house" data-name="Rabbit inside house"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/rabbit_inside_house_ep00.mp4" data-enlarge aria-label="Enlarge Rabbit inside house"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Rabbit <em>inside</em> house</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="house_contains_bed" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/house_contains_bed_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/house_contains_bed_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/house_contains_bed_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/house_contains_bed_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/house_contains_bed_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/house_contains_bed_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a house contains bed" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/house_contains_bed_ep00.mp4" poster="assets/posters/relations/house_contains_bed_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: House contains bed"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play House contains bed" data-name="House contains bed"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/house_contains_bed_ep00.mp4" data-enlarge aria-label="Enlarge House contains bed"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>House <em>contains</em> bed</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="purse_contains_key" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/purse_contains_key_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_contains_key_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/purse_contains_key_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_contains_key_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/purse_contains_key_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/purse_contains_key_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a purse contains key" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/purse_contains_key_ep00.mp4" poster="assets/posters/relations/purse_contains_key_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Purse contains key"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Purse contains key" data-name="Purse contains key"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/purse_contains_key_ep00.mp4" data-enlarge aria-label="Enlarge Purse contains key"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Purse <em>contains</em> key</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                    <figure class="relation-card" data-sample="train_contains_suitcase" data-variants="[{&quot;video&quot;:&quot;assets/videos/relations/train_contains_suitcase_ep00.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/train_contains_suitcase_ep00.jpg&quot;,&quot;episode&quot;:0},{&quot;video&quot;:&quot;assets/videos/relations/train_contains_suitcase_ep05.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/train_contains_suitcase_ep05.jpg&quot;,&quot;episode&quot;:5},{&quot;video&quot;:&quot;assets/videos/relations/train_contains_suitcase_ep09.mp4&quot;,&quot;poster&quot;:&quot;assets/posters/relations/train_contains_suitcase_ep09.jpg&quot;,&quot;episode&quot;:9}]" data-prompt="draw a train contains suitcase" data-episode="0">
+                      <div class="video-frame">
+                        <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/relations/train_contains_suitcase_ep00.mp4" poster="assets/posters/relations/train_contains_suitcase_ep00.jpg" width="480" height="360" aria-label="Generated dataset demonstration: Train contains suitcase"></video>
+                        <span class="video-tag">6×</span><button class="video-toggle" type="button" aria-label="Play Train contains suitcase" data-name="Train contains suitcase"><span aria-hidden="true">▶</span></button>
+                        <a class="relation-expand" href="assets/videos/relations/train_contains_suitcase_ep00.mp4" data-enlarge aria-label="Enlarge Train contains suitcase"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/></svg></a>
+                      </div>
+                      <figcaption><span>Train <em>contains</em> suitcase</span><small data-sample-label>Demonstration 01</small></figcaption>
+                    </figure>
+                  </div>
+                </div>
+                <div class="relation-footer gallery-control"><span role="status" aria-live="polite" data-relation-status></span><span>Expand any clip to explore its drawing.</span></div>
+              </div>
+              <p class="relation-footnote reading-width">Generated demonstrations recorded in simulation, shown at 6× speed with a final hold. These recordings show the generation pipeline’s output.</p>
+
+              <dialog class="relation-lightbox" aria-labelledby="relation-lightbox-title">
+                <div class="relation-lightbox-heading"><p id="relation-lightbox-title"></p><button type="button" data-close-lightbox aria-label="Close enlarged demonstration">×</button></div>
+                <video controls muted loop playsinline preload="none"></video>
+                <p class="relation-lightbox-prompt" data-lightbox-prompt></p>
+                <p class="relation-lightbox-detail" data-lightbox-detail></p>
+                <a data-lightbox-source href="assets/data/dataset-relations.json" target="_blank" rel="noopener">Open video ↗</a>
+              </dialog>
+            </section>
+          </div></div>
+        <article class="content-block" id="generate" aria-labelledby="generate-title">
+  <h3 class="content-title" id="generate-title">Generate demonstrations for your own tasks</h3>
+  <p class="section-lead">Start with a language prompt. The pipeline turns generated sketches into ordered strokes, then records the robot executing them—providing <span class="keyphrase">a scalable source of robot demonstrations</span> for new objects and spatial compositions.</p>
+  <div class="pipeline" data-pipeline>
+    <div class="generation-prompt"><q id="pipeline-prompt">Draw a bicycle.</q><div class="object-picker" role="group" aria-label="Choose a pipeline example">
+                <button type="button" aria-pressed="true" data-object="bicycle">Bicycle</button>
+                <button type="button" aria-pressed="false" data-object="cat">Cat</button>
+                <button type="button" aria-pressed="false" data-object="owl">Owl</button>
+                <button type="button" aria-pressed="false" data-object="sailboat">Sailboat</button>
+                <button type="button" aria-pressed="false" data-object="birthday_cake">Birthday cake</button>
+                <button type="button" aria-pressed="false" data-object="elephant">Elephant</button>
+                <button type="button" aria-pressed="false" data-object="guitar">Guitar</button>
+                <button type="button" aria-pressed="false" data-object="house">House</button>
+              </div></div>
+    <div class="generation-steps">
+      <figure><div class="sketch-frame"><img id="input-sketch" src="assets/images/sketch/bicycle.webp" width="512" height="512" loading="lazy" alt="Generated line sketch of a bicycle"></div>
+        <figcaption><span class="step-number">01</span> Generate a sketch</figcaption><p>Use a text-to-image model, or supply a sketch.</p></figure>
+      <figure><div class="sketch-frame stroke-frame"><canvas id="ordered-strokes" width="512" height="512" aria-label="Ordered bicycle strokes"></canvas><button class="stroke-toggle" type="button" aria-label="Play stroke-order animation"><span aria-hidden="true">▶</span></button></div>
+        <img id="extracted-strokes" src="assets/images/skeleton/bicycle.webp" width="512" height="512" alt="" hidden>
+        <figcaption><span class="step-number">02</span> Trace and order strokes</figcaption><p>Extract the lines and choose a sequence for drawing them.</p></figure>
+      <figure class="demo"><div class="video-frame">
+                  <video id="pipeline-video" muted loop playsinline preload="none" data-autoplay data-src="assets/videos/g_bicycle.mp4" poster="assets/posters/g_bicycle.jpg" aria-label="Generated bicycle trajectory replayed in simulation"></video>
+                  <span class="video-tag" id="pipeline-speed">8.3×</span><button class="video-toggle" type="button" aria-label="Play generated demonstration" data-name="generated demonstration"><span aria-hidden="true">▶</span></button>
+                </div><figcaption><span class="step-number">03</span> Execute and record</figcaption><p>Follow the strokes while recording observations and actions.</p></figure>
+    </div>
+  </div>
+  <div class="backend-section reading-width">
+    <h4>One pipeline, three simulation backends</h4>
+    <div class="backend-gallery"><figure><img src="assets/posters/sim_sapien.jpg" width="640" height="480" loading="lazy" alt="Hamburger drawing executed in ManiSkill / SAPIEN"><figcaption>ManiSkill / SAPIEN</figcaption></figure><figure><img src="assets/posters/sim_mujoco.jpg" width="640" height="480" loading="lazy" alt="Hamburger drawing executed in MuJoCo / LIBERO"><figcaption>MuJoCo / LIBERO</figcaption></figure><figure><img src="assets/posters/sim_isaac.jpg" width="640" height="480" loading="lazy" alt="Hamburger drawing executed in Isaac Sim"><figcaption>Isaac Sim</figcaption></figure></div>
+  </div>
+  <div class="generation-summary reading-width"><p>Each demonstration contains RGB observations, robot state, actions, and its language instruction.</p><p>Export datasets in <strong>LIBERO</strong> or <strong>LeRobot</strong> format.</p></div>
+</article>
+
+
+      </section>
+
+      <section class="section closing band" id="overview" aria-labelledby="overview-title">
+        <div class="container closing-grid">
+          <div>
+
+            <h2 id="overview-title">Project overview</h2>
+            <p class="caption">Narrated overview · 2:52</p>
+            <video class="overview-video reading-width" controls preload="none" playsinline poster="assets/posters/overview.jpg" aria-label="Narrated BURGER overview">
+              <source src="assets/videos/overview.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="closing-info reading-width">
+            <article class="content-block">
+              <h3 class="content-title">Scope and limitations</h3>
+              <div class="content-body">
+                <p>BURGER studies line drawing with a rigid tool. It simplifies the contact physics of painting
+                  and manipulation. Generated sketches and stroke-order heuristics shape the data distribution.</p>
+                <p>The evaluated policies can compose known objects, but struggle to draw unseen object categories.
+                  Drawing performance does not establish general manipulation ability.</p>
+              </div>
+            </article>
+            <article class="content-block" id="cite">
+              <h3 class="content-title">Cite BURGER</h3>
+              <div class="content-body">
+                <button class="copy-button" type="button" data-copy="citation">Copy BibTeX</button>
+                <span class="copy-status" role="status" aria-live="polite"></span>
+                <pre id="citation"><code>@misc{xu2026burger,
+  title = {{BURGER}: Benchmarking and Understanding Robotic Generalization via Embodied dRawing},
+  author = {Xu, Xiangyu and Peng, Bangshuai and Liu, Ziyi and Zhao, Mengjie and Lu, Chenhao and Fan, Zhengyang and Xu, Huazhe and Hu, Kaizhe},
+  year = {2026}
+}</code></pre>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="container footer"><span>BURGER · Tsinghua University</span></footer>
+  </body>
+</html>

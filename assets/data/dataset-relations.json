@@ -1,0 +1,1361 @@
+{
+  "updated": "2026-10-23",
+  "material": "Generated dataset demonstration recordings, observation.image camera stream",
+  "coverage": {
+    "categories": 3,
+    "tasks": 18,
+    "episodes_per_task": 3,
+    "total_episodes": 54
+  },
+  "selection": "Six illustrative tasks per category, episodes 0, 5 and 9 for every task. This is a curated subset, not an exhaustive dataset or policy evaluation.",
+  "processing": {
+    "source_resolution": [
+      320,
+      240
+    ],
+    "web_resolution": [
+      480,
+      360
+    ],
+    "playback_speed": 6,
+    "final_frame_hold_seconds": 0.8,
+    "web_fps": 24,
+    "codec": "H.264 / yuv420p",
+    "crop": "A fixed 4:3 crop per task encloses the union of final ink bounds across all three episodes, with padding. Full temporal sequence retained; no mirroring, color changes, inserted strokes or synthesized motion.",
+    "posters": "Final observation frame from the same episode; only used before playback."
+  },
+  "samples": [
+    {
+      "task": "leaf_left_moon",
+      "category": "horizontal",
+      "dataset_root": "/root/lerobot_new_combination/leaf_left_moon/leaf_left_moon_110svgs_no_outline_15envs_20260515_031420-pd_ee_pose-state_dict+rgb-leaf_left_moon_5end-20260517_103939",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a leaf left moon",
+          "source_video": "/root/lerobot_new_combination/leaf_left_moon/leaf_left_moon_110svgs_no_outline_15envs_20260515_031420-pd_ee_pose-state_dict+rgb-leaf_left_moon_5end-20260517_103939/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "12c8711ee8c5ae8aeca1583e6696170064699741c6a03ee1c33e28eec066a480",
+          "source_frames": 905,
+          "source_duration_seconds": 45.25,
+          "ink_bbox": [
+            106,
+            72,
+            225,
+            125
+          ],
+          "video": "assets/videos/relations/leaf_left_moon_ep00.mp4",
+          "poster": "assets/posters/relations/leaf_left_moon_ep00.jpg",
+          "web_duration_seconds": 8.333333,
+          "web_bytes": 277302,
+          "video_sha256": "883bf951a5072f97fb9a0b2cc330de7bd022a88a1a7a881bc005b2aa0f9c8dfe",
+          "poster_sha256": "8d552838245917d7ee4b216b7d9b3be9e411d999402d8e2e1169659d3ac64641"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a leaf left moon",
+          "source_video": "/root/lerobot_new_combination/leaf_left_moon/leaf_left_moon_110svgs_no_outline_15envs_20260515_031420-pd_ee_pose-state_dict+rgb-leaf_left_moon_5end-20260517_103939/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "335d0afcba0ea50a3de13dfa0df63d6cb7276b5a0937cb1e4a3669485de8beb3",
+          "source_frames": 966,
+          "source_duration_seconds": 48.3,
+          "ink_bbox": [
+            102,
+            78,
+            235,
+            135
+          ],
+          "video": "assets/videos/relations/leaf_left_moon_ep05.mp4",
+          "poster": "assets/posters/relations/leaf_left_moon_ep05.jpg",
+          "web_duration_seconds": 8.833333,
+          "web_bytes": 327115,
+          "video_sha256": "87a1127bc84a382340c8793cc78f56a30e3414690782c994cd3ebd3237501427",
+          "poster_sha256": "45ae0f22718edaaa6e05839d7eed2c3a3e4f7ea85ba98829b963f73ea58a4a4e"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a leaf left moon",
+          "source_video": "/root/lerobot_new_combination/leaf_left_moon/leaf_left_moon_110svgs_no_outline_15envs_20260515_031420-pd_ee_pose-state_dict+rgb-leaf_left_moon_5end-20260517_103939/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "4fd8307693416768dac198176a9de9db6239ecd4f91d86d5a08fd3b1c599e4a8",
+          "source_frames": 1092,
+          "source_duration_seconds": 54.6,
+          "ink_bbox": [
+            112,
+            68,
+            241,
+            121
+          ],
+          "video": "assets/videos/relations/leaf_left_moon_ep09.mp4",
+          "poster": "assets/posters/relations/leaf_left_moon_ep09.jpg",
+          "web_duration_seconds": 9.875,
+          "web_bytes": 329094,
+          "video_sha256": "886f12b995435989329ffee95ea38019a2af33bdb9627d7f08a8c80f8a50c8d9",
+          "poster_sha256": "e30af3480d6a99d30a48fd6c77f134932d25a90d4dfb42fb184e2995efa9a375"
+        }
+      ],
+      "crop_xywh": [
+        76,
+        30,
+        192,
+        144
+      ]
+    },
+    {
+      "task": "moon_left_leaf",
+      "category": "horizontal",
+      "dataset_root": "/root/lerobot_new_combination/moon_left_leaf/moon_left_leaf_110svgs_no_outline_15envs_20260515_024815-pd_ee_pose-state_dict+rgb-moon_left_leaf_5end-20260517_171319",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a moon left leaf",
+          "source_video": "/root/lerobot_new_combination/moon_left_leaf/moon_left_leaf_110svgs_no_outline_15envs_20260515_024815-pd_ee_pose-state_dict+rgb-moon_left_leaf_5end-20260517_171319/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "b2c197aeb0af014ce6d87c67c77e300dcffdc0f68efbcd54cf906c2cf46a80c7",
+          "source_frames": 875,
+          "source_duration_seconds": 43.75,
+          "ink_bbox": [
+            94,
+            82,
+            217,
+            139
+          ],
+          "video": "assets/videos/relations/moon_left_leaf_ep00.mp4",
+          "poster": "assets/posters/relations/moon_left_leaf_ep00.jpg",
+          "web_duration_seconds": 8.083333,
+          "web_bytes": 283091,
+          "video_sha256": "7251be85b21cf984e4aa4c088b35d2c03b9caac07180bf85e327313ec54189b4",
+          "poster_sha256": "9a632c7a9da0ad0e86cd89aa9833434a1f0aed230096016a9062acd19730dea3"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a moon left leaf",
+          "source_video": "/root/lerobot_new_combination/moon_left_leaf/moon_left_leaf_110svgs_no_outline_15envs_20260515_024815-pd_ee_pose-state_dict+rgb-moon_left_leaf_5end-20260517_171319/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "156305bbfedd09f0dafbb99a58d0d43a8e63456b99f661645ee93f1b1750985e",
+          "source_frames": 948,
+          "source_duration_seconds": 47.4,
+          "ink_bbox": [
+            88,
+            72,
+            211,
+            125
+          ],
+          "video": "assets/videos/relations/moon_left_leaf_ep05.mp4",
+          "poster": "assets/posters/relations/moon_left_leaf_ep05.jpg",
+          "web_duration_seconds": 8.708333,
+          "web_bytes": 269069,
+          "video_sha256": "2b528404735f1e19166fbc40c59b6056f683538bfe96a27f39a6791cc09149f0",
+          "poster_sha256": "3469ca77ae99470966d174377a694c4d12de123284799730ecdb2ee1f231bb8a"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a moon left leaf",
+          "source_video": "/root/lerobot_new_combination/moon_left_leaf/moon_left_leaf_110svgs_no_outline_15envs_20260515_024815-pd_ee_pose-state_dict+rgb-moon_left_leaf_5end-20260517_171319/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "35d42ef8c3650adf05d5a0712aed16ddd229bf1cd5452dde1c79647c29a20a99",
+          "source_frames": 978,
+          "source_duration_seconds": 48.9,
+          "ink_bbox": [
+            102,
+            78,
+            227,
+            131
+          ],
+          "video": "assets/videos/relations/moon_left_leaf_ep09.mp4",
+          "poster": "assets/posters/relations/moon_left_leaf_ep09.jpg",
+          "web_duration_seconds": 8.958333,
+          "web_bytes": 283681,
+          "video_sha256": "1fd3d7cdd8e8e532e530b1ae4c95e1090d8dc7e5d985a9c0727cbb11022bdf76",
+          "poster_sha256": "d27f3a1ca04fc17286e5a71a06d782f41f1127e73c7fdbe890f5dbdffb7fa4f4"
+        }
+      ],
+      "crop_xywh": [
+        62,
+        34,
+        192,
+        144
+      ]
+    },
+    {
+      "task": "snowman_left_leaf",
+      "category": "horizontal",
+      "dataset_root": "/root/lerobot_new_combination/snowman_left_leaf/snowman_left_leaf_112svgs_no_outline_15envs_20260517_133934-pd_ee_pose-state_dict+rgb-snowman_left_leaf_5end-20260518_222031",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a snowman left leaf",
+          "source_video": "/root/lerobot_new_combination/snowman_left_leaf/snowman_left_leaf_112svgs_no_outline_15envs_20260517_133934-pd_ee_pose-state_dict+rgb-snowman_left_leaf_5end-20260518_222031/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "7b32e12d35787c470d4474ef6920c1b6a7022f829756fc0db2d8455f96c9b566",
+          "source_frames": 1017,
+          "source_duration_seconds": 50.85,
+          "ink_bbox": [
+            86,
+            78,
+            209,
+            135
+          ],
+          "video": "assets/videos/relations/snowman_left_leaf_ep00.mp4",
+          "poster": "assets/posters/relations/snowman_left_leaf_ep00.jpg",
+          "web_duration_seconds": 9.25,
+          "web_bytes": 268334,
+          "video_sha256": "a33418c360aa3e6876b3f9e29f9816c5512a7490a7690739354966e85608e214",
+          "poster_sha256": "4751e69cca4262ba2a2c72ee67653f7e515401edaa14822a5eab5a17f51bd5d0"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a snowman left leaf",
+          "source_video": "/root/lerobot_new_combination/snowman_left_leaf/snowman_left_leaf_112svgs_no_outline_15envs_20260517_133934-pd_ee_pose-state_dict+rgb-snowman_left_leaf_5end-20260518_222031/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "1e03a493b21cf5a67cb151fd969ca6db725cebd51e7011a8a877f7ac04a28ea9",
+          "source_frames": 1131,
+          "source_duration_seconds": 56.55,
+          "ink_bbox": [
+            108,
+            84,
+            237,
+            145
+          ],
+          "video": "assets/videos/relations/snowman_left_leaf_ep05.mp4",
+          "poster": "assets/posters/relations/snowman_left_leaf_ep05.jpg",
+          "web_duration_seconds": 10.208333,
+          "web_bytes": 314736,
+          "video_sha256": "b39d73da5b492d5c629df5f4164ca27c7623c1e30700c20902ec8fe4d67f6238",
+          "poster_sha256": "ca862bc451de0fef3a2b4bf0ff1c230e4bdc3ecd5dcce19a29e0fa1c3dc3381b"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a snowman left leaf",
+          "source_video": "/root/lerobot_new_combination/snowman_left_leaf/snowman_left_leaf_112svgs_no_outline_15envs_20260517_133934-pd_ee_pose-state_dict+rgb-snowman_left_leaf_5end-20260518_222031/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "394901fd495f9cfd3ce5f359b56f16f12e2455aa056bcedada67d00c41208602",
+          "source_frames": 1418,
+          "source_duration_seconds": 70.9,
+          "ink_bbox": [
+            102,
+            86,
+            225,
+            147
+          ],
+          "video": "assets/videos/relations/snowman_left_leaf_ep09.mp4",
+          "poster": "assets/posters/relations/snowman_left_leaf_ep09.jpg",
+          "web_duration_seconds": 12.625,
+          "web_bytes": 396452,
+          "video_sha256": "0b64c5f347d6b7388e43e6c42af52bf4314a6cda15a6bfb92cc104d0dea50bb3",
+          "poster_sha256": "69ff305d0f51eb0728aacf4b596b25a11d09eee93b10184d0c3068ea37932219"
+        }
+      ],
+      "crop_xywh": [
+        62,
+        38,
+        200,
+        150
+      ]
+    },
+    {
+      "task": "leaf_left_snowman",
+      "category": "horizontal",
+      "dataset_root": "/root/lerobot_new_combination/leaf_left_snowman/leaf_left_snowman_112svgs_no_outline_15envs_20260516_180842-pd_ee_pose-state_dict+rgb-leaf_left_snowman_5end-20260517_111736",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a leaf left snowman",
+          "source_video": "/root/lerobot_new_combination/leaf_left_snowman/leaf_left_snowman_112svgs_no_outline_15envs_20260516_180842-pd_ee_pose-state_dict+rgb-leaf_left_snowman_5end-20260517_111736/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "afd43e54007e76d96099cc79013dc598440be9fe758b270726202c5785ecfcc4",
+          "source_frames": 1020,
+          "source_duration_seconds": 51.0,
+          "ink_bbox": [
+            104,
+            88,
+            235,
+            149
+          ],
+          "video": "assets/videos/relations/leaf_left_snowman_ep00.mp4",
+          "poster": "assets/posters/relations/leaf_left_snowman_ep00.jpg",
+          "web_duration_seconds": 9.291667,
+          "web_bytes": 313722,
+          "video_sha256": "2216f40bf261b6e13991486734fa36dbcd85421bbd2b80328b805086d65b03a8",
+          "poster_sha256": "e0be2fb733099387c2483bf94cec870ccb70107572beed1284936012be2180e8"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a leaf left snowman",
+          "source_video": "/root/lerobot_new_combination/leaf_left_snowman/leaf_left_snowman_112svgs_no_outline_15envs_20260516_180842-pd_ee_pose-state_dict+rgb-leaf_left_snowman_5end-20260517_111736/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "591b10ac9ce5cfa7dc05fd0762918b980c4699477bcc26de01e6020af746556e",
+          "source_frames": 1107,
+          "source_duration_seconds": 55.35,
+          "ink_bbox": [
+            92,
+            72,
+            223,
+            123
+          ],
+          "video": "assets/videos/relations/leaf_left_snowman_ep05.mp4",
+          "poster": "assets/posters/relations/leaf_left_snowman_ep05.jpg",
+          "web_duration_seconds": 10.0,
+          "web_bytes": 278074,
+          "video_sha256": "312365bbf3c3f283dae43892d67818de927a614378e1465bb91bdfdd5d4f0f4b",
+          "poster_sha256": "20e3c56bce29816783ebc1517693ab0bffc3f0537a54b37283aed1a1a8cca692"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a leaf left snowman",
+          "source_video": "/root/lerobot_new_combination/leaf_left_snowman/leaf_left_snowman_112svgs_no_outline_15envs_20260516_180842-pd_ee_pose-state_dict+rgb-leaf_left_snowman_5end-20260517_111736/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "7ce7f9822e0732a86e4a170971ee9a3322b1db434d2edfc23c84e533625440ff",
+          "source_frames": 1242,
+          "source_duration_seconds": 62.1,
+          "ink_bbox": [
+            108,
+            74,
+            231,
+            125
+          ],
+          "video": "assets/videos/relations/leaf_left_snowman_ep09.mp4",
+          "poster": "assets/posters/relations/leaf_left_snowman_ep09.jpg",
+          "web_duration_seconds": 11.125,
+          "web_bytes": 333184,
+          "video_sha256": "e302871ef47bf4b865d7978da8b54148c8d232660a49da03ea8960ca177f413b",
+          "poster_sha256": "799708ee71a57594cb432174338e21227bf4e7252143ff8c3a4983c828a44fa9"
+        }
+      ],
+      "crop_xywh": [
+        68,
+        38,
+        192,
+        144
+      ]
+    },
+    {
+      "task": "mug_left_pizza",
+      "category": "horizontal",
+      "dataset_root": "/root/lerobot_new_combination/mug_left_pizza/mug_left_pizza_112svgs_no_outline_15envs_20260516_202118-pd_ee_pose-state_dict+rgb-mug_left_pizza_5end-20260517_214144",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a mug left pizza",
+          "source_video": "/root/lerobot_new_combination/mug_left_pizza/mug_left_pizza_112svgs_no_outline_15envs_20260516_202118-pd_ee_pose-state_dict+rgb-mug_left_pizza_5end-20260517_214144/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "89b47b739328ff8ca13bd0c06ed5ff9aaede8af31d93fbed583c82b3804ec1cc",
+          "source_frames": 1445,
+          "source_duration_seconds": 72.25,
+          "ink_bbox": [
+            74,
+            90,
+            207,
+            147
+          ],
+          "video": "assets/videos/relations/mug_left_pizza_ep00.mp4",
+          "poster": "assets/posters/relations/mug_left_pizza_ep00.jpg",
+          "web_duration_seconds": 12.833333,
+          "web_bytes": 482446,
+          "video_sha256": "d17575d2b089e5f59950795b2a62d679c9bee6186c4e26ee9f978adbc74b2418",
+          "poster_sha256": "fb9313ba619eb03ec6aa8ea27928f211004ed126ce98c69d90b7ef27333ec608"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a mug left pizza",
+          "source_video": "/root/lerobot_new_combination/mug_left_pizza/mug_left_pizza_112svgs_no_outline_15envs_20260516_202118-pd_ee_pose-state_dict+rgb-mug_left_pizza_5end-20260517_214144/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "45d60b214490cf22bcfb468c0e28b549c2534fb2af302e18368ef660ffb9c998",
+          "source_frames": 1906,
+          "source_duration_seconds": 95.3,
+          "ink_bbox": [
+            116,
+            74,
+            243,
+            125
+          ],
+          "video": "assets/videos/relations/mug_left_pizza_ep05.mp4",
+          "poster": "assets/posters/relations/mug_left_pizza_ep05.jpg",
+          "web_duration_seconds": 16.666667,
+          "web_bytes": 519449,
+          "video_sha256": "9dadf795aaa331d73780f1565378ee4551c311a6f4bc670fd5a6643f23f34800",
+          "poster_sha256": "8b21f198ac7229e911072f410f1316ee6648fd65b4ba6b2c15229c534a192a26"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a mug left pizza",
+          "source_video": "/root/lerobot_new_combination/mug_left_pizza/mug_left_pizza_112svgs_no_outline_15envs_20260516_202118-pd_ee_pose-state_dict+rgb-mug_left_pizza_5end-20260517_214144/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "7aa40468e668e284818458c8abbefab28ddb04f77ae0325d6b6209ccea257a75",
+          "source_frames": 1976,
+          "source_duration_seconds": 98.8,
+          "ink_bbox": [
+            100,
+            80,
+            239,
+            139
+          ],
+          "video": "assets/videos/relations/mug_left_pizza_ep09.mp4",
+          "poster": "assets/posters/relations/mug_left_pizza_ep09.jpg",
+          "web_duration_seconds": 17.25,
+          "web_bytes": 606418,
+          "video_sha256": "17e9137e123ec1fb1b5f7996ceb01d4cfb07f4f919781ba53cd8718bdd160179",
+          "poster_sha256": "5f7ef912b62eafccef0c929e515d0278104b66af536e5ab06b96c3c20c250718"
+        }
+      ],
+      "crop_xywh": [
+        46,
+        26,
+        224,
+        168
+      ]
+    },
+    {
+      "task": "purse_left_star",
+      "category": "horizontal",
+      "dataset_root": "/root/lerobot_new_combination/purse_left_star/purse_left_star_112svgs_no_outline_15envs_20260517_052714-pd_ee_pose-state_dict+rgb-purse_left_star_5end-20260518_195323",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a purse left star",
+          "source_video": "/root/lerobot_new_combination/purse_left_star/purse_left_star_112svgs_no_outline_15envs_20260517_052714-pd_ee_pose-state_dict+rgb-purse_left_star_5end-20260518_195323/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "4191fff8dc5b0aa73f3c8ca7f534629c4fb589fd049f7a3149e0aaa764ad42ba",
+          "source_frames": 1094,
+          "source_duration_seconds": 54.7,
+          "ink_bbox": [
+            102,
+            80,
+            243,
+            133
+          ],
+          "video": "assets/videos/relations/purse_left_star_ep00.mp4",
+          "poster": "assets/posters/relations/purse_left_star_ep00.jpg",
+          "web_duration_seconds": 9.916667,
+          "web_bytes": 336939,
+          "video_sha256": "ef3ab870cd66a554b6372e7c52b7a1d4f7519786d11818d6c9866f1715d271ad",
+          "poster_sha256": "41a42658789c1ddbef5e81dbb333de317121abc250754768ac9c7ae5a1075d0d"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a purse left star",
+          "source_video": "/root/lerobot_new_combination/purse_left_star/purse_left_star_112svgs_no_outline_15envs_20260517_052714-pd_ee_pose-state_dict+rgb-purse_left_star_5end-20260518_195323/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "ebf49c183037919707d260d5a52802519d71e6a1f96a6299cd8f31f9b91edae1",
+          "source_frames": 1298,
+          "source_duration_seconds": 64.9,
+          "ink_bbox": [
+            112,
+            66,
+            243,
+            119
+          ],
+          "video": "assets/videos/relations/purse_left_star_ep05.mp4",
+          "poster": "assets/posters/relations/purse_left_star_ep05.jpg",
+          "web_duration_seconds": 11.625,
+          "web_bytes": 384701,
+          "video_sha256": "c2b55238f8e01e2e0d3711fef8e53d6296d49aa23d4afa9dda7dce8fa7e42270",
+          "poster_sha256": "763d63fd5524b7740121dce46146c1f90ccd3274e8f6ce4b0ac6e7748b09db1d"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a purse left star",
+          "source_video": "/root/lerobot_new_combination/purse_left_star/purse_left_star_112svgs_no_outline_15envs_20260517_052714-pd_ee_pose-state_dict+rgb-purse_left_star_5end-20260518_195323/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "d86ec4c9e66d5800e946325fe7f6d3499b6dcc1cdc0692d4772d18e31bb17f6b",
+          "source_frames": 1340,
+          "source_duration_seconds": 67.0,
+          "ink_bbox": [
+            92,
+            82,
+            229,
+            139
+          ],
+          "video": "assets/videos/relations/purse_left_star_ep09.mp4",
+          "poster": "assets/posters/relations/purse_left_star_ep09.jpg",
+          "web_duration_seconds": 11.958333,
+          "web_bytes": 446763,
+          "video_sha256": "40f4160f84083354556c68f08d3c4bedea6c21838b36ab084dbda10f50d4fdc8",
+          "poster_sha256": "4fb9f500fc9adf567c111c1093c7dfc1eb458d47e6d4d7d4be71e650de9117ed"
+        }
+      ],
+      "crop_xywh": [
+        68,
+        28,
+        200,
+        150
+      ]
+    },
+    {
+      "task": "camera_over_baseball",
+      "category": "vertical",
+      "dataset_root": "/root/lerobot_up_down/camera_over_baseball",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a camera over baseball",
+          "source_video": "/root/lerobot_up_down/camera_over_baseball/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "c9f4cee4abb2530c4b0ae8a3cee489a0d43b2a2abc5a670f518d971fbede5c1f",
+          "source_frames": 1422,
+          "source_duration_seconds": 71.1,
+          "ink_bbox": [
+            132,
+            90,
+            171,
+            161
+          ],
+          "video": "assets/videos/relations/camera_over_baseball_ep00.mp4",
+          "poster": "assets/posters/relations/camera_over_baseball_ep00.jpg",
+          "web_duration_seconds": 12.625,
+          "web_bytes": 358558,
+          "video_sha256": "4e90e5a41ed16e390a7b0f8ae29dc40aa9e79b2777519cefce2536cfa6332cc2",
+          "poster_sha256": "404047561c6b74e6a07e468b5c53c44af5ef2a24d68dbfd00c434b3e5d783a31"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a camera over baseball",
+          "source_video": "/root/lerobot_up_down/camera_over_baseball/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "40094793ea01d035634d762c09be1049f3f9be13b4f8c32d8576c0f4916a9f7e",
+          "source_frames": 1621,
+          "source_duration_seconds": 81.05,
+          "ink_bbox": [
+            126,
+            86,
+            163,
+            157
+          ],
+          "video": "assets/videos/relations/camera_over_baseball_ep05.mp4",
+          "poster": "assets/posters/relations/camera_over_baseball_ep05.jpg",
+          "web_duration_seconds": 14.291667,
+          "web_bytes": 393942,
+          "video_sha256": "3aa323b46a33e24f9aed73218e4dfbae19d25a90983c691b1afe2cc9c2266fbb",
+          "poster_sha256": "df7e5db198bb810d44dfab2933b565e5fcfc0210e91231e03eb022c4232856ab"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a camera over baseball",
+          "source_video": "/root/lerobot_up_down/camera_over_baseball/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "246eb9a0c2daa807f97ee33c65b06b2dbca7142eebc17f98b34329f92825452b",
+          "source_frames": 1672,
+          "source_duration_seconds": 83.6,
+          "ink_bbox": [
+            140,
+            82,
+            177,
+            151
+          ],
+          "video": "assets/videos/relations/camera_over_baseball_ep09.mp4",
+          "poster": "assets/posters/relations/camera_over_baseball_ep09.jpg",
+          "web_duration_seconds": 14.708333,
+          "web_bytes": 380753,
+          "video_sha256": "6d1b8831f964cc19169da24cad5a3db9c0cd19ff012863045e04daa52d56e278",
+          "poster_sha256": "29112efd4cfcb29235b6a40c0560397a922dfc3f380b8b6bc40f8d7bea22c4c2"
+        }
+      ],
+      "crop_xywh": [
+        72,
+        62,
+        160,
+        120
+      ]
+    },
+    {
+      "task": "umbrella_over_butterfly",
+      "category": "vertical",
+      "dataset_root": "/root/lerobot_up_down/umbrella_over_butterfly",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw an umbrella over butterfly",
+          "source_video": "/root/lerobot_up_down/umbrella_over_butterfly/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "82e9bd02993cf32fa95d7d3e78b74c66b365f87ecea94eb45e2fc3bc3726598e",
+          "source_frames": 597,
+          "source_duration_seconds": 29.85,
+          "ink_bbox": [
+            140,
+            76,
+            175,
+            135
+          ],
+          "video": "assets/videos/relations/umbrella_over_butterfly_ep00.mp4",
+          "poster": "assets/posters/relations/umbrella_over_butterfly_ep00.jpg",
+          "web_duration_seconds": 5.75,
+          "web_bytes": 180581,
+          "video_sha256": "dce5559ed9c6d33375c86330afff34e0e2671dfbba3d1125cc5f58409e0dd29d",
+          "poster_sha256": "b7d286dc3fb2516dfe188cf7d5e2dbbd3affdfc29c07ab67e6217da163727932"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw an umbrella over butterfly",
+          "source_video": "/root/lerobot_up_down/umbrella_over_butterfly/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "28187defde6da31ded91c345de35f0f2e1353238a7674471acd1f8f3b053a615",
+          "source_frames": 750,
+          "source_duration_seconds": 37.5,
+          "ink_bbox": [
+            158,
+            70,
+            193,
+            131
+          ],
+          "video": "assets/videos/relations/umbrella_over_butterfly_ep05.mp4",
+          "poster": "assets/posters/relations/umbrella_over_butterfly_ep05.jpg",
+          "web_duration_seconds": 7.041667,
+          "web_bytes": 204117,
+          "video_sha256": "48be8778bba76d5aea54861e6d5df885b43b7e2a9dc9e87318b41cbffc2e4698",
+          "poster_sha256": "bdcc2a88ec29ed9dbea9fa5b05f2cc73b3c8588cebda6346970fe0943245f0fe"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw an umbrella over butterfly",
+          "source_video": "/root/lerobot_up_down/umbrella_over_butterfly/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "0482fecfaaab3ebacad2418232246a90c577146ffde0feb11019fe67b7e95992",
+          "source_frames": 699,
+          "source_duration_seconds": 34.95,
+          "ink_bbox": [
+            158,
+            68,
+            193,
+            133
+          ],
+          "video": "assets/videos/relations/umbrella_over_butterfly_ep09.mp4",
+          "poster": "assets/posters/relations/umbrella_over_butterfly_ep09.jpg",
+          "web_duration_seconds": 6.625,
+          "web_bytes": 201699,
+          "video_sha256": "94f15062a34f8a7f5c8786dd4e1a3af95065bb2dcb0b75763935ec60a7424da0",
+          "poster_sha256": "60f84911135c64155cfbb56575d41c9db22137288707b90e70f9e7b21ee40be6"
+        }
+      ],
+      "crop_xywh": [
+        86,
+        42,
+        160,
+        120
+      ]
+    },
+    {
+      "task": "guitar_over_owl",
+      "category": "vertical",
+      "dataset_root": "/root/lerobot_up_down/guitar_over_owl",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a guitar over owl",
+          "source_video": "/root/lerobot_up_down/guitar_over_owl/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "d9f81d5b37992d19164e57a8b9523f59bde997595c4ccf492f0ab4c92afb9c2e",
+          "source_frames": 848,
+          "source_duration_seconds": 42.4,
+          "ink_bbox": [
+            140,
+            72,
+            173,
+            143
+          ],
+          "video": "assets/videos/relations/guitar_over_owl_ep00.mp4",
+          "poster": "assets/posters/relations/guitar_over_owl_ep00.jpg",
+          "web_duration_seconds": 7.875,
+          "web_bytes": 222610,
+          "video_sha256": "fb95eb2d626f34b65ebd0a79ed7ddf24a85a373dd10894a04131301b01b7cbd1",
+          "poster_sha256": "1e6631a74c583b7eb5f9cdfa26e1e60267b98fd8532bc7cdbc1cc71734ab640d"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a guitar over owl",
+          "source_video": "/root/lerobot_up_down/guitar_over_owl/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "552a7ee6a76b2fbfedecf1eb5073ae2177bc2018623d99a11c037f983fa73ace",
+          "source_frames": 1142,
+          "source_duration_seconds": 57.1,
+          "ink_bbox": [
+            132,
+            68,
+            169,
+            127
+          ],
+          "video": "assets/videos/relations/guitar_over_owl_ep05.mp4",
+          "poster": "assets/posters/relations/guitar_over_owl_ep05.jpg",
+          "web_duration_seconds": 10.291667,
+          "web_bytes": 285430,
+          "video_sha256": "e2dd87ff47ebb9259bac9f42668fb5dc26415d006c6851c62d3c4f06f1389f59",
+          "poster_sha256": "86271264f8972cc40549cb850cc747e438e1136d2e07baec5b595039edeb049d"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a guitar over owl",
+          "source_video": "/root/lerobot_up_down/guitar_over_owl/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "c4745a7af049cdfb60e9863465e449f272e215d85b99e039ffd9e74746634322",
+          "source_frames": 1165,
+          "source_duration_seconds": 58.25,
+          "ink_bbox": [
+            158,
+            80,
+            193,
+            153
+          ],
+          "video": "assets/videos/relations/guitar_over_owl_ep09.mp4",
+          "poster": "assets/posters/relations/guitar_over_owl_ep09.jpg",
+          "web_duration_seconds": 10.5,
+          "web_bytes": 340352,
+          "video_sha256": "936cd80217b9126389dcaa2d5a518f468a1e225e1d4ce767c8b2e661134bfc93",
+          "poster_sha256": "3ce72b19315912fe57116074d9d464497fe50e79db04da68b7265a9c04220822"
+        }
+      ],
+      "crop_xywh": [
+        78,
+        48,
+        168,
+        126
+      ]
+    },
+    {
+      "task": "bicycle_under_book",
+      "category": "vertical",
+      "dataset_root": "/root/lerobot_up_down/bicycle_under_book",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a bicycle under book",
+          "source_video": "/root/lerobot_up_down/bicycle_under_book/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "417d0dfd9e24d074c9caed9152a815c77d8806adccfb0aee45a7be1fb480d73a",
+          "source_frames": 999,
+          "source_duration_seconds": 49.95,
+          "ink_bbox": [
+            134,
+            72,
+            171,
+            137
+          ],
+          "video": "assets/videos/relations/bicycle_under_book_ep00.mp4",
+          "poster": "assets/posters/relations/bicycle_under_book_ep00.jpg",
+          "web_duration_seconds": 9.125,
+          "web_bytes": 270735,
+          "video_sha256": "3748b3e04f42885d9b9d551a1b7740249892f6ef178e96df2fce5a4d8669405d",
+          "poster_sha256": "06e87996997721ab42a7840ec8ba37b64c7eadb0d477601f3acda15b61310c6e"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a bicycle under book",
+          "source_video": "/root/lerobot_up_down/bicycle_under_book/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "61fbd7d40cf97c6048f9c78b39b55a1a642918a7c7bc9d37edaeed092f8b0255",
+          "source_frames": 1305,
+          "source_duration_seconds": 65.25,
+          "ink_bbox": [
+            128,
+            78,
+            167,
+            145
+          ],
+          "video": "assets/videos/relations/bicycle_under_book_ep05.mp4",
+          "poster": "assets/posters/relations/bicycle_under_book_ep05.jpg",
+          "web_duration_seconds": 11.666667,
+          "web_bytes": 358134,
+          "video_sha256": "ae0477a9085397a67384cb533cce23e373ea2b5d25c89992393c52cd5cb5072d",
+          "poster_sha256": "d32841d970eef53fe5df2f9b5f610d0ad0cea4d3a5dca4c8202cae5a673a33cb"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a bicycle under book",
+          "source_video": "/root/lerobot_up_down/bicycle_under_book/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "80cac31c1d9ba3fc3552cf759c7399bbc40f0199156d019077a4cc242354c0b1",
+          "source_frames": 1192,
+          "source_duration_seconds": 59.6,
+          "ink_bbox": [
+            158,
+            78,
+            195,
+            145
+          ],
+          "video": "assets/videos/relations/bicycle_under_book_ep09.mp4",
+          "poster": "assets/posters/relations/bicycle_under_book_ep09.jpg",
+          "web_duration_seconds": 10.708333,
+          "web_bytes": 311152,
+          "video_sha256": "8632293ff5398e112817040ca24c98fb77e67ddc20e3ddbd514fed40f4ccb346",
+          "poster_sha256": "bb4bec0e669a6759526951f58aa3cbc7e015131263851dd98f9b338669ae71e7"
+        }
+      ],
+      "crop_xywh": [
+        82,
+        48,
+        160,
+        120
+      ]
+    },
+    {
+      "task": "bucket_under_cloud",
+      "category": "vertical",
+      "dataset_root": "/root/lerobot_up_down/bucket_under_cloud",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a bucket under cloud",
+          "source_video": "/root/lerobot_up_down/bucket_under_cloud/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "88dc5c3c77abb1a22a9dc7a8e2cdfa49b51822b52dcace4dac6dbe820af47dce",
+          "source_frames": 703,
+          "source_duration_seconds": 35.15,
+          "ink_bbox": [
+            126,
+            82,
+            161,
+            153
+          ],
+          "video": "assets/videos/relations/bucket_under_cloud_ep00.mp4",
+          "poster": "assets/posters/relations/bucket_under_cloud_ep00.jpg",
+          "web_duration_seconds": 6.666667,
+          "web_bytes": 208093,
+          "video_sha256": "b5360593d438dfc4d00164993342f6a4a1fc6c055fa4f6545519472cdb901c26",
+          "poster_sha256": "1db88fe94b0e3d3e86191f0ed31a25aa9ac3e928aa126c8180b43507fc47e1ca"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a bucket under cloud",
+          "source_video": "/root/lerobot_up_down/bucket_under_cloud/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "510fc362fa3d3c99060e48e27c62905d91920d0211d5ff0e74b63a859ebabfb3",
+          "source_frames": 919,
+          "source_duration_seconds": 45.95,
+          "ink_bbox": [
+            134,
+            72,
+            169,
+            131
+          ],
+          "video": "assets/videos/relations/bucket_under_cloud_ep05.mp4",
+          "poster": "assets/posters/relations/bucket_under_cloud_ep05.jpg",
+          "web_duration_seconds": 8.458333,
+          "web_bytes": 213462,
+          "video_sha256": "af70663cf063e35282a512b79dae848330c6b68126dd8e96df964e7c7bfa3abe",
+          "poster_sha256": "d6af1772576d61c0496937d429cebe3d4c3c46d27ba8aa5ca4302a082d9c7245"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a bucket under cloud",
+          "source_video": "/root/lerobot_up_down/bucket_under_cloud/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "dd7c4b54c38d5da33e9ceeb68105f02094436eb4ce4bfdcbd5732a6c71b7d697",
+          "source_frames": 735,
+          "source_duration_seconds": 36.75,
+          "ink_bbox": [
+            152,
+            80,
+            191,
+            141
+          ],
+          "video": "assets/videos/relations/bucket_under_cloud_ep09.mp4",
+          "poster": "assets/posters/relations/bucket_under_cloud_ep09.jpg",
+          "web_duration_seconds": 6.916667,
+          "web_bytes": 197699,
+          "video_sha256": "2a393aecdbdd1967299f3757ff8a88eec39ba4b6cf2c7a17032e3d9f41b5cdba",
+          "poster_sha256": "08662671f71ef836ca60a87cf9eec45b1f752f635d14ac67edea4a01bc5040cb"
+        }
+      ],
+      "crop_xywh": [
+        74,
+        50,
+        168,
+        126
+      ]
+    },
+    {
+      "task": "ice_cream_under_flower",
+      "category": "vertical",
+      "dataset_root": "/root/lerobot_up_down/ice_cream_under_flower",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw an ice cream under flower",
+          "source_video": "/root/lerobot_up_down/ice_cream_under_flower/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "0efe6aff3b30e7a23c6a84e90c6f35befbc40f56cecd445888456107df0c191a",
+          "source_frames": 675,
+          "source_duration_seconds": 33.75,
+          "ink_bbox": [
+            150,
+            70,
+            173,
+            141
+          ],
+          "video": "assets/videos/relations/ice_cream_under_flower_ep00.mp4",
+          "poster": "assets/posters/relations/ice_cream_under_flower_ep00.jpg",
+          "web_duration_seconds": 6.416667,
+          "web_bytes": 129263,
+          "video_sha256": "c1e192a4d35409014a7361b1b1aef5c2c53742d1bce398127497883be647d2b9",
+          "poster_sha256": "afc085e639c863838bee616c29ab6d0a3fdee250dd0f5418f03eefdb5e5a6eec"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw an ice cream under flower",
+          "source_video": "/root/lerobot_up_down/ice_cream_under_flower/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "0b7760414ad977594b497b645771cb0f187f74782fadd45598f751afecf8d054",
+          "source_frames": 825,
+          "source_duration_seconds": 41.25,
+          "ink_bbox": [
+            158,
+            86,
+            183,
+            163
+          ],
+          "video": "assets/videos/relations/ice_cream_under_flower_ep05.mp4",
+          "poster": "assets/posters/relations/ice_cream_under_flower_ep05.jpg",
+          "web_duration_seconds": 7.666667,
+          "web_bytes": 218042,
+          "video_sha256": "43a2b0e2a8633a7bc09abafa1c4e056ec86232e3af8846a8bc176fd639807e72",
+          "poster_sha256": "5c0ad5a29c450826883460af05320706527243a55570ba20c195b309f35a5ef3"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw an ice cream under flower",
+          "source_video": "/root/lerobot_up_down/ice_cream_under_flower/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "76702d0de07f8aae170cfbc3d04c15be37c34ce01fae39d560c1f1c3c5c4273a",
+          "source_frames": 636,
+          "source_duration_seconds": 31.8,
+          "ink_bbox": [
+            156,
+            78,
+            179,
+            153
+          ],
+          "video": "assets/videos/relations/ice_cream_under_flower_ep09.mp4",
+          "poster": "assets/posters/relations/ice_cream_under_flower_ep09.jpg",
+          "web_duration_seconds": 6.083333,
+          "web_bytes": 147397,
+          "video_sha256": "9b98bc69418be2ec513bc3505ab41248e110af085a1d51bdb7ecd214cadf7cbb",
+          "poster_sha256": "c09a69993ce3c1e12321cbabbe88754dfb6991df880f2efaa85b0a4719be6878"
+        }
+      ],
+      "crop_xywh": [
+        74,
+        48,
+        184,
+        138
+      ]
+    },
+    {
+      "task": "book_inside_backpack",
+      "category": "containment",
+      "dataset_root": "/root/in_out_data/lerobot/book_inside_backpack_112svgs_no_outline_10envs_20260914_200219-pd_ee_pose-state_dict+rgb-book_inside_backpack_5end-20260915_051239",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a book inside backpack",
+          "source_video": "/root/in_out_data/lerobot/book_inside_backpack_112svgs_no_outline_10envs_20260914_200219-pd_ee_pose-state_dict+rgb-book_inside_backpack_5end-20260915_051239/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "2337267f8f4b9a90a6747330da1d2ed0270e872c09593d593a252d8f949805b4",
+          "source_frames": 1257,
+          "source_duration_seconds": 62.85,
+          "ink_bbox": [
+            150,
+            86,
+            193,
+            135
+          ],
+          "video": "assets/videos/relations/book_inside_backpack_ep00.mp4",
+          "poster": "assets/posters/relations/book_inside_backpack_ep00.jpg",
+          "web_duration_seconds": 11.25,
+          "web_bytes": 332569,
+          "video_sha256": "766b4034ea98ef66fd780b0a0d683bbb8dc83afa3920e44d4e726ed0da34ba82",
+          "poster_sha256": "562fe6cdc6767b71972431a74511ad562d99ea053e63a5a642bc9115616877b9"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a book inside backpack",
+          "source_video": "/root/in_out_data/lerobot/book_inside_backpack_112svgs_no_outline_10envs_20260914_200219-pd_ee_pose-state_dict+rgb-book_inside_backpack_5end-20260915_051239/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "057aef6c71780c3022bef438187180747553f03146343f49563d662074c4464b",
+          "source_frames": 1662,
+          "source_duration_seconds": 83.1,
+          "ink_bbox": [
+            142,
+            92,
+            191,
+            145
+          ],
+          "video": "assets/videos/relations/book_inside_backpack_ep05.mp4",
+          "poster": "assets/posters/relations/book_inside_backpack_ep05.jpg",
+          "web_duration_seconds": 14.625,
+          "web_bytes": 468063,
+          "video_sha256": "797ab10088b86d8be88d2e91e268bbf84ec5ed628dc82add5fa3327971b9d790",
+          "poster_sha256": "3a03f8e0180f9b736fe806b2752b38251e5098ad7138703039132f82c03a4b2a"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a book inside backpack",
+          "source_video": "/root/in_out_data/lerobot/book_inside_backpack_112svgs_no_outline_10envs_20260914_200219-pd_ee_pose-state_dict+rgb-book_inside_backpack_5end-20260915_051239/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "f67f98d0c276c0712b01287914e96271ffb176a2287ee7bdb1d57704cd0d2fdd",
+          "source_frames": 2040,
+          "source_duration_seconds": 102.0,
+          "ink_bbox": [
+            130,
+            92,
+            185,
+            143
+          ],
+          "video": "assets/videos/relations/book_inside_backpack_ep09.mp4",
+          "poster": "assets/posters/relations/book_inside_backpack_ep09.jpg",
+          "web_duration_seconds": 17.791667,
+          "web_bytes": 566744,
+          "video_sha256": "d67b5a18a097df14d8d89894e7c60db85772962f05c1ec92f7b52804d9a39dfd",
+          "poster_sha256": "ef0b5e6522d346e92d2e5c46f0741e7fbb20bbe2fefa60442822ee871bf0484a"
+        }
+      ],
+      "crop_xywh": [
+        82,
+        56,
+        160,
+        120
+      ]
+    },
+    {
+      "task": "cat_inside_tent",
+      "category": "containment",
+      "dataset_root": "/root/in_out_data/lerobot/cat_inside_tent_112svgs_no_outline_10envs_20260914_203719-pd_ee_pose-state_dict+rgb-cat_inside_tent_5end-20260915_061913",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a cat inside tent",
+          "source_video": "/root/in_out_data/lerobot/cat_inside_tent_112svgs_no_outline_10envs_20260914_203719-pd_ee_pose-state_dict+rgb-cat_inside_tent_5end-20260915_061913/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "46539589dc3919ce808035cd6a690ae4507ba2f923a5cfdc3052abdd8f31370b",
+          "source_frames": 546,
+          "source_duration_seconds": 27.3,
+          "ink_bbox": [
+            136,
+            72,
+            161,
+            111
+          ],
+          "video": "assets/videos/relations/cat_inside_tent_ep00.mp4",
+          "poster": "assets/posters/relations/cat_inside_tent_ep00.jpg",
+          "web_duration_seconds": 5.333333,
+          "web_bytes": 139956,
+          "video_sha256": "3368f310c9471e13d11d282607171fbf58f7df6f1d2f20ef3937ffe3ff079c02",
+          "poster_sha256": "60609d94e4c29e5074bce869e722ba0ea338bfcb54cd28bb9db78592a6cc4b4e"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a cat inside tent",
+          "source_video": "/root/in_out_data/lerobot/cat_inside_tent_112svgs_no_outline_10envs_20260914_203719-pd_ee_pose-state_dict+rgb-cat_inside_tent_5end-20260915_061913/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "876631415cd8a971dc8ba6fd012eced0e2315c36f2a1082daa967eeefc3e466e",
+          "source_frames": 692,
+          "source_duration_seconds": 34.6,
+          "ink_bbox": [
+            140,
+            86,
+            185,
+            131
+          ],
+          "video": "assets/videos/relations/cat_inside_tent_ep05.mp4",
+          "poster": "assets/posters/relations/cat_inside_tent_ep05.jpg",
+          "web_duration_seconds": 6.541667,
+          "web_bytes": 224367,
+          "video_sha256": "d99aa25b4e4754dbb2f6acc8492aa816da96999356acf0803bd9b377153af515",
+          "poster_sha256": "205c82ea460ae673e9b1cf1fbbdf57966f21693539a1f31e4749e36cd2b4bade"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a cat inside tent",
+          "source_video": "/root/in_out_data/lerobot/cat_inside_tent_112svgs_no_outline_10envs_20260914_203719-pd_ee_pose-state_dict+rgb-cat_inside_tent_5end-20260915_061913/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "d34898a5d958460107aea45f9ad4960a8ed824b6bd9590d5673af2b0475c3cce",
+          "source_frames": 1055,
+          "source_duration_seconds": 52.75,
+          "ink_bbox": [
+            136,
+            78,
+            181,
+            115
+          ],
+          "video": "assets/videos/relations/cat_inside_tent_ep09.mp4",
+          "poster": "assets/posters/relations/cat_inside_tent_ep09.jpg",
+          "web_duration_seconds": 9.583333,
+          "web_bytes": 289691,
+          "video_sha256": "c15be265d5c32b85d366733dd8aec5fd0b55c190ff7f9c2012adbd80248a6c57",
+          "poster_sha256": "30f03db0cbb8e244a80abadd9bcc8ca51a6024c3c97bb75ba0d3962446fc3a21"
+        }
+      ],
+      "crop_xywh": [
+        80,
+        42,
+        160,
+        120
+      ]
+    },
+    {
+      "task": "rabbit_inside_house",
+      "category": "containment",
+      "dataset_root": "/root/in_out_data/lerobot/rabbit_inside_house_112svgs_no_outline_10envs_20260914_220548-pd_ee_pose-state_dict+rgb-rabbit_inside_house_5end-20260915_075013",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a rabbit inside house",
+          "source_video": "/root/in_out_data/lerobot/rabbit_inside_house_112svgs_no_outline_10envs_20260914_220548-pd_ee_pose-state_dict+rgb-rabbit_inside_house_5end-20260915_075013/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "14d83683be0df1b3af855719f8f942e1fcc44f15d6c42f9b871c5807097c67e9",
+          "source_frames": 926,
+          "source_duration_seconds": 46.3,
+          "ink_bbox": [
+            158,
+            82,
+            187,
+            129
+          ],
+          "video": "assets/videos/relations/rabbit_inside_house_ep00.mp4",
+          "poster": "assets/posters/relations/rabbit_inside_house_ep00.jpg",
+          "web_duration_seconds": 8.5,
+          "web_bytes": 266941,
+          "video_sha256": "85032f6953c1daf3e0a99de0940e6198965e893c8cd50020079ebc6965c589e5",
+          "poster_sha256": "df49a0fb0bb164551373e32aa0c7e2f40ba9306c0b446bc7ea157f17705f1a3a"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a rabbit inside house",
+          "source_video": "/root/in_out_data/lerobot/rabbit_inside_house_112svgs_no_outline_10envs_20260914_220548-pd_ee_pose-state_dict+rgb-rabbit_inside_house_5end-20260915_075013/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "7a18242100013bb04eaeb4f4da24bc911b60255741f7f5c18ad49c82367bfd0c",
+          "source_frames": 1113,
+          "source_duration_seconds": 55.65,
+          "ink_bbox": [
+            146,
+            86,
+            189,
+            131
+          ],
+          "video": "assets/videos/relations/rabbit_inside_house_ep05.mp4",
+          "poster": "assets/posters/relations/rabbit_inside_house_ep05.jpg",
+          "web_duration_seconds": 10.083333,
+          "web_bytes": 324895,
+          "video_sha256": "af4e99747814cdc96dc2b78fab8326c677a4fba17b8d8ae469324efb494abde4",
+          "poster_sha256": "d8e11ab8012b7f76369427671775969256f8a40bc3be22dcba6167394ddcfdd3"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a rabbit inside house",
+          "source_video": "/root/in_out_data/lerobot/rabbit_inside_house_112svgs_no_outline_10envs_20260914_220548-pd_ee_pose-state_dict+rgb-rabbit_inside_house_5end-20260915_075013/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "89ec182df9364678276dea176fc57c4d3b183b564775bebef26466236dd92673",
+          "source_frames": 1257,
+          "source_duration_seconds": 62.85,
+          "ink_bbox": [
+            148,
+            76,
+            199,
+            117
+          ],
+          "video": "assets/videos/relations/rabbit_inside_house_ep09.mp4",
+          "poster": "assets/posters/relations/rabbit_inside_house_ep09.jpg",
+          "web_duration_seconds": 11.25,
+          "web_bytes": 326170,
+          "video_sha256": "1a5b0e71428e4e1b88c67f8df68aa95da37615bd1b7e64b1f62a580151136223",
+          "poster_sha256": "3b259d1d301147c2e30df42462eff630df28e48ee582d23c6b8043a9ae3e2dfb"
+        }
+      ],
+      "crop_xywh": [
+        92,
+        44,
+        160,
+        120
+      ]
+    },
+    {
+      "task": "house_contains_bed",
+      "category": "containment",
+      "dataset_root": "/root/in_out_data/lerobot/house_contains_bed_112svgs_no_outline_10envs_20260914_212724-pd_ee_pose-state_dict+rgb-house_contains_bed_5end-20260915_065541",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a house contains bed",
+          "source_video": "/root/in_out_data/lerobot/house_contains_bed_112svgs_no_outline_10envs_20260914_212724-pd_ee_pose-state_dict+rgb-house_contains_bed_5end-20260915_065541/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "9a83347dcca50b50366f68effc6cc71378fc59dc38b46666a7f1ff6ca6c4e3fe",
+          "source_frames": 940,
+          "source_duration_seconds": 47.0,
+          "ink_bbox": [
+            142,
+            90,
+            173,
+            121
+          ],
+          "video": "assets/videos/relations/house_contains_bed_ep00.mp4",
+          "poster": "assets/posters/relations/house_contains_bed_ep00.jpg",
+          "web_duration_seconds": 8.625,
+          "web_bytes": 269963,
+          "video_sha256": "af28bf235ed9c0de38f9928a5930a741abd7fe2bfd9feb14d5b36d08ac9bdc4d",
+          "poster_sha256": "a25bcdc3420d5facc3bbded9ff91c8232ef7b5b3f3631617a009bb79d3c990a7"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a house contains bed",
+          "source_video": "/root/in_out_data/lerobot/house_contains_bed_112svgs_no_outline_10envs_20260914_212724-pd_ee_pose-state_dict+rgb-house_contains_bed_5end-20260915_065541/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "622efaa6d26b2a5f6f2c509684d1b99c79490162a59b8fe1150cafb88aa60b04",
+          "source_frames": 1344,
+          "source_duration_seconds": 67.2,
+          "ink_bbox": [
+            136,
+            78,
+            179,
+            115
+          ],
+          "video": "assets/videos/relations/house_contains_bed_ep05.mp4",
+          "poster": "assets/posters/relations/house_contains_bed_ep05.jpg",
+          "web_duration_seconds": 12.0,
+          "web_bytes": 367285,
+          "video_sha256": "68dc26e462d0b98fc16de4f662862187e3f7b99d8f957f7728cf9f219ff24236",
+          "poster_sha256": "68b8471a5755de4c0fdf8aa32ddfcf03417c30b1983e4c2c2724c24cc3e390f5"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a house contains bed",
+          "source_video": "/root/in_out_data/lerobot/house_contains_bed_112svgs_no_outline_10envs_20260914_212724-pd_ee_pose-state_dict+rgb-house_contains_bed_5end-20260915_065541/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "bc8a921818e4c144545bd45a7f818561fcace6754bfb938fbbff4618ad8eccea",
+          "source_frames": 1493,
+          "source_duration_seconds": 74.65,
+          "ink_bbox": [
+            144,
+            76,
+            193,
+            113
+          ],
+          "video": "assets/videos/relations/house_contains_bed_ep09.mp4",
+          "poster": "assets/posters/relations/house_contains_bed_ep09.jpg",
+          "web_duration_seconds": 13.25,
+          "web_bytes": 397922,
+          "video_sha256": "ed831f506ad4f4988045645974aaf9c032ef339c4162161e7407fbbdcafab604",
+          "poster_sha256": "2d874d1c607f580768b1bda4a9b36303f4252c75c39e39d070dfd63069e3aad0"
+        }
+      ],
+      "crop_xywh": [
+        84,
+        38,
+        160,
+        120
+      ]
+    },
+    {
+      "task": "purse_contains_key",
+      "category": "containment",
+      "dataset_root": "/root/in_out_data/lerobot/purse_contains_key_112svgs_no_outline_10envs_20260914_215827-pd_ee_pose-state_dict+rgb-purse_contains_key_5end-20260915_074332",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a purse contains key",
+          "source_video": "/root/in_out_data/lerobot/purse_contains_key_112svgs_no_outline_10envs_20260914_215827-pd_ee_pose-state_dict+rgb-purse_contains_key_5end-20260915_074332/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "78bd65066e2d719b477b64c3059dfedf930ab277651736ea93a07242d9789b38",
+          "source_frames": 474,
+          "source_duration_seconds": 23.7,
+          "ink_bbox": [
+            146,
+            88,
+            187,
+            127
+          ],
+          "video": "assets/videos/relations/purse_contains_key_ep00.mp4",
+          "poster": "assets/posters/relations/purse_contains_key_ep00.jpg",
+          "web_duration_seconds": 4.75,
+          "web_bytes": 126825,
+          "video_sha256": "10f039ce289e887e8cf25e54be1f91bfe0b74c8861cc740f37a3f495330d9f9e",
+          "poster_sha256": "5cbf0f80e73657bf8c8d685cbb387f428fa6ede5351610bf2862f78c95b14d75"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a purse contains key",
+          "source_video": "/root/in_out_data/lerobot/purse_contains_key_112svgs_no_outline_10envs_20260914_215827-pd_ee_pose-state_dict+rgb-purse_contains_key_5end-20260915_074332/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "6eb7d2ebf3eb203af31e6e3b5a871de0217271f4f5e67ed7c03801971fe138fd",
+          "source_frames": 549,
+          "source_duration_seconds": 27.45,
+          "ink_bbox": [
+            132,
+            86,
+            177,
+            125
+          ],
+          "video": "assets/videos/relations/purse_contains_key_ep05.mp4",
+          "poster": "assets/posters/relations/purse_contains_key_ep05.jpg",
+          "web_duration_seconds": 5.375,
+          "web_bytes": 147161,
+          "video_sha256": "5550a898fde03cb4e9e5ff9a32862611806b584eeb99cfc139ff3d3302f776ba",
+          "poster_sha256": "b60b76a11e7db932af4c026441628394d5f989d46f53bbfeafb0ff4e613cce84"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a purse contains key",
+          "source_video": "/root/in_out_data/lerobot/purse_contains_key_112svgs_no_outline_10envs_20260914_215827-pd_ee_pose-state_dict+rgb-purse_contains_key_5end-20260915_074332/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "9fd1b8837b817a5da221efd47e7db51a5f4055c9f8620697a1625947908ceda4",
+          "source_frames": 853,
+          "source_duration_seconds": 42.65,
+          "ink_bbox": [
+            148,
+            94,
+            189,
+            135
+          ],
+          "video": "assets/videos/relations/purse_contains_key_ep09.mp4",
+          "poster": "assets/posters/relations/purse_contains_key_ep09.jpg",
+          "web_duration_seconds": 7.916667,
+          "web_bytes": 239191,
+          "video_sha256": "0ccbb071aeeb7b3b7339d2c873315742f339bbe5dcdf071ab50d480dfed722a4",
+          "poster_sha256": "b87e623a8e67988dcb87613b53ca3e30a29605b5fd0d390f94518b953f87c7ea"
+        }
+      ],
+      "crop_xywh": [
+        80,
+        50,
+        160,
+        120
+      ]
+    },
+    {
+      "task": "train_contains_suitcase",
+      "category": "containment",
+      "dataset_root": "/root/in_out_data/lerobot/train_contains_suitcase_112svgs_no_outline_10envs_20260914_224749-pd_ee_pose-state_dict+rgb-train_contains_suitcase_5end-20260915_095704",
+      "fps": 20,
+      "episodes": [
+        {
+          "episode_index": 0,
+          "prompt": "draw a train contains suitcase",
+          "source_video": "/root/in_out_data/lerobot/train_contains_suitcase_112svgs_no_outline_10envs_20260914_224749-pd_ee_pose-state_dict+rgb-train_contains_suitcase_5end-20260915_095704/videos/chunk-000/observation.image/episode_000000.mp4",
+          "source_sha256": "382b7751a6f704e3d647dc352d24579923de3e03d8de38e7ec1b11da28c3442b",
+          "source_frames": 941,
+          "source_duration_seconds": 47.05,
+          "ink_bbox": [
+            124,
+            94,
+            179,
+            129
+          ],
+          "video": "assets/videos/relations/train_contains_suitcase_ep00.mp4",
+          "poster": "assets/posters/relations/train_contains_suitcase_ep00.jpg",
+          "web_duration_seconds": 8.625,
+          "web_bytes": 267535,
+          "video_sha256": "6adcd4aa55f285d2571e447ff8464e982f405f29a31c11b8035c2fdf9a385d8a",
+          "poster_sha256": "5971bea6cc3cba78156774ece106880b66adeefb7fad1a69886da69f0bce7592"
+        },
+        {
+          "episode_index": 5,
+          "prompt": "draw a train contains suitcase",
+          "source_video": "/root/in_out_data/lerobot/train_contains_suitcase_112svgs_no_outline_10envs_20260914_224749-pd_ee_pose-state_dict+rgb-train_contains_suitcase_5end-20260915_095704/videos/chunk-000/observation.image/episode_000005.mp4",
+          "source_sha256": "8b6b819dbe3fc0e5067fbd08fdb6822b0b7ef85b37254e97f82b335c3d887dd9",
+          "source_frames": 1152,
+          "source_duration_seconds": 57.6,
+          "ink_bbox": [
+            118,
+            104,
+            179,
+            135
+          ],
+          "video": "assets/videos/relations/train_contains_suitcase_ep05.mp4",
+          "poster": "assets/posters/relations/train_contains_suitcase_ep05.jpg",
+          "web_duration_seconds": 10.375,
+          "web_bytes": 358993,
+          "video_sha256": "e53c9ea0959b1bdcb16b432cfd70a7b0834b7beab592ba453dd183245092475b",
+          "poster_sha256": "ff181cb437c4d368c3e66f747c00cdff4b2c42f0ba321517e3c56a9c28b61def"
+        },
+        {
+          "episode_index": 9,
+          "prompt": "draw a train contains suitcase",
+          "source_video": "/root/in_out_data/lerobot/train_contains_suitcase_112svgs_no_outline_10envs_20260914_224749-pd_ee_pose-state_dict+rgb-train_contains_suitcase_5end-20260915_095704/videos/chunk-000/observation.image/episode_000009.mp4",
+          "source_sha256": "0de501cec5a5a25f40824ccef1ae3f2c9345e3b2a2edd46011b196f2bf461b4f",
+          "source_frames": 1374,
+          "source_duration_seconds": 68.7,
+          "ink_bbox": [
+            146,
+            86,
+            189,
+            127
+          ],
+          "video": "assets/videos/relations/train_contains_suitcase_ep09.mp4",
+          "poster": "assets/posters/relations/train_contains_suitcase_ep09.jpg",
+          "web_duration_seconds": 12.25,
+          "web_bytes": 343046,
+          "video_sha256": "8ff6de4d63626f1173cba55d10f91b784b5b14fb7949d53dca478764aa5672ed",
+          "poster_sha256": "5a3b30cde4695d40a81d5f958ea8941b7a23bd2b2f5508590ac5a7bdba06f0c8"
+        }
+      ],
+      "crop_xywh": [
+        74,
+        50,
+        160,
+        120
+      ]
+    }
+  ]
+}
