@@ -34,4 +34,4 @@ The site can be served from this branch's root directory by GitHub Pages or anot
 
 The Paper button opens `assets/paper/BURGER.pdf`. Replace this file when the manuscript is updated.
 
-The arXiv, dataset, code, and announcement links remain marked as coming soon. Replace their disabled buttons in `index.html` when the corresponding resources are public.
+The arXiv button links to https://arxiv.org/abs/2610.40532, and the Data button links to https://huggingface.co/datasets/Zhaosying66/BURGER. The code and announcement links remain marked as coming soon; replace their disabled buttons in `index.html` when those resources are public.
