@@ -170,7 +170,7 @@
     syncMotionPreference();
   }
 
-  // The two recordings keep their own timing; the range controls only the reveal.
+  // Keep each recording's speed, holding the shorter clip until both can replay.
   const comparison = document.querySelector('.video-compare');
   if (comparison) {
     const pair = [...comparison.querySelectorAll('video[data-compare-src]')];
@@ -182,6 +182,8 @@
     let revealFrame = 0;
     let revealed = false;
     let interacted = false;
+    const finishedVideos = new Set();
+    let playbackPreparation = null;
 
     const updateSplit = value => {
       if (!range) return;
@@ -200,29 +202,72 @@
     };
     const syncPairButton = () => {
       if (!button) return;
-      const playing = pair.some(video => !video.paused && !video.ended);
+      const playing = wantedPlaying;
       const icon = button.querySelector('span');
       if (icon) icon.textContent = playing ? 'Ⅱ' : '▶';
       button.setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} simulation and real-robot videos`);
     };
     const pausePair = () => {
       wantedPlaying = false;
+      playbackPreparation?.abort();
+      playbackPreparation = null;
       pair.forEach(video => video.pause());
       syncPairButton();
     };
-    const playPair = () => {
-      if (document.hidden || !visible || !pair.length) return;
+    const waitForReady = (video, signal) => new Promise((resolve, reject) => {
+      const cleanup = () => {
+        video.removeEventListener('canplay', check);
+        video.removeEventListener('seeked', check);
+        video.removeEventListener('error', fail);
+        signal.removeEventListener('abort', cancel);
+      };
+      const check = () => {
+        if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA && !video.seeking) {
+          cleanup();
+          resolve();
+        }
+      };
+      const fail = () => { cleanup(); reject(video.error); };
+      const cancel = () => { cleanup(); reject(new DOMException('Playback cancelled', 'AbortError')); };
+      video.addEventListener('canplay', check);
+      video.addEventListener('seeked', check);
+      video.addEventListener('error', fail);
+      signal.addEventListener('abort', cancel);
+      if (signal.aborted) cancel();
+      else if (video.error) fail();
+      else check();
+    });
+    const playPair = async () => {
+      if (document.hidden || !visible || !pair.length || playbackPreparation) return;
+      const preparation = new AbortController();
+      playbackPreparation = preparation;
       wantedPlaying = true;
       button?.removeAttribute('title');
-      pair.forEach(video => {
-        if (!video.getAttribute('src')) {
-          video.src = video.dataset.compareSrc;
-          video.load();
-        } else if (video.error) {
-          video.load();
+      syncPairButton();
+      try {
+        if (pair.every(video => finishedVideos.has(video))) {
+          finishedVideos.clear();
+          pair.forEach(video => { video.currentTime = 0; });
         }
-        video.play().catch(() => syncPairButton());
-      });
+        const activeVideos = pair.filter(video => !finishedVideos.has(video));
+        activeVideos.forEach(video => {
+          video.preload = 'auto';
+          if (!video.getAttribute('src')) {
+            video.src = video.dataset.compareSrc;
+            video.load();
+          } else if (video.error) {
+            video.load();
+          }
+        });
+        // Seek and buffer both clips before starting either one.
+        await Promise.all(activeVideos.map(video => waitForReady(video, preparation.signal)));
+        if (preparation.signal.aborted || !wantedPlaying || !visible || document.hidden) return;
+        await Promise.all(activeVideos.map(video => video.play()));
+      } catch {
+        if (!preparation.signal.aborted) pausePair();
+      } finally {
+        if (playbackPreparation === preparation) playbackPreparation = null;
+      }
     };
     const animateReveal = () => {
       if (!range || revealed || interacted || reducedMotion) return;
@@ -300,7 +345,11 @@
         syncPairButton();
       });
       video.addEventListener('pause', syncPairButton);
-      video.addEventListener('ended', syncPairButton);
+      video.addEventListener('ended', () => {
+        finishedVideos.add(video);
+        syncPairButton();
+        if (wantedPlaying && pair.every(clip => finishedVideos.has(clip))) playPair();
+      });
       video.addEventListener('error', () => {
         pausePair();
         if (!button) return;
@@ -310,7 +359,7 @@
     });
     button?.addEventListener('click', () => {
       takeControl();
-      if (pair.some(video => !video.paused && !video.ended)) {
+      if (wantedPlaying) {
         pausedByUser = true;
         pausePair();
       } else {

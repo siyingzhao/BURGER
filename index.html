@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/site.css?v=20261029-aligned">
     <script src="js/pipeline.js" defer></script>
-    <script src="js/site.js?v=20261029-touch" defer></script>
+    <script src="js/site.js?v=20261029-paired-loop" defer></script>
     <script src="js/dataset-relations.js" defer></script>
   </head>
   <body class="site">
@@ -55,8 +55,8 @@
     <figure class="demo opening-demo">
       <div class="demo-heading"><span class="instruction">“Draw a hamburger.”</span></div>
       <div class="video-compare video-frame" id="video-compare" style="--split:50%">
-        <div class="compare-layer compare-real"><video muted loop playsinline preload="none" data-compare-src="assets/videos/real_burger_opening.mp4?v=20261029-refbase" poster="assets/posters/real_burger_opening.jpg?v=20261029-refbase" aria-label="Real robot drawing a hamburger at 3× recording speed"></video></div>
-        <div class="compare-layer compare-sim"><video muted loop playsinline preload="none" data-compare-src="assets/videos/sim_sapien.mp4" poster="assets/posters/sim_sapien.jpg" aria-label="Simulated robot drawing a hamburger"></video></div>
+        <div class="compare-layer compare-real"><video muted playsinline preload="none" data-compare-src="assets/videos/real_burger_opening.mp4?v=20261029-refbase" poster="assets/posters/real_burger_opening.jpg?v=20261029-refbase" aria-label="Real robot drawing a hamburger at 3× recording speed"></video></div>
+        <div class="compare-layer compare-sim"><video muted playsinline preload="none" data-compare-src="assets/videos/sim_sapien.mp4" poster="assets/posters/sim_sapien.jpg" aria-label="Simulated robot drawing a hamburger"></video></div>
         <span class="compare-label sim-label" title="3× recording speed">Simulation · 3×</span><span class="compare-label real-label" title="3× recording speed, followed by a 1.2-second final-frame hold">Real robot · 3×</span>
         <div class="compare-divider" aria-hidden="true"></div>
         <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Reveal simulation or real robot">
