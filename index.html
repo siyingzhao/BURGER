@@ -169,7 +169,7 @@
           <p>The initial blank canvas does not reveal which object to draw. The instruction specifies the object and, for a composition, its spatial relation to another object. As the drawing develops, the policy uses the changing canvas as visual feedback.</p>
         </div>
 
-        <p class="section-lead">We also ask whether a policy can combine familiar objects in <span class="keyphrase">pairs absent from training</span>. The examples below show π<sub>0</sub> executing a seen pair and a held-out pair.</p>
+        <p class="section-lead">We also ask whether a policy can combine familiar objects in <span class="keyphrase">pairs absent from training</span>. The examples below show learned policies executing a seen pair and a held-out pair.</p>
         <div class="composition-grid reading-width">
           <figure class="demo composition-demo">
             <div class="demo-heading"><span class="status-label">Pair seen in training</span><span>π<sub>0</sub> · simulation</span></div>
@@ -180,12 +180,12 @@
             <figcaption><q>Draw a leaf left of a moon.</q></figcaption>
           </figure>
           <figure class="demo composition-demo">
-            <div class="demo-heading"><span class="status-label accent">Pair held out from training</span><span>π<sub>0</sub> · simulation</span></div>
+            <div class="demo-heading"><span class="status-label accent">Pair held out from training</span><span>Simulation · 2×</span></div>
             <div class="video-frame">
-              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/comp_apple_berry.mp4" poster="assets/posters/comp_apple_berry.jpg" aria-label="Pi zero draws an apple left of a blueberry, a pair absent from training"></video>
+              <video muted loop playsinline preload="none" data-autoplay data-src="assets/videos/comp_cloud_moon.mp4" poster="assets/posters/comp_cloud_moon.jpg" width="960" height="720" style="object-fit: contain" aria-label="Learned policy draws a cloud to the left of a moon, a pair absent from training, at 2× recording speed"></video>
               <button class="video-toggle" type="button" aria-label="Play unseen composition" data-name="unseen composition"><span aria-hidden="true">▶</span></button>
             </div>
-            <figcaption><q>Draw an apple left of a blueberry.</q></figcaption>
+            <figcaption><q>Draw a cloud to the left of a moon.</q></figcaption>
           </figure>
         </div>
         <p class="caption reading-width">Selected learned-policy rollouts in simulation. Both objects in the held-out pair are familiar from training.</p>
